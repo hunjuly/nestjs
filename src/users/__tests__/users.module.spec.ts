@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, HttpStatus, INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
-import * as request from 'supertest'
+import * as supertest from 'supertest'
 import { UserGuard } from 'src/auth'
 import { createMemoryOrm } from 'src/common'
 import { CreateUserDto } from '../dto/create-user.dto'
@@ -18,6 +18,39 @@ class MockAuthGuard implements CanActivate {
 describe('/users', () => {
     let app: INestApplication
     let service: UsersService
+
+    const createDto = { email: 'user@mail.com', username: 'user name', password: '1234' }
+
+    const request = () => supertest(app.getHttpServer())
+    const createUser = (dto: CreateUserDto) => request().post('/users').send(dto)
+    const findAllUsers = () => request().get('/users')
+    const findUser = (userId: string) => request().get('/users/' + userId)
+    const deleteUser = (userId: string) => request().delete('/users/' + userId)
+
+    const updateUser = (userId: string, dto: UpdateUserDto) =>
+        request()
+            .patch('/users/' + userId)
+            .send(dto)
+
+    const expectUserDto = (user: UserDto, dto: CreateUserDto | UpdateUserDto) => {
+        const received = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            createDate: new Date(user.createDate),
+            updateDate: new Date(user.updateDate)
+        }
+
+        const expected = expect.objectContaining({
+            id: expect.any(String),
+            email: dto.email,
+            username: dto.username,
+            createDate: expect.any(Date),
+            updateDate: expect.any(Date)
+        })
+
+        expect(received).toEqual(expected)
+    }
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -41,50 +74,6 @@ describe('/users', () => {
         expect(app).toBeDefined()
         expect(service).toBeDefined()
     })
-
-    const createDto = { email: 'user@mail.com', username: 'user name', password: '1234' }
-
-    function createUser(dto: CreateUserDto) {
-        return request(app.getHttpServer()).post('/users').send(dto)
-    }
-
-    function findAllUsers() {
-        return request(app.getHttpServer()).get('/users')
-    }
-
-    function findUser(userId: string) {
-        return request(app.getHttpServer()).get('/users/' + userId)
-    }
-
-    function deleteUser(userId: string) {
-        return request(app.getHttpServer()).delete('/users/' + userId)
-    }
-
-    function updateUser(userId: string, dto: UpdateUserDto) {
-        return request(app.getHttpServer())
-            .patch('/users/' + userId)
-            .send(dto)
-    }
-
-    function expectUserDto(user: UserDto, dto: CreateUserDto | UpdateUserDto) {
-        const received = {
-            id: user.id,
-            email: user.email,
-            username: user.username,
-            createDate: new Date(user.createDate),
-            updateDate: new Date(user.updateDate)
-        }
-
-        const expected = expect.objectContaining({
-            id: expect.any(String),
-            email: dto.email,
-            username: dto.username,
-            createDate: expect.any(Date),
-            updateDate: expect.any(Date)
-        })
-
-        expect(received).toEqual(expected)
-    }
 
     it('/ (POST), create a user', async () => {
         const create = await createUser(createDto)

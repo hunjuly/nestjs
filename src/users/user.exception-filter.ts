@@ -4,7 +4,7 @@ import { Assert } from 'src/common'
 import { AlreadyExistsUserException, DomainException, NotFoundUserException } from './domain'
 
 @Catch(DomainException)
-export class DomainExceptionFilter implements ExceptionFilter {
+export class UserExceptionFilter implements ExceptionFilter {
     async catch(exception: unknown, host: ArgumentsHost) {
         const ctx = host.switchToHttp()
         const response = ctx.getResponse<Response>()
