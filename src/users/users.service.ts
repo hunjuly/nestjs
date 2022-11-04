@@ -6,14 +6,12 @@ import { UsersRepository } from './users.repository'
 
 @Injectable()
 export class UsersService {
-    constructor(private repository: UsersRepository, private authService: AuthService) {
-        User.repository = this.repository
-    }
+    constructor(private repository: UsersRepository, private authService: AuthService) {}
 
     async create(createDto: CreateUserDto): Promise<UserDto> {
         const createCmd = { ...createDto }
 
-        const user = await User.create(createCmd)
+        const user = await User.create(this.repository, createCmd)
 
         await this.authService.create({
             userId: user.id,
@@ -38,7 +36,7 @@ export class UsersService {
     }
 
     async findById(id: string): Promise<UserDto> {
-        const user = await User.findById(id)
+        const user = await User.findById(this.repository, id)
 
         return userToDto(user)
     }
@@ -46,13 +44,13 @@ export class UsersService {
     async update(id: string, updateDto: UpdateUserDto): Promise<UserDto> {
         const updateCmd = { ...updateDto }
 
-        const user = await User.update(id, updateCmd)
+        const user = await User.update(this.repository, id, updateCmd)
 
         return userToDto(user)
     }
 
     async remove(id: string) {
-        await User.remove(id)
+        await User.remove(this.repository, id)
 
         return { id }
     }
