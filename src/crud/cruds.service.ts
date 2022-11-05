@@ -1,18 +1,32 @@
 import { Injectable } from '@nestjs/common'
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter'
 import { CrudsRepository } from './cruds.repository'
-import { Crud } from './domain'
+import { Crud, ICrudEventEmitter } from './domain'
+import { CrudCreatedEvent, CrudUpdatedEvent } from './domain/events'
 import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
 
 @Injectable()
-export class CrudsService {
-    constructor(private repository: CrudsRepository) {}
+export class CrudsService implements ICrudEventEmitter {
+    constructor(private repository: CrudsRepository, private eventEmitter: EventEmitter2) {}
 
     async create(createDto: CreateCrudDto): Promise<CrudDto> {
         const createCmd = { ...createDto }
 
+        this.emitEvent(new CrudCreatedEvent('abcd', {}))
+
         const crud = await Crud.create(this.repository, createCmd)
 
         return crudToDto(crud)
+    }
+
+    emitEvent(event: CrudCreatedEvent | CrudUpdatedEvent) {
+        this.eventEmitter.emit('crud.created', event)
+    }
+
+    @OnEvent('*.*')
+    handleOrderCreatedEvent(event: CrudCreatedEvent) {
+        console.log('order.created', event)
+        // handle and process "OrderCreatedEvent" event
     }
 
     async findAll(): Promise<CrudDto[]> {

@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import * as supertest from 'supertest'
 import { AdminGuard, UserGuard } from 'src/auth'
 import { createMemoryOrm } from 'src/common'
+import { GlobalModule } from 'src/global.module'
 import { UserRole } from '../domain'
 import { CreateUserDto } from '../dto/create-user.dto'
 import { UpdateUserDto } from '../dto/update-user.dto'
@@ -60,7 +61,7 @@ describe('/users', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            imports: [UsersModule, createMemoryOrm()]
+            imports: [GlobalModule, UsersModule]
         })
             .overrideGuard(UserGuard)
             .useClass(MockAuthGuard)

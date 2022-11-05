@@ -2,7 +2,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import * as supertest from 'supertest'
 import { AuthModule } from 'src/auth'
-import { createMemoryOrm } from 'src/common'
+import { GlobalModule } from 'src/global.module'
 import { UsersModule } from 'src/users'
 import { UserRole } from 'src/users/domain'
 
@@ -11,7 +11,7 @@ describe('user register, login & logout', () => {
 
     beforeEach(async () => {
         const module = await Test.createTestingModule({
-            imports: [createMemoryOrm(), UsersModule, AuthModule]
+            imports: [GlobalModule, UsersModule, AuthModule]
         }).compile()
 
         app = module.createNestApplication()

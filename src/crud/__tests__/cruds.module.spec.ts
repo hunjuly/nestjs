@@ -1,8 +1,10 @@
 import { CanActivate, ExecutionContext, HttpStatus, INestApplication } from '@nestjs/common'
+import { EventEmitterModule } from '@nestjs/event-emitter'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as supertest from 'supertest'
 import { AdminGuard, UserGuard } from 'src/auth'
 import { createMemoryOrm } from 'src/common'
+import { GlobalModule } from 'src/global.module'
 import { CrudsModule } from '../cruds.module'
 import { CrudsService } from '../cruds.service'
 import { CreateCrudDto } from '../dto/create-crud.dto'
@@ -54,7 +56,7 @@ describe('/cruds', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            imports: [CrudsModule, createMemoryOrm()]
+            imports: [GlobalModule, CrudsModule]
         })
             .overrideGuard(UserGuard)
             .useClass(MockAuthGuard)

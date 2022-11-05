@@ -1,7 +1,7 @@
 import { HttpStatus, INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import * as supertest from 'supertest'
-import { createMemoryOrm } from 'src/common'
+import { GlobalModule } from 'src/global.module'
 import { AuthModule } from '../auth.module'
 import { AuthService } from '../auth.service'
 
@@ -11,7 +11,7 @@ describe('/auth', () => {
 
     beforeEach(async () => {
         const module = await Test.createTestingModule({
-            imports: [AuthModule, createMemoryOrm()]
+            imports: [GlobalModule, AuthModule]
         }).compile()
 
         service = module.get(AuthService)
