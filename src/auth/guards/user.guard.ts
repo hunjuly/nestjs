@@ -1,10 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
-import { SetMetadata } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-
-const IS_PUBLIC_KEY = 'isPublic'
-
-export const Public = () => SetMetadata(IS_PUBLIC_KEY, true)
+import { IS_PUBLIC_KEY } from './public'
 
 @Injectable()
 export class UserGuard implements CanActivate {
@@ -20,6 +16,8 @@ export class UserGuard implements CanActivate {
             return true
         }
 
-        return context.switchToHttp().getRequest().isAuthenticated()
+        const request = context.switchToHttp().getRequest()
+
+        return request.isAuthenticated()
     }
 }

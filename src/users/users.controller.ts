@@ -10,31 +10,30 @@ export class UsersController {
     constructor(private readonly service: UsersService) {}
 
     @Post()
-    @Public()
     create(@Body() createDto: CreateUserDto) {
         return this.service.create(createDto)
     }
 
-    @Get()
     @UseGuards(AdminGuard)
+    @Get()
     findAll() {
         return this.service.findAll()
     }
 
-    @Get(':id')
     @UseGuards(UserGuard)
+    @Get(':id')
     findById(@Param('id') id: string) {
         return this.service.findById(id)
     }
 
-    @Patch(':id')
     @UseGuards(UserGuard)
+    @Patch(':id')
     update(@Param('id') id: string, @Body() updateDto: UpdateUserDto) {
         return this.service.update(id, updateDto)
     }
 
-    @Delete(':id')
     @UseGuards(AdminGuard)
+    @Delete(':id')
     remove(@Param('id') id: string) {
         return this.service.remove(id)
     }
