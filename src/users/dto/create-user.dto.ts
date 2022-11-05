@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty } from 'class-validator'
+import { UserRole } from '../domain'
 
 export class CreateUserDto {
     /**
@@ -13,6 +14,12 @@ export class CreateUserDto {
      */
     @IsNotEmpty()
     username: string
+
+    /**
+     * 빈 문자열은 허용하지 않는다.
+     */
+    @IsNotEmpty()
+    role: UserRole
 
     /**
      * 빈 문자열은 허용하지 않는다.

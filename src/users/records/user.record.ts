@@ -6,6 +6,7 @@ import {
     UpdateDateColumn,
     VersionColumn
 } from 'typeorm'
+import { UserRole } from '../domain'
 
 @Entity('Users')
 export class UserRecord {
@@ -17,6 +18,9 @@ export class UserRecord {
 
     @Column()
     username: string
+
+    @Column()
+    role: UserRole
 
     @CreateDateColumn()
     createDate: Date

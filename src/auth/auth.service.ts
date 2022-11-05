@@ -2,11 +2,13 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcrypt'
 import { Repository } from 'typeorm'
+import { UserRole } from 'src/users/domain'
 import { AuthRecord } from './auth.record'
 
 export class CreateAuthDto {
     userId: string
     email: string
+    role: UserRole
     password: string
 }
 
@@ -29,6 +31,7 @@ export class AuthService {
         const candidate = new AuthRecord()
         candidate.userId = dto.userId
         candidate.email = dto.email
+        candidate.role = dto.role
         candidate.passwordHash = hash
 
         const newUser = await this.typeorm.save(candidate)

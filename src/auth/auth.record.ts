@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { UserRole } from 'src/users/domain'
 
 @Entity()
 export class AuthRecord {
@@ -7,6 +8,9 @@ export class AuthRecord {
 
     @Column({ unique: true })
     email: string
+
+    @Column()
+    role: UserRole
 
     @Column()
     passwordHash: string

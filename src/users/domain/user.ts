@@ -1,12 +1,13 @@
 import { AlreadyExistsUserException, NotFoundUserException } from './exceptions'
 import { IUsersRepository } from './interfaces'
-import { CreateUserCmd, UpdateUserCmd } from './types'
+import { CreateUserCmd, UpdateUserCmd, UserRole } from './types'
 
 export class User {
     constructor(
         public readonly id: string,
         public email: string,
         public username: string,
+        public role: UserRole,
         public readonly createDate: Date,
         public readonly updateDate: Date
     ) {}

@@ -63,6 +63,7 @@ function recordToUser(record: UserRecord): User | null {
         id: record.id,
         email: record.email,
         username: record.username,
+        role: record.role,
         createDate: record.createDate,
         updateDate: record.updateDate
     }

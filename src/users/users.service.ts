@@ -16,6 +16,7 @@ export class UsersService {
         await this.authService.create({
             userId: user.id,
             email: user.email,
+            role: user.role,
             password: createDto.password
         })
 

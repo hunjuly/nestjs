@@ -1,8 +1,9 @@
 import { CanActivate, ExecutionContext, HttpStatus, INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as supertest from 'supertest'
-import { UserGuard } from 'src/auth'
+import { AdminGuard, UserGuard } from 'src/auth'
 import { createMemoryOrm } from 'src/common'
+import { UserRole } from '../domain'
 import { CreateUserDto } from '../dto/create-user.dto'
 import { UpdateUserDto } from '../dto/update-user.dto'
 import { UserDto } from '../dto/user.dto'
@@ -19,7 +20,12 @@ describe('/users', () => {
     let app: INestApplication
     let service: UsersService
 
-    const createDto = { email: 'user@mail.com', username: 'user name', password: '1234' }
+    const createDto = {
+        email: 'user@mail.com',
+        username: 'user name',
+        role: 'user' as UserRole,
+        password: '1234'
+    }
 
     const request = () => supertest(app.getHttpServer())
     const createUser = (dto: CreateUserDto) => request().post('/users').send(dto)
@@ -58,6 +64,8 @@ describe('/users', () => {
         })
             .overrideGuard(UserGuard)
             .useClass(MockAuthGuard)
+            .overrideGuard(AdminGuard)
+            .useClass(MockAuthGuard)
             .compile()
 
         app = module.createNestApplication()
@@ -92,9 +100,9 @@ describe('/users', () => {
 
     it('/ (GET), find all users', async () => {
         // create users
-        await createUser({ email: 'user1@mail.com', username: 'username', password: '1234' })
-        await createUser({ email: 'user2@mail.com', username: 'username', password: '1234' })
-        await createUser({ email: 'user3@mail.com', username: 'username', password: '1234' })
+        await createUser({ email: 'user1@mail.com', username: 'username', role: 'user', password: '1234' })
+        await createUser({ email: 'user2@mail.com', username: 'username', role: 'user', password: '1234' })
+        await createUser({ email: 'user3@mail.com', username: 'username', role: 'user', password: '1234' })
 
         // find all
         const find = await findAllUsers()
@@ -150,11 +158,21 @@ describe('/users', () => {
 
     it('udpate a user,  but already exists email', async () => {
         // create A
-        const createA = await createUser({ email: 'A@mail.com', username: 'user', password: '1234' })
+        const createA = await createUser({
+            email: 'A@mail.com',
+            username: 'user',
+            role: 'user',
+            password: '1234'
+        })
         const userA = createA.body
 
         // create B@mail.com
-        await createUser({ email: 'B@mail.com', username: 'user', password: '1234' })
+        await createUser({
+            email: 'B@mail.com',
+            username: 'user',
+            role: 'user',
+            password: '1234'
+        })
 
         // update A, but already exists email
         const res = await updateUser(userA.id, { email: 'B@mail.com', username: 'user' })

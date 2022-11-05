@@ -23,25 +23,17 @@ describe('/auth', () => {
         await app.close()
     })
 
-    function createAuth() {
-        return service.create({
-            userId: 'userId#1',
-            email: 'user@mail.com',
-            password: '1234'
-        })
-    }
+    const request = () => supertest(app.getHttpServer())
+    const login = async (email: string, password: string) => request().post('/auth').send({ email, password })
+    const logout = (authCookie: string) => request().delete('/auth').set('Cookie', authCookie)
+    const createUserAuth = () =>
+        service.create({ userId: 'userId#1', email: 'user@mail.com', role: 'user', password: '1234' })
+    const createAdminAuth = () =>
+        service.create({ userId: 'userId#1', email: 'admin@mail.com', role: 'admin', password: '1234' })
 
-    async function login(email: string, password: string) {
-        return supertest(app.getHttpServer()).post('/auth').send({ email, password })
-    }
-
-    function logout(authCookie: string) {
-        return supertest(app.getHttpServer()).delete('/auth').set('Cookie', authCookie)
-    }
-
-    it('successful case', async () => {
+    it('user successful case', async () => {
         // create an authentication
-        await createAuth()
+        await createUserAuth()
 
         // login
         const loginRes = await login('user@mail.com', '1234')
@@ -55,16 +47,32 @@ describe('/auth', () => {
         expect(logoutRes.status).toEqual(HttpStatus.OK)
     })
 
-    it('create auth, but already exists', async () => {
-        await createAuth()
+    it('admin successful case', async () => {
+        // create an authentication
+        await createAdminAuth()
 
-        const promise = createAuth()
+        // login
+        const loginRes = await login('admin@mail.com', '1234')
+        expect(loginRes.status).toEqual(HttpStatus.CREATED)
+
+        // auth token
+        const authCookie = loginRes.headers['set-cookie']
+
+        // logout
+        const logoutRes = await logout(authCookie)
+        expect(logoutRes.status).toEqual(HttpStatus.OK)
+    })
+
+    it('create auth, but already exists', async () => {
+        await createUserAuth()
+
+        const promise = createUserAuth()
 
         await expect(promise).rejects.toThrow(Error)
     })
 
     it('login with incorrect password', async () => {
-        await createAuth()
+        await createUserAuth()
 
         const loginRes = await login('user@mail.com', 'incorrect-password')
 
@@ -72,7 +80,7 @@ describe('/auth', () => {
     })
 
     it('login with not exist email', async () => {
-        await createAuth()
+        await createUserAuth()
 
         const loginRes = await login('unknown@mail.com', '')
 
