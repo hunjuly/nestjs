@@ -1,3 +1,4 @@
+import { CrudCreatedEvent, CrudUpdatedEvent } from './events'
 import { AlreadyExistsCrudException, NotFoundCrudException } from './exceptions'
 import { ICrudsRepository } from './interfaces'
 import { CreateCrudCmd, UpdateCrudCmd } from './types'
@@ -52,5 +53,15 @@ export class Crud {
         if (!success) throw new NotFoundCrudException()
 
         return { id }
+    }
+}
+
+export class CrudEventHandler {
+    handleCrudCreated(event: CrudCreatedEvent) {
+        console.log('handleCrudCreatedEvent', event.crudId)
+    }
+
+    handleCrudUpdated(event: CrudUpdatedEvent) {
+        console.log('handleCrudUpdatedEvent', event.crudId)
     }
 }

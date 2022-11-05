@@ -1,5 +1,4 @@
 import { Crud } from './crud'
-import { CrudCreatedEvent, CrudUpdatedEvent } from './events'
 
 export interface ICrudsRepository {
     /**
@@ -14,8 +13,4 @@ export interface ICrudsRepository {
     findById(id: string): Promise<Crud | null>
     findByName(name: string): Promise<Crud | null>
     findAll(): Promise<Crud[]>
-}
-
-export interface ICrudEventEmitter {
-    emitEvent(event: CrudCreatedEvent | CrudUpdatedEvent)
 }

@@ -14,12 +14,6 @@ export class CrudUpdatedEvent extends DomainEvent {
     }
 }
 
-export class CrudEventHandler {
-    handleCrudCreatedEvent(event: CrudCreatedEvent) {
-        console.log('handleCrudCreatedEvent', event.crudId)
-    }
-
-    handleCrudUpdatedEvent(event: CrudUpdatedEvent) {
-        console.log('handleCrudUpdatedEvent', event.crudId)
-    }
+export interface ICrudEventEmitter {
+    emitEvent(event: CrudCreatedEvent | CrudUpdatedEvent)
 }
