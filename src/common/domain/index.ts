@@ -1,6 +1,6 @@
 export interface IDomainRepository<T> {
     create(crud: Partial<T>): Promise<T | null>
-    update<T>(id: string, crud: T): Promise<boolean>
+    update(id: string, crud: T): Promise<boolean>
     remove(id: string): Promise<boolean>
     findById(id: string): Promise<T | null>
     findAll(): Promise<T[]>

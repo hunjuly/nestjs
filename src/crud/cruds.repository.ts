@@ -49,7 +49,7 @@ export class CrudsRepository implements ICrudsRepository {
         return cruds
     }
 
-    async update(id: string, updateCrudDto: UpdateCrudDto): Promise<boolean> {
+    async update(id: string, updateCrudDto: Crud): Promise<boolean> {
         const result = await this.typeorm.update(id, updateCrudDto)
 
         return result.affected === 1

@@ -18,13 +18,15 @@ export class Crud extends AggregateRoot {
         return crud
     }
 
-    async update(updateDto: UpdateCrudCmd): Promise<void> {
-        if (updateDto.name) {
-            const found = await this.repository.findByName(updateDto.name)
+    async update(cmd: UpdateCrudCmd): Promise<void> {
+        if (cmd.name) {
+            const found = await this.repository.findByName(cmd.name)
 
             if (found) throw new AlreadyExistsDomainException()
 
-            this.name = updateDto.name
+            this.name = cmd.name
+
+            await this.repository.update(this.id, this)
         }
     }
 }

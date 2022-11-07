@@ -1,7 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { Assert } from 'src/common'
-import { AlreadyExistsCrudException, DomainException, NotFoundCrudException } from './domain'
+import { AlreadyExistsDomainException, DomainException, NotFoundDomainException } from 'src/common/domain'
 
 @Catch(DomainException)
 export class CrudExceptionFilter implements ExceptionFilter {
@@ -17,9 +17,9 @@ export class CrudExceptionFilter implements ExceptionFilter {
                 timestamp: new Date().toISOString()
             }
 
-            if (exception instanceof AlreadyExistsCrudException) {
+            if (exception instanceof AlreadyExistsDomainException) {
                 response.status(HttpStatus.CONFLICT).json(body)
-            } else if (exception instanceof NotFoundCrudException) {
+            } else if (exception instanceof NotFoundDomainException) {
                 response.status(HttpStatus.NOT_FOUND).json(body)
             } else {
                 Assert.fail(`unknown exception(${typeof exception})`)
