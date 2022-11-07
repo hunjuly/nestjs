@@ -69,8 +69,6 @@ export class CrudsService implements ICrudEventEmitter {
 function crudToDto(crud: Crud): CrudDto {
     return {
         id: crud.id,
-        name: crud.name,
-        createDate: crud.createDate,
-        updateDate: crud.updateDate
+        name: crud.name
     }
 }

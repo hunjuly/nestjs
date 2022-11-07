@@ -39,16 +39,12 @@ describe('/cruds', () => {
     const expectCrudDto = (crud: CrudDto, dto: CreateCrudDto | UpdateCrudDto) => {
         const received = {
             id: crud.id,
-            name: crud.name,
-            createDate: new Date(crud.createDate),
-            updateDate: new Date(crud.updateDate)
+            name: crud.name
         }
 
         const expected = expect.objectContaining({
             id: expect.any(String),
-            name: dto.name,
-            createDate: expect.any(Date),
-            updateDate: expect.any(Date)
+            name: dto.name
         })
 
         expect(received).toEqual(expected)

@@ -12,22 +12,28 @@ export class CrudsRepository implements ICrudsRepository {
         private typeorm: Repository<CrudRecord>
     ) {}
 
+    private recordToCrud(record: CrudRecord): Crud | null {
+        if (!record) return null
+
+        return new Crud(this, record.id, record.name)
+    }
+
     async findById(id: string): Promise<Crud | null> {
         const record = await this.typeorm.findOneBy({ id })
 
-        return recordToCrud(record)
+        return this.recordToCrud(record)
     }
 
     async findByName(name: string): Promise<Crud | null> {
         const record = await this.typeorm.findOneBy({ name })
 
-        return recordToCrud(record)
+        return this.recordToCrud(record)
     }
 
     async create(dto: CreateCrudDto): Promise<Crud | null> {
         const record = await this.typeorm.save(dto)
 
-        return recordToCrud(record)
+        return this.recordToCrud(record)
     }
 
     async findAll(): Promise<Crud[]> {
@@ -36,7 +42,7 @@ export class CrudsRepository implements ICrudsRepository {
         const cruds: Crud[] = []
 
         records.forEach((record) => {
-            const crud = recordToCrud(record)
+            const crud = this.recordToCrud(record)
             cruds.push(crud)
         })
 
@@ -53,16 +59,5 @@ export class CrudsRepository implements ICrudsRepository {
         const result = await this.typeorm.delete(id)
 
         return result.affected === 1
-    }
-}
-
-function recordToCrud(record: CrudRecord): Crud | null {
-    if (!record) return null
-
-    return {
-        id: record.id,
-        name: record.name,
-        createDate: record.createDate,
-        updateDate: record.updateDate
     }
 }
