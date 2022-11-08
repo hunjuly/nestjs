@@ -23,11 +23,11 @@ export class Crud extends AggregateRoot {
             const found = await this.repository.findByName(cmd.name)
 
             if (found) throw new AlreadyExistsDomainException()
-
-            this.name = cmd.name
-
-            await this.repository.update(this.id, this)
         }
+
+        this.name = cmd.name
+
+        await this.repository.update(this.id, cmd)
     }
 }
 
