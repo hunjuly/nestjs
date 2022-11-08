@@ -1,8 +1,8 @@
 import { Column, Entity } from 'typeorm'
-import { Record } from 'src/common'
+import { BaseRecord } from 'src/common'
 
 @Entity('Cruds')
-export class CrudRecord extends Record {
+export class CrudRecord extends BaseRecord {
     @Column({ unique: true })
     name: string
 }

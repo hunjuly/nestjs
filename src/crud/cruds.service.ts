@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { EventEmitter2 } from '@nestjs/event-emitter'
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter'
 import { CrudsRepository } from './cruds.repository'
 import { Crud } from './domain'
 import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
@@ -8,20 +8,32 @@ import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
 export class CrudsService {
     constructor(private repository: CrudsRepository, private eventEmitter: EventEmitter2) {}
 
-    // emitEvent(event: CrudCreatedEvent | CrudUpdatedEvent) {
-    //     this.eventEmitter.emit(event.name, event)
-    // }
+    private crudToDto(crud: Crud): CrudDto {
+        return {
+            id: crud.id,
+            name: crud.name
+        }
+    }
 
-    // @OnEvent('*.*')
-    // handleEvents(event: DomainEvent) {
-    //     if (event instanceof CrudCreatedEvent) console.log('order.created', event)
-    //     if (event instanceof CrudUpdatedEvent) console.log('order.updated', event)
-    // }
+    @OnEvent('crud.created')
+    handleEvents(_crud: Crud) {
+        // console.log(`a Crud(${_crud.name}) is created.`)
+    }
 
     async create(createDto: CreateCrudDto): Promise<CrudDto> {
         const crud = await Crud.create(this.repository, createDto)
 
-        // this.emitEvent(new CrudCreatedEvent('abcd', {}))
+        this.eventEmitter.emit('crud.created', crud)
+
+        return this.crudToDto(crud)
+    }
+
+    async update(id: string, updateDto: UpdateCrudDto): Promise<CrudDto> {
+        const crud = await this.repository.findById(id)
+
+        if (!crud) throw new NotFoundException()
+
+        await crud.update(updateDto)
 
         return this.crudToDto(crud)
     }
@@ -47,30 +59,11 @@ export class CrudsService {
         return this.crudToDto(crud)
     }
 
-    async update(id: string, updateDto: UpdateCrudDto): Promise<CrudDto> {
-        const crud = await this.repository.findById(id)
-
-        if (!crud) throw new NotFoundException()
-
-        await crud.update(updateDto)
-
-        // this.emitEvent(new CrudUpdatedEvent('abcd', {}))
-
-        return this.crudToDto(crud)
-    }
-
     async remove(id: string) {
         const success = await this.repository.remove(id)
 
         if (!success) throw new NotFoundException()
 
         return { id }
-    }
-
-    private crudToDto(crud: Crud): CrudDto {
-        return {
-            id: crud.id,
-            name: crud.name
-        }
     }
 }

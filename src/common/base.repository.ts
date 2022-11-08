@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm'
 import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm'
 
-export class Record {
+export class BaseRecord {
     @PrimaryGeneratedColumn('uuid')
     id: string
 
