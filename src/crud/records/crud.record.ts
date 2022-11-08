@@ -1,26 +1,8 @@
-import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
-    VersionColumn
-} from 'typeorm'
+import { Column, Entity } from 'typeorm'
+import { Record } from 'src/common'
 
 @Entity('Cruds')
-export class CrudRecord {
-    @PrimaryGeneratedColumn('uuid')
-    id: string
-
+export class CrudRecord extends Record {
     @Column({ unique: true })
     name: string
-
-    @CreateDateColumn()
-    createDate: Date
-
-    @UpdateDateColumn()
-    updateDate: Date
-
-    @VersionColumn()
-    version: number
 }

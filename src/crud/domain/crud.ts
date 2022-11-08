@@ -1,5 +1,4 @@
 import { AggregateRoot, AlreadyExistsDomainException } from 'src/common/domain'
-import { CrudCreatedEvent, CrudUpdatedEvent } from './events'
 import { ICrudsRepository } from './interfaces'
 import { CreateCrudCmd, UpdateCrudCmd } from './types'
 
@@ -28,15 +27,5 @@ export class Crud extends AggregateRoot {
         this.name = cmd.name
 
         await this.repository.update(this.id, cmd)
-    }
-}
-
-export class CrudEventHandler {
-    handleCrudCreated(event: CrudCreatedEvent) {
-        console.log('handleCrudCreatedEvent', event.crudId)
-    }
-
-    handleCrudUpdated(event: CrudUpdatedEvent) {
-        console.log('handleCrudUpdatedEvent', event.crudId)
     }
 }
