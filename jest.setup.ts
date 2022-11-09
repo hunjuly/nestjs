@@ -9,6 +9,22 @@ declare global {
     }
 }
 
+const g = global as any
+type FixtureDefine = { object: any; method: string; args?: any[]; return?: any }
+
+/**
+ * mock의 spy와 stub 기능 구현을 간단하게 표현함
+ */
+g.fixture = (opt: FixtureDefine) => {
+    jest.spyOn(opt.object, opt.method).mockImplementation(async (...args) => {
+        if (opt.args) {
+            expect(args).toEqual(opt.args)
+        }
+
+        if (opt.return) return opt.return
+    })
+}
+
 expect.extend({
     toMatchArray(actualList: any[], expectedList: any[]) {
         const fail = (a: any[], b: any[]) => ({
