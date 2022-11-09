@@ -1,0 +1,10 @@
+{
+    "printWidth": 110,
+    "trailingComma": "none",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^src/(.*)$", "^[./]"],
+    "importOrderSortSpecifiers": true,
+    "importOrderParserPlugins": ["typescript", "decorators-legacy"]
+}

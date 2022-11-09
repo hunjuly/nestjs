@@ -1,0 +1,65 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run:dev",
+            "detail": "⌥⌘Q",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "dev"
+            ]
+        },
+        {
+            "label": "test:e2e",
+            "detail": "⌥⌘W",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "test:e2e"
+            ]
+        },
+        {
+            "label": "test:unit",
+            "detail": "⌥⌘E",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "test:unit"
+            ]
+        },
+        {
+            "label": "test:e2e:debug",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "test:e2e:debug"
+            ]
+        },
+        {
+            "label": "infra",
+            "detail": "이것을 하지 않으면 'unknown TYPEORM_TYPE' 오류 발생",
+            "type": "shell",
+            "command": "sh",
+            "args": [
+                "scripts/${input:InfraTask}_infra_bootup.sh"
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "InfraTask",
+            "description": "",
+            "options": [
+                "memory",
+                "docker"
+            ],
+            "default": "memory"
+        }
+    ]
+}
