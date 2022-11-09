@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common'
-import { AdminGuard, Public, UserGuard } from 'src/auth'
+import { AdminGuard, UserGuard } from 'src/auth'
+import { DomainExceptionFilter } from 'src/common'
 import { CreateUserDto, UpdateUserDto } from './dto'
-import { UserExceptionFilter } from './user.exception-filter'
 import { UsersService } from './users.service'
 
-@UseFilters(UserExceptionFilter)
+@UseFilters(DomainExceptionFilter)
 @Controller('users')
 export class UsersController {
     constructor(private readonly service: UsersService) {}

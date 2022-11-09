@@ -1,10 +1,10 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from '@nestjs/common'
 import { Request, Response } from 'express'
-import { Assert } from 'src/common'
 import { AlreadyExistsDomainException, DomainException, NotFoundDomainException } from 'src/common/domain'
+import { Assert } from './assert'
 
 @Catch(DomainException)
-export class CrudExceptionFilter implements ExceptionFilter {
+export class DomainExceptionFilter implements ExceptionFilter {
     async catch(exception: unknown, host: ArgumentsHost) {
         const ctx = host.switchToHttp()
         const response = ctx.getResponse<Response>()

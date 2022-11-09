@@ -1,58 +1,42 @@
-import { AlreadyExistsUserException, NotFoundUserException } from './exceptions'
+import { AggregateRoot, AlreadyExistsDomainException } from 'src/common/domain'
 import { IUsersRepository } from './interfaces'
 import { CreateUserCmd, UpdateUserCmd, UserRole } from './types'
 
-export class User {
+export class User extends AggregateRoot {
     constructor(
-        public readonly id: string,
+        private repository: IUsersRepository,
+        id: string,
         public email: string,
         public username: string,
         public role: UserRole,
         public readonly createDate: Date,
         public readonly updateDate: Date
-    ) {}
+    ) {
+        super(id)
+    }
 
     static async create(repository: IUsersRepository, cmd: CreateUserCmd): Promise<User> {
         const found = await repository.findByEmail(cmd.email)
 
-        if (found) throw new AlreadyExistsUserException()
+        if (found) throw new AlreadyExistsDomainException()
 
         const user = await repository.create(cmd)
 
         return user
     }
 
-    static async findAll(repository: IUsersRepository): Promise<User[]> {
-        return repository.findAll()
-    }
+    async update(cmd: UpdateUserCmd): Promise<void> {
+        if (cmd.email) {
+            const found = await this.repository.findByEmail(cmd.email)
 
-    static async findById(repository: IUsersRepository, id: string): Promise<User> {
-        const user = await repository.findById(id)
+            if (found) throw new AlreadyExistsDomainException()
 
-        if (!user) throw new NotFoundUserException()
+            this.email = cmd.email
+        }
 
-        return user
-    }
+        if (cmd.role) this.role = cmd.role
+        if (cmd.username) this.username = cmd.username
 
-    static async update(repository: IUsersRepository, id: string, updateDto: UpdateUserCmd): Promise<User> {
-        const found = await repository.findByEmail(updateDto.email)
-
-        if (found) throw new AlreadyExistsUserException()
-
-        const success = await repository.update(id, updateDto)
-
-        if (!success) throw new NotFoundUserException()
-
-        const user = await repository.findById(id)
-
-        return user
-    }
-
-    static async remove(repository: IUsersRepository, id: string) {
-        const success = await repository.remove(id)
-
-        if (!success) throw new NotFoundUserException()
-
-        return { id }
+        await this.repository.update(this.id, cmd)
     }
 }

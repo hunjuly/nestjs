@@ -2,7 +2,6 @@ import { CanActivate, ExecutionContext, HttpStatus, INestApplication } from '@ne
 import { Test, TestingModule } from '@nestjs/testing'
 import * as supertest from 'supertest'
 import { AdminGuard, UserGuard } from 'src/auth'
-import { createMemoryOrm } from 'src/common'
 import { GlobalModule } from 'src/global.module'
 import { UserRole } from '../domain'
 import { CreateUserDto } from '../dto/create-user.dto'
