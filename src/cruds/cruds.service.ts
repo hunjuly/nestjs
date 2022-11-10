@@ -29,7 +29,7 @@ export class CrudsService {
 
         this.eventEmitter.emit('crud.created', crud)
 
-        return this.crudToDto(crud)
+        return this.crudToDto(crud, createUrl)
     }
 
     async update(id: string, updateDto: UpdateCrudDto, createUrl: CreateCrudUrl): Promise<CrudDto> {
@@ -39,7 +39,7 @@ export class CrudsService {
 
         await crud.update(updateDto)
 
-        return this.crudToDto(crud)
+        return this.crudToDto(crud, createUrl)
     }
 
     async findAll(page: Pagination, createUrl: CreateCrudUrl): Promise<CrudDto[]> {
@@ -50,7 +50,7 @@ export class CrudsService {
         const dtos: CrudDto[] = []
 
         result.entities.forEach((crud) => {
-            const dto = this.crudToDto(crud)
+            const dto = this.crudToDto(crud, createUrl)
             dtos.push(dto)
         })
 

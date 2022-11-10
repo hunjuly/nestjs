@@ -12,7 +12,7 @@ export class CrudsController {
 
     @Post()
     create(@Body() createDto: CreateCrudDto) {
-        return this.service.create(createDto)
+        return this.service.create(createDto, this.crudUrl)
     }
 
     // async findAll(@PageQuery() page: Pagination) {
@@ -40,7 +40,7 @@ export class CrudsController {
     @UseGuards(UserGuard)
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateDto: UpdateCrudDto) {
-        return this.service.update(id, updateDto)
+        return this.service.update(id, updateDto, this.crudUrl)
     }
 
     @UseGuards(AdminGuard)

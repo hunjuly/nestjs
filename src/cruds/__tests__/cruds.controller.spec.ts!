@@ -54,7 +54,7 @@ describe('CrudsController', () => {
 
         const spy = createSpy(service, 'findAll', [page], pagedCruds)
 
-        const items = await controller.findAll()
+        const items = await controller.findAll(page)
 
         expect(spy).toHaveBeenCalled()
         expect(items).toMatchArray(pagedCruds.items)
