@@ -22,6 +22,12 @@ export class CrudsController {
 
     //     return { ...found, items }
     // }
+    어디서 만들까 고민 중이다.
+    '_links': {
+        self: {
+            href: 'http://localhost:8080/greeting?name=World'
+        }
+    }
     crudUrl(id: string) {
         return `/cruds/${id}`
     }
