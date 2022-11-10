@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing'
 import 'jest'
-import { createSpy } from 'src/common'
+import { createSpy } from 'src/common/jest'
 import { CrudsController } from '../cruds.controller'
 import { CrudsService } from '../cruds.service'
 import { Crud } from '../domain'

@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common'
 import { AdminGuard, UserGuard } from 'src/auth'
-import { DomainExceptionFilter } from 'src/common'
+import { DomainExceptionFilter, PageQuery } from 'src/common'
+import { Pagination } from 'src/common'
 import { CrudsService } from './cruds.service'
 import { CreateCrudDto, UpdateCrudDto } from './dto'
 
@@ -14,15 +15,26 @@ export class CrudsController {
         return this.service.create(createDto)
     }
 
+    // async findAll(@PageQuery() page: Pagination) {
+    //     const found = await this.service.findAll(page)
+
+    //     const items = found.items.map((item) => new ResponseUserDto(item))
+
+    //     return { ...found, items }
+    // }
+    crudUrl(id: string) {
+        return `/cruds/${id}`
+    }
+
     @Get()
-    findAll() {
-        return this.service.findAll()
+    findAll(@PageQuery() page: Pagination) {
+        return this.service.findAll(page, this.crudUrl)
     }
 
     @UseGuards(UserGuard)
     @Get(':id')
     findById(@Param('id') id: string) {
-        return this.service.findById(id)
+        return this.service.findById(id, this.crudUrl)
     }
 
     @UseGuards(UserGuard)

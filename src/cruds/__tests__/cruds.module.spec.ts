@@ -25,7 +25,7 @@ describe('/cruds', () => {
 
     const request = () => supertest(app.getHttpServer())
     const createCrud = (dto: CreateCrudDto) => request().post('/cruds').send(dto)
-    const findAllCruds = () => request().get('/cruds')
+    const findAll = (opts: string) => request().get('/cruds' + opts)
     const findCrud = (crudId: string) => request().get('/cruds/' + crudId)
     const deleteCrud = (crudId: string) => request().delete('/cruds/' + crudId)
 
@@ -95,15 +95,14 @@ describe('/cruds', () => {
         await createCrud({ name: 'crudname3' })
 
         // find all
-        const find = await findAllCruds()
+        const find = await findAll('?limit=5&offset=1')
         const cruds = find.body
 
         // verify
         expect(find.status).toEqual(HttpStatus.OK)
-        expect(cruds.length).toEqual(3)
-        expect(cruds[0].name).toEqual('crudname1')
-        expect(cruds[1].name).toEqual('crudname2')
-        expect(cruds[2].name).toEqual('crudname3')
+        expect(cruds.length).toEqual(2)
+        expect(cruds[0].name).toEqual('crudname2')
+        expect(cruds[1].name).toEqual('crudname3')
     })
 
     it('/:crudId (GET), find a crud', async () => {

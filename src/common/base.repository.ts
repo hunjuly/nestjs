@@ -1,5 +1,6 @@
-import { Repository } from 'typeorm'
+import { FindOptionsOrder, Repository } from 'typeorm'
 import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm'
+import { Pagination } from './pagination'
 
 export class BaseRecord {
     @PrimaryGeneratedColumn('uuid')
@@ -13,6 +14,13 @@ export class BaseRecord {
 
     @VersionColumn()
     version: number
+}
+
+type PaginationResponse<T> = {
+    limit: number
+    offset: number
+    total: number
+    entities: T[]
 }
 
 export abstract class BaseRepository<Record, Entity> {
@@ -32,8 +40,12 @@ export abstract class BaseRepository<Record, Entity> {
         return this.recordToEntity(record)
     }
 
-    async findAll(): Promise<Entity[]> {
-        const records = await this.typeorm.find()
+    async findAll(page: Pagination, order: FindOptionsOrder<Record>): Promise<PaginationResponse<Entity>> {
+        const [records, total] = await this.typeorm.findAndCount({
+            skip: page.offset,
+            take: page.limit,
+            order
+        })
 
         const cruds: Entity[] = []
 
@@ -42,7 +54,7 @@ export abstract class BaseRepository<Record, Entity> {
             cruds.push(crud)
         })
 
-        return cruds
+        return { ...page, total, entities: cruds }
     }
 
     async update(id: string, updateCrudDto: Partial<Record>): Promise<boolean> {
