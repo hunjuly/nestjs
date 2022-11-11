@@ -59,7 +59,7 @@ describe('CrudsController', () => {
         expect(spy).toHaveBeenCalled()
         expect(items.items).toMatchArray(pagedCruds.items)
         expect(items).toHaveProperty('links')
-        expect(items[0]).toHaveProperty('links')
+        expect(items.items[0]).toHaveProperty('links')
     })
 
     it('findOne', async () => {

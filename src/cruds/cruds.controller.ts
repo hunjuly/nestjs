@@ -5,10 +5,20 @@ import { Pagination } from 'src/common'
 import { CrudsService } from './cruds.service'
 import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
 
-type PaginatedList<E> = { items: E[] }
+type PaginatedList<E> = Pagination & { total: number; items: E[] }
 
-type Links = {
+type CrudLinks = {
     links: { self: string }
+}
+
+type PageLinks = {
+    links: {
+        self: string
+        next?: string
+        prev?: string
+        first: string
+        last: string
+    }
 }
 
 @UseFilters(DomainExceptionFilter)
@@ -21,18 +31,25 @@ export class CrudsController {
         return this.service.create(createDto)
     }
 
-    // 어디서 만들까? -> controller. service에서 하면 정보가 많이 넘어간다.
-    // 조건을 설정해야 할 때는 어쩌지? -> 못한다. 의미가 없다.
-    // '_links': {
-    //     self: {
-    //         href: 'http://localhost:8080/greeting?name=World'
-    //     }
-    // }
     @Get()
     async findAll(@PageQuery() page: Pagination) {
-        const pagedResult = (await this.service.findAll(page)) as PaginatedList<CrudDto> & Links
+        const pagedResult = (await this.service.findAll(page)) as PaginatedList<CrudDto> & PageLinks
 
-        pagedResult.links = { self: 'http://localhost:8080/greeting?name=World' }
+        pagedResult.items.forEach((item) => {
+            const linked = item as CrudDto & CrudLinks
+            linked.links = {
+                self: '/cruds/' + linked.id
+            }
+        })
+
+        // get/delete는 어찌어찌 할 수 있다 post는 어찌하나? url을 알아도 body는 모른다.
+        pagedResult.links = {
+            self: '/cruds?name=World',
+            first: '/cruds?name=World',
+            last: '/cruds?name=World',
+            next: '/cruds?name=World',
+            prev: '/cruds?name=World'
+        }
 
         return pagedResult
     }
