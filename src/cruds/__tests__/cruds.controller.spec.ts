@@ -56,7 +56,7 @@ describe('CrudsController', () => {
         const items = await controller.findAll(page)
 
         expect(spy).toHaveBeenCalled()
-        expect(items.items).toMatchArray(pagedCruds.items)
+        expect(items.items).toMatchObject(pagedCruds.items)
     })
 
     it('findOne', async () => {

@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing'
 import { createSpy } from 'src/common/jest'
+import { GlobalModule } from 'src/global.module'
 import { CrudsRepository } from '../cruds.repository'
 import { CrudsService } from '../cruds.service'
 import { Crud } from '../domain'
 
-jest.mock('src/services/auth/auth.service')
-jest.mock('./cruds.repository')
+jest.mock('../cruds.repository')
 
 describe('CrudsService', () => {
     let service: CrudsService
@@ -13,6 +13,7 @@ describe('CrudsService', () => {
 
     beforeEach(async () => {
         const module = await Test.createTestingModule({
+            imports: [GlobalModule],
             providers: [CrudsService, CrudsRepository]
         }).compile()
 
@@ -26,7 +27,6 @@ describe('CrudsService', () => {
 
     const crudId = 'uuid#1'
     const name = 'crud@mail.com'
-    const password = 'pass#001'
 
     const crud = { id: crudId, name } as Crud
 
@@ -40,7 +40,7 @@ describe('CrudsService', () => {
 
         const spy = createSpy(repository, 'create', [crudCandidate], crud)
 
-        const createCrudDto = { name, password }
+        const createCrudDto = { name }
 
         const recv = await service.create(createCrudDto)
 
@@ -51,8 +51,10 @@ describe('CrudsService', () => {
     it('find all cruds ', async () => {
         const page = { offset: 0, limit: 10 }
         const pagedCruds = { ...page, total: 2, items: cruds }
-
-        const spy = createSpy(repository, 'findAll', [page], pagedCruds)
+        const options = {
+            createDate: 'DESC'
+        }
+        const spy = createSpy(repository, 'findAll', [page, options], pagedCruds)
 
         const recv = await service.findAll(page)
 
@@ -61,7 +63,7 @@ describe('CrudsService', () => {
     })
 
     it('find a crud', async () => {
-        const spy = createSpy(repository, 'get', [crudId], crud)
+        const spy = createSpy(repository, 'findById', [crudId], crud)
 
         const recv = await service.findById(crudId)
 
@@ -70,7 +72,7 @@ describe('CrudsService', () => {
     })
 
     it('remove a crud', async () => {
-        createSpy(repository, 'get', [crudId], crud)
+        createSpy(repository, 'findById', [crudId], crud)
 
         const spy = createSpy(repository, 'remove', [crudId], true)
 

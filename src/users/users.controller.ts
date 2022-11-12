@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common'
 import { AdminGuard, UserGuard } from 'src/auth'
-import { DomainExceptionFilter } from 'src/common'
+import { DomainExceptionFilter } from 'src/common/service'
 import { CreateUserDto, UpdateUserDto } from './dto'
 import { UsersService } from './users.service'
 

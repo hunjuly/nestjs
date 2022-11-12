@@ -1,33 +1,30 @@
 import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { createSpy } from 'src/common/jest'
+import { createSpy, createTypeOrmMock } from 'src/common/jest'
 import { CrudsRepository } from '../cruds.repository'
 import { Crud } from '../domain'
+import { CrudRecord } from '../records/crud.record'
 
 describe('CrudsRepository', () => {
     let repository: CrudsRepository
-    let typeorm: Repository<Crud>
+    let typeorm: Repository<CrudRecord>
 
     beforeEach(async () => {
+        const repositoryToken = getRepositoryToken(CrudRecord)
+
         const module = await Test.createTestingModule({
             providers: [
                 CrudsRepository,
                 {
-                    provide: getRepositoryToken(Crud),
-                    useValue: {
-                        findOneBy: jest.fn(),
-                        findAndCount: jest.fn(),
-                        delete: jest.fn(),
-                        save: jest.fn(),
-                        update: jest.fn()
-                    }
+                    provide: repositoryToken,
+                    useValue: createTypeOrmMock()
                 }
             ]
         }).compile()
 
         repository = module.get(CrudsRepository)
-        typeorm = module.get(getRepositoryToken(Crud))
+        typeorm = module.get(repositoryToken)
     })
 
     it('should be defined', () => {
@@ -51,7 +48,8 @@ describe('CrudsRepository', () => {
 
         const recv = await repository.create(crudCandidate)
 
-        expect(recv).toEqual(crud)
+        expect(spy).toHaveBeenCalled()
+        expect(recv).toMatchObject(crud)
     })
 
     it('findAll', async () => {
@@ -60,14 +58,15 @@ describe('CrudsRepository', () => {
         const spy = createSpy(
             typeorm,
             'findAndCount',
-            [{ skip: 0, take: 10, order: { id: 'DESC' } }],
+            [{ skip: 0, take: 10, order: { createDate: 'DESC' } }],
             [cruds, 4]
         )
 
-        const recv = await repository.findAll(page)
+        const recv = await repository.findAll(page, { createDate: 'DESC' })
 
+        expect(spy).toHaveBeenCalled()
         expect(recv.total).toEqual(4)
-        expect(recv.items).toEqual(cruds)
+        expect(recv.items).toMatchObject(cruds)
     })
 
     it('get', async () => {
@@ -75,7 +74,8 @@ describe('CrudsRepository', () => {
 
         const recv = await repository.findById(crudId)
 
-        expect(recv).toEqual(crud)
+        expect(spy).toHaveBeenCalled()
+        expect(recv).toMatchObject(crud)
     })
 
     it('remove', async () => {
@@ -83,16 +83,18 @@ describe('CrudsRepository', () => {
 
         const recv = await repository.remove(crudId)
 
+        expect(spy).toHaveBeenCalled()
         expect(recv).toBeTruthy()
     })
 
     it('update', async () => {
-        const updateDto = { password: 'newpass' }
+        const updateDto = { name: 'newpass' }
 
         const spy = createSpy(typeorm, 'update', [crudId, updateDto], { affected: 1 })
 
         const recv = await repository.update(crudId, updateDto)
 
+        expect(spy).toHaveBeenCalled()
         expect(recv).toBeTruthy()
     })
 })

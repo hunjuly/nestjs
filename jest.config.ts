@@ -2,7 +2,6 @@ import type { Config } from '@jest/types'
 
 // Sync object
 const config: Config.InitialOptions = {
-    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
     moduleFileExtensions: ['js', 'json', 'ts'],
     rootDir: '.',
     roots: ['<rootDir>/src/'],
