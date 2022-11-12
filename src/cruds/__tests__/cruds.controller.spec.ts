@@ -45,7 +45,6 @@ describe('CrudsController', () => {
 
         expect(spy).toHaveBeenCalled()
         expect(recv).toMatchObject(crud)
-        expect(recv).toHaveProperty('url')
     })
 
     it('findAll', async () => {
@@ -58,18 +57,15 @@ describe('CrudsController', () => {
 
         expect(spy).toHaveBeenCalled()
         expect(items.items).toMatchArray(pagedCruds.items)
-        expect(items).toHaveProperty('links')
-        expect(items.items[0]).toHaveProperty('links')
     })
 
     it('findOne', async () => {
-        const spy = createSpy(service, 'get', [crudId], crud)
+        const spy = createSpy(service, 'findById', [crudId], crud)
 
         const recv = await controller.findById(crudId)
 
         expect(spy).toHaveBeenCalled()
         expect(recv).toMatchObject(crud)
-        expect(recv).toHaveProperty('url')
     })
 
     it('remove', async () => {

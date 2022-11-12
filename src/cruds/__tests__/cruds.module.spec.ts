@@ -100,9 +100,9 @@ describe('/cruds', () => {
 
         // verify
         expect(find.status).toEqual(HttpStatus.OK)
-        expect(cruds.length).toEqual(2)
-        expect(cruds[0].name).toEqual('crudname2')
-        expect(cruds[1].name).toEqual('crudname3')
+        expect(cruds.items.length).toEqual(2)
+        expect(cruds.items[0].name).toEqual('crudname2')
+        expect(cruds.items[1].name).toEqual('crudname3')
     })
 
     it('/:crudId (GET), find a crud', async () => {
