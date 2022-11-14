@@ -1,5 +1,5 @@
-import { CanActivate, ExecutionContext } from '@nestjs/common'
-import { Test } from '@nestjs/testing'
+import { CanActivate, ExecutionContext, INestApplication } from '@nestjs/common'
+import { Test, TestingModule } from '@nestjs/testing'
 import * as supertest from 'supertest'
 import { AdminGuard, UserGuard } from 'src/auth'
 import { GlobalModule } from 'src/global.module'
@@ -30,34 +30,47 @@ export class MockAuthGuard implements CanActivate {
     }
 }
 
-export type TestRequest = {
-    post: (path: string, body: string | object) => supertest.Test
-    put: (path: string, body: string | object) => supertest.Test
-    patch: (path: string, body: string | object) => supertest.Test
-    get: (path: string) => supertest.Test
-    delete: (path: string) => supertest.Test
-}
-
 export async function createModule(modules: any[]) {
     const builder = Test.createTestingModule({ imports: [GlobalModule, ...modules] })
     builder.overrideGuard(UserGuard).useClass(MockAuthGuard)
     builder.overrideGuard(AdminGuard).useClass(MockAuthGuard)
 
     const module = await builder.compile()
+
+    return module
+}
+export async function createApp(module: TestingModule) {
     const app = module.createNestApplication()
     await app.init()
 
+    return app
+}
+
+export function createRequest(app: INestApplication, path: string): TestRequest {
     const request = () => supertest(app.getHttpServer())
 
     return {
-        module,
-        request: {
-            post: (path: string, body: string | object) => request().post(path).send(body),
-            put: (path: string, body: string | object) => request().put(path).send(body),
-            patch: (path: string, body: string | object) => request().patch(path).send(body),
-            get: (path: string) => request().get(path),
-            delete: (path: string) => request().delete(path)
-        },
-        close: () => app.close()
+        post: (body: string | object, query?: string) =>
+            request()
+                .post(path + '/' + (query ?? ''))
+                .send(body),
+        put: (id: string, body: string | object) =>
+            request()
+                .put(path + '/' + id)
+                .send(body),
+        patch: (id: string, body: string | object) =>
+            request()
+                .patch(path + '/' + id)
+                .send(body),
+        get: (query?: string) => request().get(path + '/' + (query ?? '')),
+        delete: (query: string) => request().delete(path + '/' + query)
     }
+}
+
+export type TestRequest = {
+    post: (body: string | object, query?: string) => supertest.Test
+    put: (id: string, body: string | object) => supertest.Test
+    patch: (id: string, body: string | object) => supertest.Test
+    get: (query: string) => supertest.Test
+    delete: (query: string) => supertest.Test
 }
