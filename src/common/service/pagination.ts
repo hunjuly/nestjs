@@ -10,6 +10,15 @@ export class Page {
     static default = { limit: this.DEFAULT_PAGE_LIMIT, offset: 0 }
 }
 
+export const OrderbyPipe = createParamDecorator((data: unknown, context: ExecutionContext): Page => {
+    const request = context.switchToHttp().getRequest()
+
+    return {
+        offset: parseInt(request.query.offset, 10) || 0,
+        limit: parseInt(request.query.limit, 10) || Page.DEFAULT_PAGE_LIMIT
+    }
+})
+
 export const PagePipe = createParamDecorator(
     (data: unknown, context: ExecutionContext): Page => {
         const request = context.switchToHttp().getRequest()

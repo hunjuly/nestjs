@@ -1,6 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common'
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Query,
+    UseFilters,
+    UseGuards
+} from '@nestjs/common'
 import { AdminGuard, UserGuard } from 'src/auth'
-import { DomainExceptionFilter, Page, PagePipe } from 'src/common/service'
+import { DomainExceptionFilter, OrderbyPipe, Page, PagePipe } from 'src/common/service'
 import { CrudsService } from './cruds.service'
 import { CreateCrudDto, UpdateCrudDto } from './dto'
 
@@ -15,7 +26,10 @@ export class CrudsController {
     }
 
     @Get()
-    findAll(@PagePipe() page: Page) {
+    findAll(@PagePipe() page: Page, @OrderbyPipe() orderby: string) {
+        const res = orderby.split(':')
+        console.log(res)
+
         return this.service.findAll(page)
     }
 

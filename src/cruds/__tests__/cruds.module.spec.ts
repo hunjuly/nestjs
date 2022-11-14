@@ -146,7 +146,7 @@ describe('/cruds', () => {
 
         it('sort by name', async () => {
             // find all
-            const find = await req.get('?orderBy=name:desc')
+            const find = await req.get('?orderby=name:desc')
             const cruds = find.body
 
             // verify
