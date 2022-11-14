@@ -71,6 +71,6 @@ export type TestRequest = {
     post: (body: string | object, query?: string) => supertest.Test
     put: (id: string, body: string | object) => supertest.Test
     patch: (id: string, body: string | object) => supertest.Test
-    get: (query: string) => supertest.Test
+    get: (query?: string) => supertest.Test
     delete: (query: string) => supertest.Test
 }

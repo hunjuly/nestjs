@@ -3,7 +3,7 @@ import { TestingModule } from '@nestjs/testing'
 import { TestRequest, createApp, createModule, createRequest } from 'src/common/jest'
 import { CrudsModule } from '../cruds.module'
 import { CrudsService } from '../cruds.service'
-import { createDto, dtos, expectCrudDto } from './mocks'
+import { createDto } from './mocks'
 
 describe('/cruds', () => {
     let module: TestingModule
@@ -38,80 +38,40 @@ describe('/cruds', () => {
 
     it('create a crud, but already exists email', async () => {
         const first = await req.post(createDto)
-        expect(first.status).toEqual(HttpStatus.CREATED)
-
         const second = await req.post(createDto)
+
+        expect(first.status).toEqual(HttpStatus.CREATED)
         expect(second.status).toEqual(HttpStatus.CONFLICT)
     })
 
-    it('/ (GET), find all cruds', async () => {
-        // create cruds
-        for (const dto of dtos) {
-            await req.post(dto)
-        }
-
-        // find all
-        const find = await req.get('?limit=5&offset=1')
-        const cruds = find.body
-
-        // verify
-        expect(find.status).toEqual(HttpStatus.OK)
-        expect(cruds.items.length).toEqual(2)
-        // expect(cruds.items[0].name).toEqual('crudname2')
-        // expect(cruds.items[1].name).toEqual('crudname3')
-    })
-
-    it('/ (GET), find all cruds, sorted', async () => {
-        // create cruds
-        for (const dto of dtos) {
-            await req.post(dto)
-        }
-
-        // find all
-        const find = await req.get('?limit=5&offset=1&orderBy=name:asc')
-        const cruds = find.body
-
-        // verify
-        expect(find.status).toEqual(HttpStatus.OK)
-        expect(cruds.items.length).toEqual(2)
-        expect(cruds.items[0].name).toEqual('crudname2')
-        expect(cruds.items[1].name).toEqual('crudname3')
-    })
-
     it('/:crudId (GET), find a crud', async () => {
-        // create a crud
-        const { body } = await req.post(createDto)
+        const createRes = await req.post(createDto)
+        const findRes = await req.get(createRes.body.id)
 
-        // find the crud
-        const res = await req.get(body.id)
-
-        // verify
-        expect(res.status).toEqual(HttpStatus.OK)
-        expectCrudDto(res.body, createDto)
+        expect(findRes.status).toEqual(HttpStatus.OK)
+        expect(findRes.body).toMatchCrudDto(createDto)
     })
 
     it('find a crud, but not found', async () => {
-        const res = await req.get('/cruds/unknown-id')
+        const res = await req.get('unknown-id')
 
         expect(res.status).toEqual(HttpStatus.NOT_FOUND)
     })
 
     it('/:crudId (PATCH), udpate a crud', async () => {
         // create
-        const { body } = await req.post(createDto)
-        const crud = body
-
+        const createRes = await req.post(createDto)
+        const crudId = createRes.body.id
         const updateDto = { name: 'new name' }
 
         // update the crud
-        const updateRes = await req.patch(crud.id, updateDto)
-        expect(updateRes.status).toEqual(HttpStatus.OK)
-
-        expectCrudDto(updateRes.body, updateDto)
-
+        const updateRes = await req.patch(crudId, updateDto)
         // find the crud
-        const findRes = await req.get(crud.id)
-        expect(findRes.body).toMatchObject(updateDto)
+        const findRes = await req.get(crudId)
+
+        expect(updateRes.status).toEqual(HttpStatus.OK)
+        expect(updateRes.body).toMatchCrudDto(updateDto)
+        expect(findRes.body).toMatchCrudDto(updateDto)
     })
 
     it('udpate a crud, but not found', async () => {
@@ -152,5 +112,49 @@ describe('/cruds', () => {
         const delete_ = await req.delete('unknown-id')
 
         expect(delete_.status).toEqual(HttpStatus.NOT_FOUND)
+    })
+
+    describe('/ (GET), find all cruds', () => {
+        beforeEach(async () => {
+            await req.post({ name: 'name1' })
+            await req.post({ name: 'name2' })
+            await req.post({ name: 'name3' })
+        })
+
+        it('defaut option', async () => {
+            const res = await req.get()
+            const cruds = res.body
+
+            // verify
+            expect(res.status).toEqual(HttpStatus.OK)
+            expect(cruds.items.length).toEqual(3)
+            expect(cruds.items[0].name).toEqual('name1')
+            expect(cruds.items[1].name).toEqual('name2')
+            expect(cruds.items[2].name).toEqual('name3')
+        })
+
+        it('pagination', async () => {
+            const find = await req.get('?limit=5&offset=1')
+            const cruds = find.body
+
+            // verify
+            expect(find.status).toEqual(HttpStatus.OK)
+            expect(cruds.items.length).toEqual(2)
+            expect(cruds.items[0].name).toEqual('name2')
+            expect(cruds.items[1].name).toEqual('name3')
+        })
+
+        it('sort by name', async () => {
+            // find all
+            const find = await req.get('?orderBy=name:desc')
+            const cruds = find.body
+
+            // verify
+            expect(find.status).toEqual(HttpStatus.OK)
+            expect(cruds.items.length).toEqual(3)
+            expect(cruds.items[0].name).toEqual('name2')
+            expect(cruds.items[1].name).toEqual('name1')
+            expect(cruds.items[1].name).toEqual('name0')
+        })
     })
 })
