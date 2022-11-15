@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter'
-import { Page, PaginatedList } from 'src/common/service'
+import { Order, Page, PaginatedList } from 'src/common/service'
 import { CrudsRepository } from './cruds.repository'
 import { Crud } from './domain'
 import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
@@ -27,10 +27,22 @@ export class CrudsService {
         return this.entityToDto(crud)
     }
 
-    async findAll(page: Page): Promise<PaginatedList<CrudDto>> {
-        const { items, ...result } = await this.repository.findAll(page, {
-            createDate: 'DESC'
-        })
+    async findAll(page: Page, orderby?: Order): Promise<PaginatedList<CrudDto>> {
+        let repositoryOrder = {}
+
+        if (orderby) {
+            if (orderby.name === 'createDate') {
+                repositoryOrder = {
+                    createDate: orderby.direction
+                }
+            } else if (orderby.name === 'name') {
+                repositoryOrder = {
+                    name: orderby.direction
+                }
+            }
+        }
+
+        const { items, ...result } = await this.repository.findAll(page, repositoryOrder)
 
         const dtos: CrudDto[] = []
 

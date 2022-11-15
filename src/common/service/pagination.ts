@@ -10,15 +10,6 @@ export class Page {
     static default = { limit: this.DEFAULT_PAGE_LIMIT, offset: 0 }
 }
 
-export const OrderbyPipe = createParamDecorator((data: unknown, context: ExecutionContext): Page => {
-    const request = context.switchToHttp().getRequest()
-
-    return {
-        offset: parseInt(request.query.offset, 10) || 0,
-        limit: parseInt(request.query.limit, 10) || Page.DEFAULT_PAGE_LIMIT
-    }
-})
-
 export const PagePipe = createParamDecorator(
     (data: unknown, context: ExecutionContext): Page => {
         const request = context.switchToHttp().getRequest()
@@ -83,3 +74,22 @@ export class PaginatedList<E> extends Page {
 //         })
 //     )
 // }
+
+export class Order {
+    name: string
+    direction: 'asc' | 'desc' | 'ASC' | 'DESC'
+}
+
+export const OrderbyPipe = createParamDecorator((data: unknown, context: ExecutionContext): Order => {
+    const request = context.switchToHttp().getRequest()
+
+    if (request.query.orderby) {
+        const items = request.query.orderby.split(':')
+
+        if (items.length === 2) {
+            return { name: items[0], direction: items[1] }
+        }
+    }
+
+    return undefined
+})
