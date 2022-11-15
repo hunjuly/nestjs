@@ -1,6 +1,6 @@
 import { BadRequestException, HttpException, Injectable, NotFoundException } from '@nestjs/common'
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter'
-import { Order, Page, PaginatedList } from 'src/common/service'
+import { OrderOption, PageOption, PaginatedList } from 'src/common/service'
 import { CrudsRepository } from './cruds.repository'
 import { Crud } from './domain'
 import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
@@ -28,7 +28,7 @@ export class CrudsService {
         return this.entityToDto(crud)
     }
 
-    async findAll(page: Page, orderby?: Order): Promise<PaginatedList<CrudDto>> {
+    async findAll(page: PageOption, orderby?: OrderOption): Promise<PaginatedList<CrudDto>> {
         let repositoryOrder = {}
 
         if (orderby) {

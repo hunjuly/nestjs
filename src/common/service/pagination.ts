@@ -2,7 +2,7 @@ import { ExecutionContext, createParamDecorator } from '@nestjs/common'
 
 // import { Type, applyDecorators } from '@nestjs/common'
 
-export class Page {
+export class PageOption {
     limit: number
     offset: number
 
@@ -11,12 +11,12 @@ export class Page {
 }
 
 export const PageQuery = createParamDecorator(
-    (data: unknown, context: ExecutionContext): Page => {
+    (data: unknown, context: ExecutionContext): PageOption => {
         const request = context.switchToHttp().getRequest()
 
         return {
             offset: parseInt(request.query.offset, 10) || 0,
-            limit: parseInt(request.query.limit, 10) || Page.DEFAULT_PAGE_LIMIT
+            limit: parseInt(request.query.limit, 10) || PageOption.DEFAULT_PAGE_LIMIT
         }
     }
     // [
@@ -35,7 +35,7 @@ export const PageQuery = createParamDecorator(
     // ]
 )
 
-export class PaginatedList<E> extends Page {
+export class PaginatedList<E> extends PageOption {
     total: number
     items: E[]
 }
@@ -75,12 +75,12 @@ export class PaginatedList<E> extends Page {
 //     )
 // }
 
-export class Order {
+export class OrderOption {
     name: string
     direction: 'asc' | 'desc' | 'ASC' | 'DESC'
 }
 
-export const OrderQuery = createParamDecorator((data: unknown, context: ExecutionContext): Order => {
+export const OrderQuery = createParamDecorator((data: unknown, context: ExecutionContext): OrderOption => {
     const request = context.switchToHttp().getRequest()
 
     if (request.query.orderby) {
