@@ -10,7 +10,7 @@ export class Page {
     static default = { limit: this.DEFAULT_PAGE_LIMIT, offset: 0 }
 }
 
-export const PagePipe = createParamDecorator(
+export const PageQuery = createParamDecorator(
     (data: unknown, context: ExecutionContext): Page => {
         const request = context.switchToHttp().getRequest()
 
@@ -80,7 +80,7 @@ export class Order {
     direction: 'asc' | 'desc' | 'ASC' | 'DESC'
 }
 
-export const OrderbyPipe = createParamDecorator((data: unknown, context: ExecutionContext): Order => {
+export const OrderQuery = createParamDecorator((data: unknown, context: ExecutionContext): Order => {
     const request = context.switchToHttp().getRequest()
 
     if (request.query.orderby) {

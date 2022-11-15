@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, HttpException, Injectable, NotFoundException } from '@nestjs/common'
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter'
 import { Order, Page, PaginatedList } from 'src/common/service'
 import { CrudsRepository } from './cruds.repository'
 import { Crud } from './domain'
 import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
+import { CrudRecord } from './records/crud.record'
 
 @Injectable()
 export class CrudsService {
@@ -31,14 +32,10 @@ export class CrudsService {
         let repositoryOrder = {}
 
         if (orderby) {
-            if (orderby.name === 'createDate') {
-                repositoryOrder = {
-                    createDate: orderby.direction
-                }
-            } else if (orderby.name === 'name') {
-                repositoryOrder = {
-                    name: orderby.direction
-                }
+            if (orderby.name in CrudRecord) {
+                repositoryOrder = { [orderby.name]: orderby.direction }
+            } else {
+                throw new BadRequestException('unknown field name, ' + orderby.name)
             }
         }
 

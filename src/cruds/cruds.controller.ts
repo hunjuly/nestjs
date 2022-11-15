@@ -11,7 +11,7 @@ import {
     UseGuards
 } from '@nestjs/common'
 import { AdminGuard, UserGuard } from 'src/auth'
-import { DomainExceptionFilter, Order, OrderbyPipe, Page, PagePipe } from 'src/common/service'
+import { DomainExceptionFilter, Order, OrderQuery, Page, PageQuery } from 'src/common/service'
 import { CrudsService } from './cruds.service'
 import { CreateCrudDto, UpdateCrudDto } from './dto'
 
@@ -26,7 +26,7 @@ export class CrudsController {
     }
 
     @Get()
-    findAll(@PagePipe() page: Page, @OrderbyPipe() orderby?: Order) {
+    findAll(@PageQuery() page: Page, @OrderQuery() orderby?: Order) {
         return this.service.findAll(page, orderby)
     }
 
