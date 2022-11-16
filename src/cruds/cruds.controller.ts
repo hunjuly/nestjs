@@ -1,15 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Patch,
-    Post,
-    Query,
-    UseFilters,
-    UseGuards
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common'
 import { AdminGuard, UserGuard } from 'src/auth'
 import { DomainExceptionFilter, OrderOption, OrderQuery, PageOption, PageQuery } from 'src/common/service'
 import { CrudsService } from './cruds.service'
@@ -26,8 +15,8 @@ export class CrudsController {
     }
 
     @Get()
-    findAll(@PageQuery() page: PageOption, @OrderQuery() orderby?: OrderOption) {
-        return this.service.findAll(page, orderby)
+    findAll(@PageQuery() page: PageOption, @OrderQuery() order?: OrderOption) {
+        return this.service.findAll(page, order)
     }
 
     @UseGuards(UserGuard)
