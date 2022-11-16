@@ -87,13 +87,15 @@ describe('/cruds', () => {
         })
 
         it('already exists resource', async () => {
-            // create A & B
-            await req.post({ name: 'nameA' })
+            // create A
+            await req.post({ name: 'first' })
 
-            const createRes = await req.post({ name: 'nameB' })
-            const crudId = createRes.body.id
+            // create B
+            const secondRes = await req.post({ name: 'second' })
+            const secondId = secondRes.body.id
 
-            const updateRes = await req.patch(crudId, { name: 'nameA' })
+            // update second to first
+            const updateRes = await req.patch(secondId, { name: 'first' })
 
             expect(updateRes.status).toEqual(HttpStatus.CONFLICT)
         })
