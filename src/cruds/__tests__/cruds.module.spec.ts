@@ -37,7 +37,7 @@ describe('/cruds', () => {
             expect(res.body).toMatchCrudDto(createDto)
         })
 
-        it('already exists email', async () => {
+        it('already exists resource', async () => {
             const first = await req.post(createDto)
             const second = await req.post(createDto)
 
@@ -86,7 +86,7 @@ describe('/cruds', () => {
             expect(updateRes.status).toEqual(HttpStatus.NOT_FOUND)
         })
 
-        it('udpate a crud, but already exists', async () => {
+        it('already exists resource', async () => {
             // create A & B
             await req.post({ name: 'nameA' })
 
