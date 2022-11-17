@@ -13,7 +13,7 @@ describe('/cruds', () => {
     let service: CrudsService
 
     beforeEach(async () => {
-        module = await createModule([CrudsModule])
+        module = await createModule([CrudsModule], [])
         app = await createApp(module)
         req = createRequest(app, '/cruds')
 

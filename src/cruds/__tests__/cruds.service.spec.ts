@@ -1,9 +1,8 @@
-import { Test } from '@nestjs/testing'
-import { createSpy } from 'src/common/jest'
-import { GlobalModule } from 'src/global.module'
+import { createModule, createSpy } from 'src/common/jest'
 import { CrudsRepository } from '../cruds.repository'
 import { CrudsService } from '../cruds.service'
 import { Crud } from '../domain'
+import { crud, crudId, cruds, name } from './mocks'
 
 jest.mock('../cruds.repository')
 
@@ -12,10 +11,7 @@ describe('CrudsService', () => {
     let repository: CrudsRepository
 
     beforeEach(async () => {
-        const module = await Test.createTestingModule({
-            imports: [GlobalModule],
-            providers: [CrudsService, CrudsRepository]
-        }).compile()
+        const module = await createModule([], [CrudsService, CrudsRepository])
 
         service = module.get(CrudsService)
         repository = module.get(CrudsRepository)
@@ -24,16 +20,6 @@ describe('CrudsService', () => {
     it('should be defined', () => {
         expect(service).toBeDefined()
     })
-
-    const crudId = 'uuid#1'
-    const name = 'crud@mail.com'
-
-    const crud = { id: crudId, name } as Crud
-
-    const cruds = [
-        { id: 'uuid#1', name: 'crud1@test.com' },
-        { id: 'uuid#2', name: 'crud2@test.com' }
-    ] as Crud[]
 
     it('create a crud', async () => {
         const crudCandidate = { id: undefined, name } as Crud
@@ -55,6 +41,7 @@ describe('CrudsService', () => {
             createDatea: 'DESC'
         }
         const spy = createSpy(repository, 'findAll', [page, options], pagedCruds)
+        createSpy(repository, 'hasColumn', ['createDate'], true)
 
         const recv = await service.findAll(page, {
             name: 'createDate',
