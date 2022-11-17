@@ -160,5 +160,11 @@ describe('/cruds', () => {
             expect(cruds[1].name).toEqual('name2')
             expect(cruds[2].name).toEqual('name1')
         })
+
+        it('wrong order name', async () => {
+            const res = await req.get('?orderby=wrong:desc')
+
+            expect(res.status).toEqual(HttpStatus.BAD_REQUEST)
+        })
     })
 })

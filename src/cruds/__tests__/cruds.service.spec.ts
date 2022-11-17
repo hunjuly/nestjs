@@ -52,14 +52,17 @@ describe('CrudsService', () => {
         const page = { offset: 0, limit: 10 }
         const pagedCruds = { ...page, total: 2, items: cruds }
         const options = {
-            createDate: 'DESC'
+            createDatea: 'DESC'
         }
         const spy = createSpy(repository, 'findAll', [page, options], pagedCruds)
 
-        const recv = await service.findAll(page)
+        const recv = await service.findAll(page, {
+            name: 'createDate',
+            direction: 'DESC'
+        })
 
         expect(spy).toHaveBeenCalled()
-        expect(recv.items).toMatchArray(pagedCruds.items)
+        expect(recv.items).toMatchObject(pagedCruds.items)
     })
 
     it('find a crud', async () => {

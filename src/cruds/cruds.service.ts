@@ -1,10 +1,15 @@
-import { BadRequestException, HttpException, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter'
-import { OrderOption, PageOption, PaginatedList } from 'src/common/service'
+import { FindOptionsOrderProperty } from 'typeorm'
+import { BaseRecord, OrderOption, PageOption, PaginatedList } from 'src/common/service'
 import { CrudsRepository } from './cruds.repository'
 import { Crud } from './domain'
 import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
 import { CrudRecord } from './records/crud.record'
+
+// export declare type FindOptionsOrder<Entity> = {
+//     [P in keyof Entity]?: P extends 'toString' ? unknown : 'ASC' | 'DESC' | 'asc' | 'desc'
+// }
 
 @Injectable()
 export class CrudsService {
@@ -28,14 +33,14 @@ export class CrudsService {
         return this.entityToDto(crud)
     }
 
-    async findAll(page: PageOption, orderby?: OrderOption): Promise<PaginatedList<CrudDto>> {
+    async findAll(page: PageOption, order?: OrderOption): Promise<PaginatedList<CrudDto>> {
         let repositoryOrder = {}
 
-        if (orderby) {
-            if (orderby.name in CrudRecord) {
-                repositoryOrder = { [orderby.name]: orderby.direction }
+        if (order) {
+            if (this.repository.hasColumn(order.name)) {
+                repositoryOrder = { [order.name]: order.direction }
             } else {
-                throw new BadRequestException('unknown field name, ' + orderby.name)
+                throw new BadRequestException('unknown field name, ' + order.name)
             }
         }
 

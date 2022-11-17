@@ -7,6 +7,14 @@ export abstract class BaseRepository<Record, Entity> {
 
     protected abstract recordToEntity(record: Record): Entity | null
 
+    hasColumn(columnName: string) {
+        for (const column of this.typeorm.metadata.columns) {
+            if (column.databaseName === columnName) return true
+        }
+
+        return false
+    }
+
     async findById(id: string): Promise<Entity | null> {
         const record = await this.typeorm.findOneBy({ id })
 
