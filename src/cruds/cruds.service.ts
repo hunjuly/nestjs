@@ -1,15 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter'
-import { FindOptionsOrderProperty } from 'typeorm'
-import { BaseRecord, OrderOption, PageOption, PaginatedList } from 'src/common/service'
+import { OrderOption, PageOption, PaginatedList } from 'src/common/service'
 import { CrudsRepository } from './cruds.repository'
 import { Crud } from './domain'
 import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
-import { CrudRecord } from './records/crud.record'
-
-// export declare type FindOptionsOrder<Entity> = {
-//     [P in keyof Entity]?: P extends 'toString' ? unknown : 'ASC' | 'DESC' | 'asc' | 'desc'
-// }
 
 @Injectable()
 export class CrudsService {
