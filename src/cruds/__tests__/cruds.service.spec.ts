@@ -1,18 +1,7 @@
 import { createModule, createSpy } from 'src/common/jest'
 import { CrudsRepository } from '../cruds.repository'
 import { CrudsService } from '../cruds.service'
-import { Crud } from '../domain'
-import {
-    createDto,
-    crud,
-    crudId,
-    orderOption,
-    pageOption,
-    pagedResult,
-    removeResult,
-    updateDto,
-    updatedCrud
-} from './mocks'
+import { createDto, crud, crudId, orderOption, pageOption, pagedResult } from './mocks'
 
 jest.mock('../cruds.repository')
 

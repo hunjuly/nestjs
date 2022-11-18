@@ -1,10 +1,10 @@
-import { Test } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { createSpy, createTypeOrmMock } from 'src/common/jest'
+import { createModule, createSpy, createTypeOrmMock } from 'src/common/jest'
 import { CrudsRepository } from '../cruds.repository'
 import { Crud } from '../domain'
 import { CrudRecord } from '../records/crud.record'
+import { createDto, crud, crudId, cruds } from './mocks'
 
 describe('CrudsRepository', () => {
     let repository: CrudsRepository
@@ -13,7 +13,7 @@ describe('CrudsRepository', () => {
     beforeEach(async () => {
         const repositoryToken = getRepositoryToken(CrudRecord)
 
-        const module = await Test.createTestingModule({
+        const module = await createModule({
             providers: [
                 CrudsRepository,
                 {
@@ -21,7 +21,7 @@ describe('CrudsRepository', () => {
                     useValue: createTypeOrmMock()
                 }
             ]
-        }).compile()
+        })
 
         repository = module.get(CrudsRepository)
         typeorm = module.get(repositoryToken)
@@ -31,22 +31,10 @@ describe('CrudsRepository', () => {
         expect(repository).toBeDefined()
     })
 
-    const crudId = 'uuid#1'
-    const name = 'crud@mail.com'
-
-    const crud = { id: crudId, name } as Crud
-
-    const cruds = [
-        { id: 'uuid#1', name: 'crud1@test.com' },
-        { id: 'uuid#2', name: 'crud2@test.com' }
-    ] as Crud[]
-
     it('create', async () => {
-        const crudCandidate = { id: undefined, name } as Crud
+        const spy = createSpy(typeorm, 'save', [createDto], crud)
 
-        const spy = createSpy(typeorm, 'save', [crudCandidate], crud)
-
-        const recv = await repository.create(crudCandidate)
+        const recv = await repository.create(createDto)
 
         expect(spy).toHaveBeenCalled()
         expect(recv).toMatchObject(crud)
