@@ -20,6 +20,8 @@ export const cruds = [
     { id: 'uuid#2', name: 'crud2@test.com' }
 ] as Crud[]
 
+export const updatedCrud = { ...crud, name: 'new name' }
+
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace jest {

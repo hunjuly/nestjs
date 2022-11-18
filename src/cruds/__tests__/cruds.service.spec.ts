@@ -11,7 +11,9 @@ describe('CrudsService', () => {
     let repository: CrudsRepository
 
     beforeEach(async () => {
-        const module = await createModule([], [CrudsService, CrudsRepository])
+        const module = await createModule({
+            providers: [CrudsService, CrudsRepository]
+        })
 
         service = module.get(CrudsService)
         repository = module.get(CrudsRepository)
@@ -37,15 +39,13 @@ describe('CrudsService', () => {
     it('find all cruds ', async () => {
         const page = { offset: 0, limit: 10 }
         const pagedCruds = { ...page, total: 2, items: cruds }
-        const options = {
-            createDatea: 'DESC'
-        }
+        const options = { createDate: 'desc' }
         const spy = createSpy(repository, 'findAll', [page, options], pagedCruds)
         createSpy(repository, 'hasColumn', ['createDate'], true)
 
         const recv = await service.findAll(page, {
             name: 'createDate',
-            direction: 'DESC'
+            direction: 'desc'
         })
 
         expect(spy).toHaveBeenCalled()

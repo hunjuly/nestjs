@@ -1,9 +1,8 @@
-import { Test } from '@nestjs/testing'
 import 'jest'
-import { createSpy } from 'src/common/jest'
+import { createModule, createSpy } from 'src/common/jest'
 import { CrudsController } from '../cruds.controller'
 import { CrudsService } from '../cruds.service'
-import { Crud } from '../domain'
+import { crud, crudId, cruds, name, updateDto, updatedCrud } from './mocks'
 
 jest.mock('../cruds.service')
 
@@ -12,10 +11,10 @@ describe('CrudsController', () => {
     let service: CrudsService
 
     beforeEach(async () => {
-        const module = await Test.createTestingModule({
+        const module = await createModule({
             controllers: [CrudsController],
             providers: [CrudsService]
-        }).compile()
+        })
 
         controller = module.get(CrudsController)
         service = module.get(CrudsService)
@@ -25,19 +24,8 @@ describe('CrudsController', () => {
         expect(controller).toBeDefined()
     })
 
-    const crudId = 'uuid#1'
-    const name = 'crud@mail.com'
-    const password = 'pass#001'
-
-    const crud = { id: crudId, name } as Crud
-
-    const cruds = [
-        { id: 'uuid#1', name: 'crud1@test.com' },
-        { id: 'uuid#2', name: 'crud2@test.com' }
-    ] as Crud[]
-
     it('create', async () => {
-        const createDto = { name, password }
+        const createDto = { name }
 
         const spy = createSpy(service, 'create', [createDto], crud)
 
@@ -80,9 +68,6 @@ describe('CrudsController', () => {
     })
 
     it('update', async () => {
-        const updateDto = { name: 'old name' }
-        const updatedCrud = { ...crud, name: 'new name' }
-
         const spy = createSpy(service, 'update', [crudId, updateDto], updatedCrud)
 
         const recv = await controller.update(crudId, updateDto)
