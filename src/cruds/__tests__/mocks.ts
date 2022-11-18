@@ -3,9 +3,13 @@ import { CreateCrudDto } from '../dto/create-crud.dto'
 import { CrudDto } from '../dto/crud.dto'
 import { UpdateCrudDto } from '../dto/update-crud.dto'
 
-export const createDto = {
-    name: 'crud name'
-}
+export const createDto = { name: 'crud name' }
+export const updateDto = { name: 'new name' }
+
+export const firstDto = { name: 'first' }
+export const secondDto = { name: 'second' }
+
+export const dtos = [{ name: 'name1' }, { name: 'name2' }, { name: 'name3' }]
 
 export const crudId = 'uuid#1'
 export const name = 'crud@mail.com'

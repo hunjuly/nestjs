@@ -3,7 +3,7 @@ import { TestingModule } from '@nestjs/testing'
 import { TestRequest, createApp, createModule, createRequest } from 'src/common/jest'
 import { CrudsModule } from '../cruds.module'
 import { CrudsService } from '../cruds.service'
-import { createDto } from './mocks'
+import { createDto, dtos, firstDto, secondDto, updateDto } from './mocks'
 
 describe('/cruds', () => {
     let module: TestingModule
@@ -68,11 +68,10 @@ describe('/cruds', () => {
             const createRes = await req.post(createDto)
             const crudId = createRes.body.id
 
-            // update the crud
-            const updateDto = { name: 'new name' }
+            // update
             const updateRes = await req.patch(crudId, updateDto)
 
-            // find the crud
+            // find the updated crud.
             const findRes = await req.get(crudId)
 
             expect(updateRes.status).toEqual(HttpStatus.OK)
@@ -88,14 +87,16 @@ describe('/cruds', () => {
 
         it('already exists resource', async () => {
             // create A
-            await req.post({ name: 'first' })
+            await req.post(firstDto)
 
             // create B
-            const secondRes = await req.post({ name: 'second' })
+            const secondRes = await req.post(secondDto)
             const secondId = secondRes.body.id
 
             // update second to first
-            const updateRes = await req.patch(secondId, { name: 'first' })
+            const updateRes = await req.patch(secondId, {
+                name: firstDto.name
+            })
 
             expect(updateRes.status).toEqual(HttpStatus.CONFLICT)
         })
@@ -122,9 +123,9 @@ describe('/cruds', () => {
 
     describe('/ (GET)', () => {
         beforeEach(async () => {
-            await req.post({ name: 'name1' })
-            await req.post({ name: 'name2' })
-            await req.post({ name: 'name3' })
+            await req.post(dtos[0])
+            await req.post(dtos[1])
+            await req.post(dtos[2])
         })
 
         it('find all cruds', async () => {
@@ -133,9 +134,9 @@ describe('/cruds', () => {
 
             expect(res.status).toEqual(HttpStatus.OK)
             expect(cruds.length).toEqual(3)
-            expect(cruds[0].name).toEqual('name1')
-            expect(cruds[1].name).toEqual('name2')
-            expect(cruds[2].name).toEqual('name3')
+            expect(cruds[0].name).toEqual(dtos[0].name)
+            expect(cruds[1].name).toEqual(dtos[1].name)
+            expect(cruds[2].name).toEqual(dtos[2].name)
         })
 
         it('pagination', async () => {
@@ -146,8 +147,8 @@ describe('/cruds', () => {
             expect(res.body.offset).toEqual(1)
             expect(res.body.total).toEqual(3)
             expect(cruds.length).toEqual(2)
-            expect(cruds[0].name).toEqual('name2')
-            expect(cruds[1].name).toEqual('name3')
+            expect(cruds[0].name).toEqual(dtos[1].name)
+            expect(cruds[1].name).toEqual(dtos[2].name)
         })
 
         it('order by name:desc', async () => {
@@ -156,9 +157,9 @@ describe('/cruds', () => {
 
             expect(res.status).toEqual(HttpStatus.OK)
             expect(cruds.length).toEqual(3)
-            expect(cruds[0].name).toEqual('name3')
-            expect(cruds[1].name).toEqual('name2')
-            expect(cruds[2].name).toEqual('name1')
+            expect(cruds[0].name).toEqual(dtos[2].name)
+            expect(cruds[1].name).toEqual(dtos[1].name)
+            expect(cruds[2].name).toEqual(dtos[0].name)
         })
 
         it('wrong order name', async () => {
