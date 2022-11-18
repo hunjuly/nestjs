@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter'
-import { OrderOption, PageOption, PaginatedList } from 'src/common/service'
+import { OrderOption, PageOption, PaginatedResult } from 'src/common/service'
 import { CrudsRepository } from './cruds.repository'
 import { Crud } from './domain'
 import { CreateCrudDto, CrudDto, UpdateCrudDto } from './dto'
@@ -27,18 +27,12 @@ export class CrudsService {
         return this.entityToDto(crud)
     }
 
-    async findAll(page: PageOption, order?: OrderOption): Promise<PaginatedList<CrudDto>> {
-        let repositoryOrder = {}
-
-        if (order) {
-            if (this.repository.hasColumn(order.name)) {
-                repositoryOrder = { [order.name]: order.direction }
-            } else {
-                throw new BadRequestException('unknown field name, ' + order.name)
-            }
+    async findAll(page: PageOption, order?: OrderOption): Promise<PaginatedResult<CrudDto>> {
+        if (order && !this.repository.hasColumn(order.name)) {
+            throw new BadRequestException('unknown field name, ' + order.name)
         }
 
-        const { items, ...result } = await this.repository.findAll(page, repositoryOrder)
+        const { items, ...result } = await this.repository.findAll(page, order)
 
         const dtos: CrudDto[] = []
 

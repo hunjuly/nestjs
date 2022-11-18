@@ -24,7 +24,7 @@ export function createTypeOrmMock() {
     }
 }
 
-export class MockAuthGuard implements CanActivate {
+class MockAuthGuard implements CanActivate {
     canActivate(_context: ExecutionContext) {
         return true
     }

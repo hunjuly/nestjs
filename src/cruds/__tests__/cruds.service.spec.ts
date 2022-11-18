@@ -2,7 +2,17 @@ import { createModule, createSpy } from 'src/common/jest'
 import { CrudsRepository } from '../cruds.repository'
 import { CrudsService } from '../cruds.service'
 import { Crud } from '../domain'
-import { crud, crudId, cruds, name } from './mocks'
+import {
+    createDto,
+    crud,
+    crudId,
+    orderOption,
+    pageOption,
+    pagedResult,
+    removeResult,
+    updateDto,
+    updatedCrud
+} from './mocks'
 
 jest.mock('../cruds.repository')
 
@@ -24,35 +34,25 @@ describe('CrudsService', () => {
     })
 
     it('create a crud', async () => {
-        const crudCandidate = { id: undefined, name } as Crud
+        const spy = createSpy(repository, 'create', [createDto], crud)
 
-        const spy = createSpy(repository, 'create', [crudCandidate], crud)
-
-        const createCrudDto = { name }
-
-        const recv = await service.create(createCrudDto)
+        const recv = await service.create(createDto)
 
         expect(spy).toHaveBeenCalled()
         expect(recv).toMatchObject(crud)
     })
 
     it('find all cruds ', async () => {
-        const page = { offset: 0, limit: 10 }
-        const pagedCruds = { ...page, total: 2, items: cruds }
-        const options = { createDate: 'desc' }
-        const spy = createSpy(repository, 'findAll', [page, options], pagedCruds)
-        createSpy(repository, 'hasColumn', ['createDate'], true)
+        createSpy(repository, 'hasColumn', undefined, true)
+        const spy = createSpy(repository, 'findAll', [pageOption, orderOption], pagedResult)
 
-        const recv = await service.findAll(page, {
-            name: 'createDate',
-            direction: 'desc'
-        })
+        const recv = await service.findAll(pageOption, orderOption)
 
         expect(spy).toHaveBeenCalled()
-        expect(recv.items).toMatchObject(pagedCruds.items)
+        expect(recv.items).toMatchObject(pagedResult.items)
     })
 
-    it('find a crud', async () => {
+    it('findById', async () => {
         const spy = createSpy(repository, 'findById', [crudId], crud)
 
         const recv = await service.findById(crudId)
@@ -61,7 +61,7 @@ describe('CrudsService', () => {
         expect(recv).toMatchObject(crud)
     })
 
-    it('remove a crud', async () => {
+    it('remove', async () => {
         createSpy(repository, 'findById', [crudId], crud)
 
         const spy = createSpy(repository, 'remove', [crudId], true)

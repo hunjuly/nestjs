@@ -2,7 +2,16 @@ import 'jest'
 import { createModule, createSpy } from 'src/common/jest'
 import { CrudsController } from '../cruds.controller'
 import { CrudsService } from '../cruds.service'
-import { crud, crudId, cruds, name, updateDto, updatedCrud } from './mocks'
+import {
+    createDto,
+    crud,
+    crudId,
+    pageOption,
+    pagedResult,
+    removeResult,
+    updateDto,
+    updatedCrud
+} from './mocks'
 
 jest.mock('../cruds.service')
 
@@ -25,8 +34,6 @@ describe('CrudsController', () => {
     })
 
     it('create', async () => {
-        const createDto = { name }
-
         const spy = createSpy(service, 'create', [createDto], crud)
 
         const recv = await controller.create(createDto)
@@ -36,18 +43,15 @@ describe('CrudsController', () => {
     })
 
     it('findAll', async () => {
-        const page = { offset: 0, limit: 10 }
-        const pagedCruds = { ...page, total: 2, items: cruds }
+        const spy = createSpy(service, 'findAll', [pageOption], pagedResult)
 
-        const spy = createSpy(service, 'findAll', [page], pagedCruds)
-
-        const items = await controller.findAll(page)
+        const result = await controller.findAll(pageOption)
 
         expect(spy).toHaveBeenCalled()
-        expect(items.items).toMatchObject(pagedCruds.items)
+        expect(result.items).toMatchObject(pagedResult.items)
     })
 
-    it('findOne', async () => {
+    it('findById', async () => {
         const spy = createSpy(service, 'findById', [crudId], crud)
 
         const recv = await controller.findById(crudId)
@@ -57,8 +61,6 @@ describe('CrudsController', () => {
     })
 
     it('remove', async () => {
-        const removeResult = { id: crudId }
-
         const spy = createSpy(service, 'remove', [crudId], removeResult)
 
         const recv = await controller.remove(crudId)

@@ -35,7 +35,7 @@ export const PageQuery = createParamDecorator(
     // ]
 )
 
-export class PaginatedList<E> extends PageOption {
+export class PaginatedResult<E> extends PageOption {
     total: number
     items: E[]
 }

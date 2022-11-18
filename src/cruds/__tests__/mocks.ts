@@ -1,3 +1,4 @@
+import { OrderOption } from 'src/common/service'
 import { Crud } from '../domain'
 import { CreateCrudDto } from '../dto/create-crud.dto'
 import { CrudDto } from '../dto/crud.dto'
@@ -20,7 +21,11 @@ export const cruds = [
     { id: 'uuid#2', name: 'crud2@test.com' }
 ] as Crud[]
 
+export const pageOption = { offset: 0, limit: 10 }
+export const pagedResult = { ...pageOption, total: 2, items: cruds }
+export const orderOption = { name: 'createDate', direction: 'desc' } as OrderOption
 export const updatedCrud = { ...crud, name: 'new name' }
+export const removeResult = { id: crudId }
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
