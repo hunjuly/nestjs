@@ -1,6 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common'
+import {
+    DomainExceptionFilter,
+    OrderOption,
+    OrderQuery,
+    PageOption,
+    PageQuery
+} from 'src//common/application'
 import { AdminGuard, UserGuard } from 'src/auth'
-import { DomainExceptionFilter } from 'src/common/service'
 import { CreateUserDto, UpdateUserDto } from './dto'
 import { UsersService } from './users.service'
 
@@ -16,8 +22,8 @@ export class UsersController {
 
     @UseGuards(AdminGuard)
     @Get()
-    findAll() {
-        return this.service.findAll()
+    findAll(@PageQuery() page: PageOption, @OrderQuery() order?: OrderOption) {
+        return this.service.findAll(page, order)
     }
 
     @UseGuards(UserGuard)

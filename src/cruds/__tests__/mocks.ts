@@ -1,16 +1,16 @@
-import { OrderOption } from 'src/common/service'
+import { OrderOption } from 'src//common/application'
 import { Crud } from '../domain'
 import { CreateCrudDto } from '../dto/create-crud.dto'
 import { CrudDto } from '../dto/crud.dto'
 import { UpdateCrudDto } from '../dto/update-crud.dto'
 
-export const createDto = { name: 'crud name' }
-export const updateDto = { name: 'new name' }
+export const createDto = { name: 'crud name' } as CreateCrudDto
+export const updateDto = { name: 'new name' } as UpdateCrudDto
 
-export const firstDto = { name: 'first' }
-export const secondDto = { name: 'second' }
+export const firstDto = { name: 'first' } as CreateCrudDto
+export const secondDto = { name: 'second' } as CreateCrudDto
 
-export const dtos = [{ name: 'name1' }, { name: 'name2' }, { name: 'name3' }]
+export const createDtos = [{ name: 'name1' }, { name: 'name2' }, { name: 'name3' }] as CreateCrudDto[]
 
 export const crudId = 'uuid#1'
 export const name = 'crud@mail.com'
@@ -39,24 +39,24 @@ declare global {
 
 expect.extend({
     toMatchCrudDto(crud: CrudDto, dto: CreateCrudDto | UpdateCrudDto) {
-        const expected = {
+        const actually = {
             id: crud.id,
             name: crud.name
         }
 
-        const received = expect.objectContaining({
+        const expected = expect.objectContaining({
             id: expect.any(String),
             name: dto.name
         })
 
-        const pass = this.equals(received, expected)
+        const pass = this.equals(expected, actually)
 
         return {
             pass,
             message: () =>
                 `expected ${this.utils.printReceived(
-                    expected
-                )} not to contain object ${this.utils.printExpected(received)}`
+                    actually
+                )} not to contain object ${this.utils.printExpected(expected)}`
         }
     }
 })

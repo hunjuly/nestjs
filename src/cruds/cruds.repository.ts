@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { BaseRepository } from 'src/common/service'
+import { BaseRepository } from 'src//common/application'
 import { Crud, ICrudsRepository } from './domain'
 import { CrudRecord } from './records/crud.record'
 

@@ -3,7 +3,7 @@ import { TestingModule } from '@nestjs/testing'
 import { TestRequest, createApp, createModule, createRequest } from 'src/common/jest'
 import { CrudsModule } from '../cruds.module'
 import { CrudsService } from '../cruds.service'
-import { createDto, dtos, firstDto, secondDto, updateDto } from './mocks'
+import { createDto, createDtos, firstDto, secondDto, updateDto } from './mocks'
 
 /*
 만약 controller,service를 각각 다른 프로그래머가 개발한다면 각각의 격리된 레이어를 대상으로 테스트 해야 한다.
@@ -127,9 +127,9 @@ describe('/cruds', () => {
 
     describe('/ (GET)', () => {
         beforeEach(async () => {
-            await req.post(dtos[0])
-            await req.post(dtos[1])
-            await req.post(dtos[2])
+            await req.post(createDtos[0])
+            await req.post(createDtos[1])
+            await req.post(createDtos[2])
         })
 
         it('find all cruds', async () => {
@@ -138,9 +138,9 @@ describe('/cruds', () => {
 
             expect(res.status).toEqual(HttpStatus.OK)
             expect(cruds.length).toEqual(3)
-            expect(cruds[0].name).toEqual(dtos[0].name)
-            expect(cruds[1].name).toEqual(dtos[1].name)
-            expect(cruds[2].name).toEqual(dtos[2].name)
+            expect(cruds[0].name).toEqual(createDtos[0].name)
+            expect(cruds[1].name).toEqual(createDtos[1].name)
+            expect(cruds[2].name).toEqual(createDtos[2].name)
         })
 
         it('pagination', async () => {
@@ -151,8 +151,8 @@ describe('/cruds', () => {
             expect(res.body.offset).toEqual(1)
             expect(res.body.total).toEqual(3)
             expect(cruds.length).toEqual(2)
-            expect(cruds[0].name).toEqual(dtos[1].name)
-            expect(cruds[1].name).toEqual(dtos[2].name)
+            expect(cruds[0].name).toEqual(createDtos[1].name)
+            expect(cruds[1].name).toEqual(createDtos[2].name)
         })
 
         it('order by name:desc', async () => {
@@ -161,12 +161,12 @@ describe('/cruds', () => {
 
             expect(res.status).toEqual(HttpStatus.OK)
             expect(cruds.length).toEqual(3)
-            expect(cruds[0].name).toEqual(dtos[2].name)
-            expect(cruds[1].name).toEqual(dtos[1].name)
-            expect(cruds[2].name).toEqual(dtos[0].name)
+            expect(cruds[0].name).toEqual(createDtos[2].name)
+            expect(cruds[1].name).toEqual(createDtos[1].name)
+            expect(cruds[2].name).toEqual(createDtos[0].name)
         })
 
-        it('wrong order name', async () => {
+        it('order by wrong column name', async () => {
             const res = await req.get('?orderby=wrong:desc')
 
             expect(res.status).toEqual(HttpStatus.BAD_REQUEST)

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { BaseRepository } from 'src/common'
+import { BaseRepository } from 'src//common/application'
 import { IUsersRepository, User } from './domain'
 import { UserRecord } from './records/user.record'
 

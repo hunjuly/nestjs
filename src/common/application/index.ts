@@ -1,3 +1,4 @@
+export * from './base.service'
 export * from './base.repository'
 export * from './base.record'
 export * from './domain.exception-filter'
