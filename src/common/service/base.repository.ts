@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm'
 import { Assert } from '../assert'
-import { OrderOption, PageOption, PaginatedResult } from './pagination'
+import { OrderOption } from './order-option'
+import { PageOption, PaginatedResult } from './page-option'
 
 export abstract class BaseRepository<Record, Entity> {
     constructor(protected typeorm: Repository<any>) {}
@@ -44,7 +45,7 @@ export abstract class BaseRepository<Record, Entity> {
     }
 
     async findAll(page: PageOption, order: OrderOption): Promise<PaginatedResult<Entity>> {
-        const repositoryOrder = order ? { [order.name]: order.direction } : undefined
+        const repositoryOrder = order && { [order.name]: order.direction }
 
         const [records, total] = await this.typeorm.findAndCount({
             skip: page.offset,

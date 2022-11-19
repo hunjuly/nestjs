@@ -22,7 +22,7 @@ describe('CrudsService', () => {
         expect(service).toBeDefined()
     })
 
-    it('create a crud', async () => {
+    it('create', async () => {
         const spy = createSpy(repository, 'create', [createDto], crud)
 
         const recv = await service.create(createDto)
@@ -31,8 +31,8 @@ describe('CrudsService', () => {
         expect(recv).toMatchObject(crud)
     })
 
-    it('find all cruds ', async () => {
-        createSpy(repository, 'hasColumn', undefined, true)
+    it('findAll', async () => {
+        const ___ = createSpy(repository, 'hasColumn', undefined, true)
         const spy = createSpy(repository, 'findAll', [pageOption, orderOption], pagedResult)
 
         const recv = await service.findAll(pageOption, orderOption)
@@ -51,8 +51,7 @@ describe('CrudsService', () => {
     })
 
     it('remove', async () => {
-        createSpy(repository, 'findById', [crudId], crud)
-
+        const ___ = createSpy(repository, 'findById', [crudId], crud)
         const spy = createSpy(repository, 'remove', [crudId], true)
 
         const recv = await service.remove(crudId)

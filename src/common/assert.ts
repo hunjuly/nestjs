@@ -20,7 +20,7 @@ export class Assert {
         if (!con) throw new SystemError(message)
     }
 
-    static unique(con: any[] | UniqueResult, message?: string) {
+    static unique(con: any[] | { affected?: number }, message?: string) {
         if (Array.isArray(con)) {
             if (1 < con.length) throw new SystemError(message)
         } else if (con.affected) {
@@ -33,16 +33,4 @@ export class Assert {
             Logger.verbose('DB does not support affected property.')
         }
     }
-}
-
-class UniqueResult {
-    /**
-     * Raw SQL result returned by executed query.
-     */
-    raw: any
-    /**
-     * Number of affected rows/documents
-     * Not all drivers support this
-     */
-    affected?: number | null
 }

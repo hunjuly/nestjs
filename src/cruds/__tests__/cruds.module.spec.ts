@@ -5,6 +5,11 @@ import { CrudsModule } from '../cruds.module'
 import { CrudsService } from '../cruds.service'
 import { createDto, dtos, firstDto, secondDto, updateDto } from './mocks'
 
+/*
+만약 controller,service를 각각 다른 프로그래머가 개발한다면 각각의 격리된 레이어를 대상으로 테스트 해야 한다.
+혼자 개발한다 하더라도 각 레이어의 크기가 크고 복잡하다면 테스트를 나눌 수 있다.
+그러나 여기서는 이 정도 테스트로 충분하다. 각 레이어 마다 할 필요는 없다.
+*/
 describe('/cruds', () => {
     let module: TestingModule
     let app: INestApplication
@@ -88,10 +93,7 @@ describe('/cruds', () => {
         })
 
         it('already exists resource', async () => {
-            // create A
-            await req.post(firstDto)
-
-            // create B
+            const _firstRes = await req.post(firstDto)
             const secondRes = await req.post(secondDto)
             const secondId = secondRes.body.id
 

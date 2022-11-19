@@ -18,7 +18,8 @@ export const name = 'crud@mail.com'
 export const crud = { id: crudId, name } as Crud
 export const cruds = [
     { id: 'uuid#1', name: 'crud1@test.com' },
-    { id: 'uuid#2', name: 'crud2@test.com' }
+    { id: 'uuid#2', name: 'crud2@test.com' },
+    { id: 'uuid#3', name: 'crud3@test.com' }
 ] as Crud[]
 
 export const pageOption = { offset: 0, limit: 10 }
