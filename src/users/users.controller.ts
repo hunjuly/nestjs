@@ -6,7 +6,7 @@ import {
     PageOption,
     PageQuery
 } from 'src//common/application'
-import { AdminGuard, UserGuard } from 'src/auth'
+import { AdminGuard, UserGuard } from 'src/auths'
 import { CreateUserDto, UpdateUserDto } from './dto'
 import { UsersService } from './users.service'
 

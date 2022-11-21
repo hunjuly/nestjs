@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { BaseService } from 'src//common/application'
-import { AuthService } from 'src/auth'
+import { AuthsService } from 'src/auths'
 import { User } from './domain'
 import { CreateUserDto, UpdateUserDto, UserDto } from './dto'
 import { UserRecord } from './records/user.record'
@@ -8,7 +8,7 @@ import { UsersRepository } from './users.repository'
 
 @Injectable()
 export class UsersService extends BaseService<UserRecord, User, UserDto> {
-    constructor(private repository: UsersRepository, private authService: AuthService) {
+    constructor(private repository: UsersRepository, private authService: AuthsService) {
         super(repository)
     }
 
