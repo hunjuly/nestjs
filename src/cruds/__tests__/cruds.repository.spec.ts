@@ -1,6 +1,6 @@
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { createModule, createSpy, createTypeOrmMock } from 'src/common/jest'
+import { createSpy, createTestingModule, createTypeOrmMock } from 'src/common/jest'
 import { CrudsRepository } from '../cruds.repository'
 import { CrudRecord } from '../records/crud.record'
 import { createDto, crud, crudId, cruds, orderOption, pageOption, updateDto } from './mocks'
@@ -15,7 +15,7 @@ describe('CrudsRepository', () => {
             useValue: createTypeOrmMock()
         }
 
-        const module = await createModule({
+        const module = await createTestingModule({
             providers: [CrudsRepository, typeormProvider]
         })
 

@@ -1,4 +1,4 @@
-import { createModule, createSpy } from 'src/common/jest'
+import { createSpy, createTestingModule } from 'src/common/jest'
 import { CrudsRepository } from '../cruds.repository'
 import { CrudsService } from '../cruds.service'
 import { createDto, crud, crudId, orderOption, pageOption, pagedResult } from './mocks'
@@ -10,7 +10,7 @@ describe('CrudsService', () => {
     let repository: CrudsRepository
 
     beforeEach(async () => {
-        const module = await createModule({
+        const module = await createTestingModule({
             providers: [CrudsService, CrudsRepository]
         })
 

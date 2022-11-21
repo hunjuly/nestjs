@@ -1,5 +1,5 @@
 import 'jest'
-import { createModule, createSpy } from 'src/common/jest'
+import { createSpy, createTestingModule } from 'src/common/jest'
 import { CrudsController } from '../cruds.controller'
 import { CrudsService } from '../cruds.service'
 import {
@@ -20,7 +20,7 @@ describe('CrudsController', () => {
     let service: CrudsService
 
     beforeEach(async () => {
-        const module = await createModule({
+        const module = await createTestingModule({
             controllers: [CrudsController],
             providers: [CrudsService]
         })

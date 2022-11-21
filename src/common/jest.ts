@@ -30,7 +30,11 @@ class MockAuthGuard implements CanActivate {
     }
 }
 
-export async function createModule(injections: { modules?: any[]; controllers?: any[]; providers?: any[] }) {
+export async function createTestingModule(injections: {
+    modules?: any[]
+    controllers?: any[]
+    providers?: any[]
+}) {
     const modules = injections.modules ?? []
     const controllers = injections.controllers ?? []
     const providers = injections.providers ?? []

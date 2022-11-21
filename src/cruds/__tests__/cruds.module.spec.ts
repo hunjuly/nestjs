@@ -1,6 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common'
 import { TestingModule } from '@nestjs/testing'
-import { TestRequest, createApp, createModule, createRequest } from 'src/common/jest'
+import { TestRequest, createApp, createRequest, createTestingModule } from 'src/common/jest'
 import { CrudsModule } from '../cruds.module'
 import { CrudsService } from '../cruds.service'
 import { createDto, createDtos, firstDto, secondDto, updateDto } from './mocks'
@@ -18,7 +18,7 @@ describe('/cruds', () => {
     let service: CrudsService
 
     beforeEach(async () => {
-        module = await createModule({
+        module = await createTestingModule({
             modules: [CrudsModule]
         })
         app = await createApp(module)

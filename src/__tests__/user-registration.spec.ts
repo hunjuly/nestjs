@@ -1,107 +1,72 @@
 import { HttpStatus, INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
-import * as supertest from 'supertest'
-import { AuthModule } from 'src/auth'
-import { GlobalModule } from 'src/global.module'
-import { UsersModule } from 'src/users'
-import { UserRole } from 'src/users/domain'
+import { AppModule } from 'src/app.module'
+import { ServiceRequest } from './mocks'
 
 describe('user register, login & logout', () => {
     let app: INestApplication
+    let req: ServiceRequest
 
     beforeEach(async () => {
         const module = await Test.createTestingModule({
-            imports: [GlobalModule, UsersModule, AuthModule]
+            imports: [AppModule]
         }).compile()
 
         app = module.createNestApplication()
         await app.init()
+
+        req = new ServiceRequest(app)
     })
 
     afterEach(async () => {
         await app.close()
     })
 
-    const request = () => supertest(app.getHttpServer())
-
-    async function register(role: UserRole) {
-        const createDto = {
-            email: 'user@mail.com',
-            password: '1234',
-            username: 'user name',
-            role
-        }
-
-        return request().post('/users').send(createDto)
-    }
-
-    async function login() {
-        return request().post('/auth').send({ email: 'user@mail.com', password: '1234' })
-    }
-
-    async function getUserInfo(userId: string, authCookie: string) {
-        return request()
-            .get('/users/' + userId)
-            .set('Cookie', authCookie)
-    }
-
-    async function removeUser(userId: string, authCookie: string) {
-        return request()
-            .delete('/users/' + userId)
-            .set('Cookie', authCookie)
-    }
-
-    function logout(authCookie: string) {
-        return request().delete('/auth').set('Cookie', authCookie)
-    }
-
     it('user successful case', async () => {
-        const registerRes = await register('user')
-        expect(registerRes.status).toEqual(HttpStatus.CREATED)
-
-        // login
-        const loginRes = await login()
-        expect(loginRes.status).toEqual(HttpStatus.CREATED)
-
-        // authCookie
+        const registerRes = await req.register('user')
         const userId = registerRes.body.id
+
+        // login & get authCookie
+        const loginRes = await req.login()
         const authCookie = loginRes.headers['set-cookie']
 
         // use authCookie
-        const infoRes = await getUserInfo(userId, authCookie)
-        expect(infoRes.status).toEqual(HttpStatus.OK)
+        const infoRes = await req.getUser(userId, authCookie)
 
         // failed because required admin
-        const failRes = await removeUser(userId, authCookie)
-        expect(failRes.status).toEqual(HttpStatus.FORBIDDEN)
+        const failRes = await req.removeUser(userId, authCookie)
 
         // logout
-        const logoutRes = await logout(authCookie)
+        const logoutRes = await req.logout(authCookie)
+
+        expect(registerRes.status).toEqual(HttpStatus.CREATED)
+        expect(loginRes.status).toEqual(HttpStatus.CREATED)
+        expect(infoRes.status).toEqual(HttpStatus.OK)
+        expect(failRes.status).toEqual(HttpStatus.FORBIDDEN)
         expect(logoutRes.status).toEqual(HttpStatus.OK)
     })
 
     it('admin successful case', async () => {
-        const registerRes = await register('admin')
-        expect(registerRes.status).toEqual(HttpStatus.CREATED)
+        const registerRes = await req.register('admin')
+        const userId = registerRes.body.id
 
         // login
-        const loginRes = await login()
-        expect(loginRes.status).toEqual(HttpStatus.CREATED)
-
-        // authCookie
-        const userId = registerRes.body.id
+        const loginRes = await req.login()
         const authCookie = loginRes.headers['set-cookie']
 
         // use authCookie
-        const infoRes = await getUserInfo(userId, authCookie)
-        expect(infoRes.status).toEqual(HttpStatus.OK)
+        const infoRes = await req.getUser(userId, authCookie)
 
         // use admin service
-        const failRes = await removeUser(userId, authCookie)
-        expect(failRes.status).toEqual(HttpStatus.OK)
+        const failRes = await req.removeUser(userId, authCookie)
 
         // logout
-        const logoutRes = await logout(authCookie)
+        const logoutRes = await req.logout(authCookie)
+
+        expect(registerRes.status).toEqual(HttpStatus.CREATED)
+        expect(loginRes.status).toEqual(HttpStatus.CREATED)
+        expect(infoRes.status).toEqual(HttpStatus.OK)
+        expect(failRes.status).toEqual(HttpStatus.OK)
         expect(logoutRes.status).toEqual(HttpStatus.OK)
     })
 })

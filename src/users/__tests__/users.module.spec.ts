@@ -1,6 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common'
 import { TestingModule } from '@nestjs/testing'
-import { TestRequest, createApp, createModule, createRequest } from 'src/common/jest'
+import { TestRequest, createApp, createRequest, createTestingModule } from 'src/common/jest'
 import { UsersModule } from '../users.module'
 import { UsersService } from '../users.service'
 import { createDto, createDtos, firstDto, secondDto, updateDto } from './mocks'
@@ -13,7 +13,7 @@ describe('/users', () => {
     let service: UsersService
 
     beforeEach(async () => {
-        module = await createModule({
+        module = await createTestingModule({
             modules: [UsersModule]
         })
         app = await createApp(module)
