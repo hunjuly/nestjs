@@ -13,7 +13,7 @@ export class CreateAuthDto {
 }
 
 @Injectable()
-export class AuthService {
+export class AuthsService {
     constructor(
         @InjectRepository(AuthRecord)
         private typeorm: Repository<AuthRecord>

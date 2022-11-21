@@ -2,8 +2,8 @@ import { Controller, Delete, Logger, Post, Request, UseGuards } from '@nestjs/co
 import { LocalAuthGuard } from './guards/local-auth.guard'
 import { UserGuard } from './guards/user.guard'
 
-@Controller('auth')
-export class AuthController {
+@Controller('auths')
+export class AuthsController {
     @Post()
     @UseGuards(LocalAuthGuard)
     login(@Request() req) {

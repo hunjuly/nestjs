@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { AuthController } from './auth.controller'
 import { AuthRecord } from './auth.record'
-import { AuthService } from './auth.service'
+import { AuthsController } from './auths.controller'
+import { AuthsService } from './auths.service'
 import { LocalStrategy } from './local.strategy'
 import { SessionModule } from './session.module'
 
 @Module({
     imports: [TypeOrmModule.forFeature([AuthRecord]), SessionModule],
-    providers: [AuthService, LocalStrategy],
-    controllers: [AuthController],
-    exports: [AuthService]
+    providers: [AuthsService, LocalStrategy],
+    controllers: [AuthsController],
+    exports: [AuthsService]
 })
-export class AuthModule {}
+export class AuthsModule {}

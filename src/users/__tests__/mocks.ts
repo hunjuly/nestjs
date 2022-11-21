@@ -4,7 +4,7 @@ import { CreateUserDto, UpdateUserDto, UserDto } from '../dto'
 export const createDto = {
     email: 'user@mail.com',
     username: 'user name',
-    role: 'user' as UserRole,
+    role: 'member' as UserRole,
     password: '1234'
 }
 
@@ -13,21 +13,21 @@ export const updateDto = { email: 'new@mail.com', username: 'new name' }
 export const firstDto = {
     email: 'A@mail.com',
     username: 'user',
-    role: 'user',
+    role: 'member',
     password: '1234'
 }
 
 export const secondDto = {
     email: 'B@mail.com',
     username: 'user',
-    role: 'user',
+    role: 'member',
     password: '1234'
 }
 
 export const createDtos = [
-    { email: 'user1@mail.com', username: 'username', role: 'user' as UserRole, password: '1234' },
-    { email: 'user2@mail.com', username: 'username', role: 'user' as UserRole, password: '1234' },
-    { email: 'user3@mail.com', username: 'username', role: 'user' as UserRole, password: '1234' }
+    { email: 'user1@mail.com', username: 'username', role: 'member' as UserRole, password: '1234' },
+    { email: 'user2@mail.com', username: 'username', role: 'member' as UserRole, password: '1234' },
+    { email: 'user3@mail.com', username: 'username', role: 'member' as UserRole, password: '1234' }
 ] as CreateUserDto[]
 
 declare global {

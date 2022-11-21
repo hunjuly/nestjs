@@ -23,7 +23,7 @@ describe('user register, login & logout', () => {
     })
 
     it('user successful case', async () => {
-        const registerRes = await req.register('user')
+        const registerRes = await req.register('member')
         const userId = registerRes.body.id
 
         // login & get authCookie

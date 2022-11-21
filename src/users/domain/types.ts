@@ -1,4 +1,4 @@
-export type UserRole = 'user' | 'admin'
+export type UserRole = 'member' | 'admin'
 
 export class CreateUserCmd {
     email: string
