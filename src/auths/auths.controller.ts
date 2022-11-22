@@ -24,4 +24,8 @@ export class AuthsController {
     @Get('admin-test')
     @UseGuards(AdminGuard)
     adminTest() {}
+
+    @Get('user-test')
+    @UseGuards(UserGuard)
+    memberTest() {}
 }

@@ -1,3 +1,6 @@
+import { Test } from '@nestjs/testing'
+import { GlobalModule } from 'src/global.module'
+import { AuthsModule } from '../auths.module'
 import { CreateAuthDto } from '../auths.service'
 
 export const member = {
@@ -24,4 +27,10 @@ export const admin = {
         email: 'admin@mail.com',
         password: 'abcd'
     }
+}
+
+export async function createAuthsTestingModule() {
+    return Test.createTestingModule({
+        imports: [GlobalModule, AuthsModule]
+    }).compile()
 }

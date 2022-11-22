@@ -1,10 +1,8 @@
 import { HttpStatus, INestApplication } from '@nestjs/common'
-import { Test, TestingModule } from '@nestjs/testing'
+import { TestingModule } from '@nestjs/testing'
 import { TestRequest, createApp, createRequest } from 'src/common/jest'
-import { GlobalModule } from 'src/global.module'
-import { AuthsModule } from '../auths.module'
 import { AuthsService } from '../auths.service'
-import { admin, member } from './mocks'
+import { admin, createAuthsTestingModule, member } from './mocks'
 
 describe('/auths', () => {
     let module: TestingModule
@@ -14,93 +12,96 @@ describe('/auths', () => {
     let service: AuthsService
 
     beforeAll(async () => {
-        module = await Test.createTestingModule({
-            imports: [GlobalModule, AuthsModule]
-        }).compile()
-
+        module = await createAuthsTestingModule()
         app = await createApp(module)
         req = createRequest(app, '/auths')
 
         service = module.get(AuthsService)
-
-        console.log('beforeAll')
     })
 
-    let authCookie: string | null
-
     afterAll(async () => {
-        console.log('afterAll')
         await app.close()
     })
 
-    it('create an authentication', async () => {
-        await service.create(member.createDto)
-    })
+    describe('member user successful senario', () => {
+        let authCookie: string | null
 
-    it('login & get auth-cookie', async () => {
-        // login
-        const loginRes = await req.post(member.loginDto)
-        expect(loginRes.status).toEqual(HttpStatus.CREATED)
+        it('create an authentication', async () => {
+            const res = await service.create(member.createDto)
 
-        // auth cookie
-        authCookie = loginRes.headers['set-cookie']
-        expect(authCookie).not.toBeNull()
-    })
-
-    it('logout', async () => {
-        const logoutRes = await req.delete().set('cookie', authCookie)
-        expect(logoutRes.status).toEqual(HttpStatus.OK)
-    })
-
-    it.skip('admin required', async () => {
-        await service.create(admin.createDto)
-        await service.create(member.createDto)
-
-        const adminRes = await req.post(admin.loginDto)
-        const adminCookie = adminRes.headers['set-cookie']
-
-        const memberRes = await req.post(member.loginDto)
-        const memberCookie = memberRes.headers['set-cookie']
-
-        const memberTestRes = await req.get('admin-test').set('cookie', memberCookie)
-        expect(memberTestRes.status).toEqual(HttpStatus.FORBIDDEN)
-
-        const adminTestRes = await req.get('admin-test').set('cookie', adminCookie)
-        expect(adminTestRes.status).toEqual(HttpStatus.OK)
-    })
-
-    describe('failure cases', () => {
-        it('already exists authentication', async () => {
-            console.log('already exists')
-
-            const promise = service.create(member.createDto)
-            console.log('already exists2')
-
-            await expect(promise).rejects.toThrow(Error)
-        })
-
-        it('incorrect password', async () => {
-            const loginRes = await req.post({
-                email: member.createDto.email,
-                password: 'incorrect-password'
+            expect(res).toEqual({
+                userId: expect.any(String),
+                email: member.createDto.email
             })
-
-            expect(loginRes.status).toEqual(HttpStatus.UNAUTHORIZED)
         })
 
-        it('not exists authentication', async () => {
-            const loginRes = await req.post({
-                email: 'unknown@mail.com',
-                password: ''
+        it('login & get auth-cookie', async () => {
+            // login
+            const res = await req.post(member.loginDto)
+            expect(res.status).toEqual(HttpStatus.CREATED)
+
+            // auth cookie
+            authCookie = res.headers['set-cookie']
+            expect(authCookie).not.toBeNull()
+        })
+
+        it('the user-test succeeds', async () => {
+            const res = await req.get('user-test').set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+
+        it('the admin-test fails', async () => {
+            const res = await req.get('admin-test').set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.FORBIDDEN)
+        })
+
+        it('logout', async () => {
+            const res = await req.delete().set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+    })
+
+    describe('admin user successful senario', () => {
+        let authCookie: string | null
+
+        it('create an authentication', async () => {
+            const res = await service.create(admin.createDto)
+
+            expect(res).toEqual({
+                userId: expect.any(String),
+                email: admin.createDto.email
             })
-
-            expect(loginRes.status).toEqual(HttpStatus.UNAUTHORIZED)
         })
 
-        it('invalid token', async () => {
-            const logoutRes = await req.delete().set('cookie', 'invalid-token')
+        it('login & get auth-cookie', async () => {
+            // login
+            const res = await req.post(admin.loginDto)
+            expect(res.status).toEqual(HttpStatus.CREATED)
 
-            expect(logoutRes.status).toEqual(HttpStatus.FORBIDDEN)
+            // auth cookie
+            authCookie = res.headers['set-cookie']
+            expect(authCookie).not.toBeNull()
+        })
+
+        it('the user-test succeeds', async () => {
+            const res = await req.get('user-test').set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+
+        it('the admin-test succeeds', async () => {
+            const res = await req.get('admin-test').set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+
+        it('logout', async () => {
+            const res = await req.delete().set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
         })
     })
 })
