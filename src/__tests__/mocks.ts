@@ -21,7 +21,7 @@ export class ServiceRequest {
     login() {
         const loginDto = { email: 'user@mail.com', password: '1234' }
 
-        return this.request().post('/auth').send(loginDto)
+        return this.request().post('/auths').send(loginDto)
     }
 
     getUser(userId: string, authCookie: string) {
@@ -37,6 +37,6 @@ export class ServiceRequest {
     }
 
     logout(authCookie: string) {
-        return this.request().delete('/auth').set('Cookie', authCookie)
+        return this.request().delete('/auths').set('Cookie', authCookie)
     }
 }

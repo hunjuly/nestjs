@@ -62,9 +62,9 @@ export function createRequest(app: INestApplication, path: string): TestRequest 
     const request = () => supertest(app.getHttpServer())
 
     return {
-        post: (body: string | object, query?: string) =>
+        post: (body: string | object, query = '') =>
             request()
-                .post(path + '/' + (query ?? ''))
+                .post(path + '/' + query)
                 .send(body),
         put: (id: string, body: string | object) =>
             request()
@@ -74,8 +74,8 @@ export function createRequest(app: INestApplication, path: string): TestRequest 
             request()
                 .patch(path + '/' + id)
                 .send(body),
-        get: (query?: string) => request().get(path + '/' + (query ?? '')),
-        delete: (query: string) => request().delete(path + '/' + query)
+        get: (query = '') => request().get(path + '/' + query),
+        delete: (query = '') => request().delete(path + '/' + query)
     }
 }
 
@@ -84,5 +84,5 @@ export type TestRequest = {
     put: (id: string, body: string | object) => supertest.Test
     patch: (id: string, body: string | object) => supertest.Test
     get: (query?: string) => supertest.Test
-    delete: (query: string) => supertest.Test
+    delete: (query?: string) => supertest.Test
 }

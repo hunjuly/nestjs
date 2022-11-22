@@ -1,4 +1,5 @@
-import { Controller, Delete, Logger, Post, Request, UseGuards } from '@nestjs/common'
+import { Controller, Delete, Get, Logger, Post, Request, UseGuards } from '@nestjs/common'
+import { AdminGuard } from './guards'
 import { LocalAuthGuard } from './guards/local-auth.guard'
 import { UserGuard } from './guards/user.guard'
 
@@ -18,7 +19,9 @@ export class AuthsController {
                 Logger.error(err)
             }
         })
-
-        return {}
     }
+
+    @Get('admin-test')
+    @UseGuards(AdminGuard)
+    adminTest() {}
 }

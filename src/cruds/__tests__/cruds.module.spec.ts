@@ -46,9 +46,9 @@ describe('/cruds', () => {
 
         it('already exists resource', async () => {
             const first = await req.post(createDto)
-            const second = await req.post(createDto)
-
             expect(first.status).toEqual(HttpStatus.CREATED)
+
+            const second = await req.post(createDto)
             expect(second.status).toEqual(HttpStatus.CONFLICT)
         })
     })
@@ -77,12 +77,11 @@ describe('/cruds', () => {
 
             // update
             const updateRes = await req.patch(crudId, updateDto)
+            expect(updateRes.status).toEqual(HttpStatus.OK)
+            expect(updateRes.body).toMatchCrudDto(updateDto)
 
             // find the updated crud.
             const findRes = await req.get(crudId)
-
-            expect(updateRes.status).toEqual(HttpStatus.OK)
-            expect(updateRes.body).toMatchCrudDto(updateDto)
             expect(findRes.body).toMatchCrudDto(updateDto)
         })
 
@@ -110,11 +109,12 @@ describe('/cruds', () => {
         it('remove a crud', async () => {
             const createRes = await req.post(createDto)
             const crudId = createRes.body.id
-            const deleteRes = await req.delete(crudId)
-            const findRes = await req.get(crudId)
 
+            const deleteRes = await req.delete(crudId)
             expect(deleteRes.status).toEqual(HttpStatus.OK)
             expect(deleteRes.body).toEqual({ id: crudId })
+
+            const findRes = await req.get(crudId)
             expect(findRes.status).toEqual(HttpStatus.NOT_FOUND)
         })
 

@@ -28,6 +28,7 @@ describe('user register, login & logout', () => {
 
         // login & get authCookie
         const loginRes = await req.login()
+        expect(loginRes.status).toEqual(HttpStatus.CREATED)
         const authCookie = loginRes.headers['set-cookie']
 
         // use authCookie
@@ -40,7 +41,6 @@ describe('user register, login & logout', () => {
         const logoutRes = await req.logout(authCookie)
 
         expect(registerRes.status).toEqual(HttpStatus.CREATED)
-        expect(loginRes.status).toEqual(HttpStatus.CREATED)
         expect(infoRes.status).toEqual(HttpStatus.OK)
         expect(failRes.status).toEqual(HttpStatus.FORBIDDEN)
         expect(logoutRes.status).toEqual(HttpStatus.OK)
