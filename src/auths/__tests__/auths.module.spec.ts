@@ -23,7 +23,7 @@ describe('/auths', () => {
         await app.close()
     })
 
-    describe('member user successful senario', () => {
+    describe('member successful scenario', () => {
         let authCookie: string | null
 
         it('create an authentication', async () => {
@@ -64,7 +64,7 @@ describe('/auths', () => {
         })
     })
 
-    describe('admin user successful senario', () => {
+    describe('admin successful scenario', () => {
         let authCookie: string | null
 
         it('create an authentication', async () => {

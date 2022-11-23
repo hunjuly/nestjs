@@ -24,36 +24,36 @@ describe('failure cases', () => {
     })
 
     it('already exists authentication', async () => {
-        await service.create(member.createDto)
+        const promise1 = service.create(member.createDto)
+        await expect(promise1).resolves.not.toBeNull()
 
-        const promise = service.create(member.createDto)
-
-        await expect(promise).rejects.toThrow(Error)
+        const promise2 = service.create(member.createDto)
+        await expect(promise2).rejects.toThrow(Error)
     })
 
     it('incorrect password', async () => {
         await service.create(member.createDto)
 
-        const loginRes = await req.post({
+        const res = await req.post({
             email: member.createDto.email,
             password: 'incorrect-password'
         })
 
-        expect(loginRes.status).toEqual(HttpStatus.UNAUTHORIZED)
+        expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
     })
 
     it('not exists authentication', async () => {
-        const loginRes = await req.post({
+        const res = await req.post({
             email: 'unknown@mail.com',
             password: ''
         })
 
-        expect(loginRes.status).toEqual(HttpStatus.UNAUTHORIZED)
+        expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
     })
 
     it('invalid token', async () => {
-        const logoutRes = await req.delete().set('cookie', 'invalid-token')
+        const res = await req.delete().set('cookie', 'invalid-token')
 
-        expect(logoutRes.status).toEqual(HttpStatus.FORBIDDEN)
+        expect(res.status).toEqual(HttpStatus.FORBIDDEN)
     })
 })

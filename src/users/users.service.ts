@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { BaseService } from 'src//common/application'
 import { AuthsService } from 'src/auths'
 import { User } from './domain'
@@ -35,6 +35,16 @@ export class UsersService extends BaseService<UserRecord, User, UserDto> {
         await user.update(updateDto)
 
         return this.entityToDto(user)
+    }
+
+    async remove(id: string) {
+        const res = await super.remove(id)
+
+        const success = await this.authService.remove(id)
+
+        if (!success) Logger.error(`remove failed(auths/${id})`)
+
+        return res
     }
 
     protected entityToDto(user: User): UserDto {

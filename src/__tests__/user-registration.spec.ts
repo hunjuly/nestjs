@@ -1,72 +1,132 @@
 import { HttpStatus, INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { AppModule } from 'src/app.module'
-import { ServiceRequest } from './mocks'
+import { TestRequest, createApp, createRequest } from 'src/common/jest'
+import { CreateUserDto } from 'src/users/dto'
 
 describe('user register, login & logout', () => {
     let app: INestApplication
-    let req: ServiceRequest
+    let users: TestRequest
+    let auths: TestRequest
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [AppModule]
         }).compile()
-
-        app = module.createNestApplication()
-        await app.init()
-
-        req = new ServiceRequest(app)
+        app = await createApp(module)
+        users = createRequest(app, '/users')
+        auths = createRequest(app, '/auths')
     })
 
-    afterEach(async () => {
+    afterAll(async () => {
         await app.close()
     })
 
-    it('user successful case', async () => {
-        const registerRes = await req.register('member')
-        const userId = registerRes.body.id
+    describe('member', () => {
+        const createDto = {
+            username: 'user name',
+            role: 'member',
+            email: 'member@mail.com',
+            password: '1234'
+        } as CreateUserDto
 
-        // login & get authCookie
-        const loginRes = await req.login()
-        expect(loginRes.status).toEqual(HttpStatus.CREATED)
-        const authCookie = loginRes.headers['set-cookie']
+        const loginDto = {
+            email: 'member@mail.com',
+            password: '1234'
+        }
 
-        // use authCookie
-        const infoRes = await req.getUser(userId, authCookie)
+        let authCookie: string | null
+        let userId: string | null
 
-        // failed because required admin
-        const failRes = await req.removeUser(userId, authCookie)
+        it('create a member', async () => {
+            const res = await users.post(createDto)
 
-        // logout
-        const logoutRes = await req.logout(authCookie)
+            expect(res.status).toEqual(HttpStatus.CREATED)
+            expect(res.body).toMatchObject({ id: expect.any(String) })
 
-        expect(registerRes.status).toEqual(HttpStatus.CREATED)
-        expect(infoRes.status).toEqual(HttpStatus.OK)
-        expect(failRes.status).toEqual(HttpStatus.FORBIDDEN)
-        expect(logoutRes.status).toEqual(HttpStatus.OK)
+            userId = res.body.id
+        })
+
+        it('login & get authCookie', async () => {
+            // login
+            const res = await auths.post(loginDto)
+            expect(res.status).toEqual(HttpStatus.CREATED)
+
+            // auth cookie
+            authCookie = res.headers['set-cookie']
+            expect(authCookie).not.toBeNull()
+        })
+
+        it('member api succeeds', async () => {
+            const res = await users.get(userId).set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+
+        it('admin api fails', async () => {
+            const res = await users.delete(userId).set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.FORBIDDEN)
+        })
+
+        it('logout', async () => {
+            const res = await auths.delete().set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
     })
 
-    it('admin successful case', async () => {
-        const registerRes = await req.register('admin')
-        const userId = registerRes.body.id
+    describe('admin', () => {
+        const createDto = {
+            username: 'admin name',
+            role: 'admin',
+            email: 'admin@mail.com',
+            password: '!@#$'
+        } as CreateUserDto
 
-        // login
-        const loginRes = await req.login()
-        const authCookie = loginRes.headers['set-cookie']
+        const loginDto = {
+            email: 'admin@mail.com',
+            password: '!@#$'
+        }
 
-        // use authCookie
-        const infoRes = await req.getUser(userId, authCookie)
+        let authCookie: string | null
+        let userId: string | null
 
-        // use admin service
-        const failRes = await req.removeUser(userId, authCookie)
+        it('create an admin', async () => {
+            const res = await users.post(createDto)
 
-        // logout
-        const logoutRes = await req.logout(authCookie)
+            expect(res.status).toEqual(HttpStatus.CREATED)
+            expect(res.body).toMatchObject({ id: expect.any(String) })
 
-        expect(registerRes.status).toEqual(HttpStatus.CREATED)
-        expect(loginRes.status).toEqual(HttpStatus.CREATED)
-        expect(infoRes.status).toEqual(HttpStatus.OK)
-        expect(failRes.status).toEqual(HttpStatus.OK)
-        expect(logoutRes.status).toEqual(HttpStatus.OK)
+            userId = res.body.id
+        })
+
+        it('login & get authCookie', async () => {
+            // login
+            const res = await auths.post(loginDto)
+            expect(res.status).toEqual(HttpStatus.CREATED)
+
+            // auth cookie
+            authCookie = res.headers['set-cookie']
+            expect(authCookie).not.toBeNull()
+        })
+
+        it('member api succeeds', async () => {
+            const res = await users.get(userId).set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+
+        it('admin api succeeds', async () => {
+            const res = await users.delete(userId).set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+
+        it('logout', async () => {
+            const res = await auths.delete().set('cookie', authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
     })
 })
