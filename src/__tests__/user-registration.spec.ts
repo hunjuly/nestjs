@@ -4,6 +4,21 @@ import { AppModule } from 'src/app.module'
 import { TestRequest, createApp, createRequest } from 'src/common/jest'
 import { CreateUserDto } from 'src/users/dto'
 
+// TODO 권한문제, 자기자신 혹은 admin을 어떻게 알 수 있는가? 새로운 가드가 필요하다.
+// TODO 시스템 오류 시 어떻게 멈추나.
+
+/*
+1. memberA 생성
+2. memberA login 성공
+1. memberB 생성
+3. memberA가 memberB 삭제 실패
+3. memberA가 memberA 삭제 성공
+4. memberA logout ?실패인가?
+5. admin 가입
+6. memberB 삭제 성공
+7. memberB login 실패
+4. admin logout
+*/
 describe('user register, login & logout', () => {
     let app: INestApplication
     let users: TestRequest

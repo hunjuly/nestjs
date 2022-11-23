@@ -103,5 +103,9 @@ describe('/auths', () => {
 
             expect(res.status).toEqual(HttpStatus.OK)
         })
+
+        it('remove', async () => {
+            fail('remove 테스트 해라')
+        })
     })
 })
