@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport'
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
-    async canActivate(context: ExecutionContext): Promise<boolean> {
+    async canActivate(context: ExecutionContext) {
         // super.canActivate() 하면 LocalStrategy.validate() 한다.
         // validate()의 리턴값({ userId, email })을 request.user에 기록한다.
         const result = (await super.canActivate(context)) as boolean

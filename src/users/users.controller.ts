@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common'
+import {
+    Body,
+    Controller,
+    Delete,
+    ForbiddenException,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Request,
+    UseFilters,
+    UseGuards
+} from '@nestjs/common'
 import {
     DomainExceptionFilter,
     OrderOption,
@@ -38,9 +50,21 @@ export class UsersController {
         return this.service.update(id, updateDto)
     }
 
-    @UseGuards(AdminGuard)
+    @UseGuards(UserGuard)
     @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.service.remove(id)
+    remove(@Request() req, @Param('id') id: string) {
+        if (req.user.role === 'admin' || id === req.user.id) {
+            return this.service.remove(id)
+        }
+
+        throw new ForbiddenException()
     }
 }
+
+// async logout(@Request() req) {
+//     await req.logout((err) => {
+//         if (err) {
+//             Logger.error(err)
+//         }
+//     })
+// }
