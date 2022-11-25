@@ -60,11 +60,3 @@ export class UsersController {
         throw new ForbiddenException()
     }
 }
-
-// async logout(@Request() req) {
-//     await req.logout((err) => {
-//         if (err) {
-//             Logger.error(err)
-//         }
-//     })
-// }

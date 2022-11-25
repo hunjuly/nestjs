@@ -9,16 +9,11 @@ import { CreateUserDto } from 'src/users/dto'
 // TODO 시스템 오류 시 어떻게 멈추나.
 // https://stackoverflow.com/questions/57146395/how-to-trigger-application-shutdown-from-a-service-in-nest-js
 
-/*
-1. register memberA, memberB, adminA
-2. memberA,adminA login succeeds
-3. memberA가 memberB 삭제 실패
-4. memberA가 memberA 삭제 성공
-5. adminA가 memberB 삭제 성공
-5. adminA가 adminA 삭제 성공
-6. memberA logout ?실패인가?, memberB logout 실패, adminA logout
-7. memberA,memberB,adminA login 실패
-*/
+// TODO 사용자 삭제하면 토큰 무효화 하는가?
+// google: oauth token validation user removed
+// https://social.msdn.microsoft.com/forums/en-US/09300817-edb4-460e-9d09-f907658d41a6/how-to-know-if-user-has-been-deactivateddeleted-and-remove-access-token?forum=aspwebapi
+// 베어러 토큰은 암호화를 통해 보안된 엔드포인트에서 자체 포함되고 검증됩니다.
+// 실시간 상태가 필요하다면 보안된 엔드포인트에 대한 모든 요청에 대해 사용자의 상태를 확인하는 코드를 작성하기만 하면 됩니다.
 
 describe('user register, login & logout', () => {
     let app: INestApplication
@@ -38,7 +33,7 @@ describe('user register, login & logout', () => {
         await app.close()
     })
 
-    describe('1. register memberA, memberB, adminA', () => {
+    describe('1. 사용자 등록', () => {
         it('memberA', async () => {
             const res = await users.post(memberA.createDto)
             expect(res.status).toEqual(HttpStatus.CREATED)
@@ -64,7 +59,7 @@ describe('user register, login & logout', () => {
         })
     })
 
-    describe('2. memberA, adminA login succeeds', () => {
+    describe('2. 로그인', () => {
         it('memberA', async () => {
             const res = await auths.post(memberA.loginDto)
             expect(res.status).toEqual(HttpStatus.CREATED)
@@ -86,64 +81,79 @@ describe('user register, login & logout', () => {
         })
     })
 
-    it('3. memberA가 memberB 삭제 실패', async () => {
-        const res = await users.delete(memberB.userId).set('cookie', memberA.authCookie)
+    describe('3. 서비스 사용', () => {
+        it('memberA는 서비스 사용 가능', async () => {
+            const res = await users.get(memberA.userId).set('cookie', memberA.authCookie)
 
-        expect(res.status).toEqual(HttpStatus.FORBIDDEN)
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+        it('memberA는 관리자 서비스 사용 불가', async () => {
+            const res = await users.get().set('cookie', memberA.authCookie)
+
+            expect(res.status).toEqual(HttpStatus.FORBIDDEN)
+        })
+
+        it('adminA는 관리자 서비스 사용 가능', async () => {
+            const res = await users.get().set('cookie', adminA.authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
     })
 
-    it('4. memberA가 memberA 삭제 성공', async () => {
-        const res = await users.delete(memberA.userId).set('cookie', memberA.authCookie)
+    describe('5. 사용자 삭제', () => {
+        it('memberA가 memberB 삭제 불가', async () => {
+            const res = await users.delete(memberB.userId).set('cookie', memberA.authCookie)
 
-        expect(res.status).toEqual(HttpStatus.OK)
+            expect(res.status).toEqual(HttpStatus.FORBIDDEN)
+        })
+
+        it('memberA 자신은 삭제 가능', async () => {
+            const res = await users.delete(memberA.userId).set('cookie', memberA.authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+
+        it('adminA는 memberB 삭제 가능', async () => {
+            const res = await users.delete(memberB.userId).set('cookie', adminA.authCookie)
+
+            expect(res.status).toEqual(HttpStatus.OK)
+        })
+
+        it('삭제된 memberA는 서비스 사용 불가', async () => {
+            const res = await users.get(memberA.userId).set('cookie', memberA.authCookie)
+
+            expect(res.status).toEqual(HttpStatus.FORBIDDEN)
+        })
     })
 
-    it('5. adminA가 memberB 삭제 성공', async () => {
-        const res = await users.delete(memberB.userId).set('cookie', adminA.authCookie)
-
-        expect(res.status).toEqual(HttpStatus.OK)
-    })
-
-    it('6. adminA가 adminA 삭제 성공', async () => {
-        const res = await users.delete(adminA.userId).set('cookie', adminA.authCookie)
-
-        expect(res.status).toEqual(HttpStatus.OK)
-    })
-
-    describe('7. logout', () => {
-        it('memberA failed', async () => {
+    describe('6. logout', () => {
+        it('삭제된 memberA는 로그아웃 불가', async () => {
             const res = await auths.delete().set('cookie', memberA.authCookie)
 
             expect(res.status).toEqual(HttpStatus.FORBIDDEN)
         })
 
-        it('memberB failed', async () => {
-            const res = await auths.delete().set('cookie', memberB.authCookie)
-
-            expect(res.status).toEqual(HttpStatus.FORBIDDEN)
-        })
-
-        it('adminA succeeds', async () => {
+        it('adminA는 로그아웃 가능', async () => {
             const res = await auths.delete().set('cookie', adminA.authCookie)
 
             expect(res.status).toEqual(HttpStatus.OK)
         })
     })
 
-    describe('8. memberA, memberB, adminA login 실패', () => {
-        it('memberA', async () => {
+    describe('7. 재로그인', () => {
+        it('삭제된 memberA는 로그인 불가', async () => {
             const res = await auths.post(memberA.loginDto)
             expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
         })
 
-        it('memberB', async () => {
+        it('삭제된 memberB는 로그인 불가', async () => {
             const res = await auths.post(memberB.loginDto)
             expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
         })
 
-        it('adminA', async () => {
+        it('adminA는 로그인 가능', async () => {
             const res = await auths.post(adminA.loginDto)
-            expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
+            expect(res.status).toEqual(HttpStatus.CREATED)
         })
     })
 })

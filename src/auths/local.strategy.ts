@@ -25,4 +25,12 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
         return { id: auth.userId, email: auth.email, role: auth.role }
     }
+
+    // async authenticate(req: any, options?: any): Promise<void> {
+    //     // const auth = await this.authService.findByEmail('email')
+    //     super.authenticate(req, options)
+    //     console.log('req, options')
+
+    //     req.user = { id: 'auth.userId', email: 'user@mail.com', role: 'member' }
+    // }
 }
