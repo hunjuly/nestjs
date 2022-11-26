@@ -5,28 +5,32 @@ import { CreateAuthDto } from '../auths.service'
 
 export const member = {
     createDto: {
-        userId: 'memberId#1',
+        userId: 'memberA',
         role: 'member',
-        email: 'member@mail.com',
+        email: 'memberA@mail.com',
         password: '1234'
     } as CreateAuthDto,
     loginDto: {
-        email: 'member@mail.com',
+        email: 'memberA@mail.com',
         password: '1234'
-    }
+    },
+    authCookie: null,
+    userId: 'memberA'
 }
 
 export const admin = {
     createDto: {
-        userId: 'adminId#1',
+        userId: 'adminA',
         role: 'admin',
-        email: 'admin@mail.com',
-        password: 'abcd'
+        email: 'adminA@mail.com',
+        password: '!@#$'
     } as CreateAuthDto,
     loginDto: {
-        email: 'admin@mail.com',
-        password: 'abcd'
-    }
+        email: 'adminA@mail.com',
+        password: '!@#$'
+    },
+    authCookie: null,
+    userId: 'adminA'
 }
 
 export async function createAuthsTestingModule() {

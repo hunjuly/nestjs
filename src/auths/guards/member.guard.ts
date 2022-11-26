@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core'
 import { IS_PUBLIC_KEY } from './public'
 
 @Injectable()
-export class UserGuard implements CanActivate {
+export class MemberGuard implements CanActivate {
     constructor(protected reflector: Reflector) {}
 
     canActivate(context: ExecutionContext) {

@@ -12,11 +12,19 @@ export class AuthSerializer extends PassportSerializer {
         done(null, user)
     }
 
-    async deserializeUser(payload: any, done: (err: Error, payload: any) => void) {
-        const res = await this.authService.findByEmail('memberA@mail.com')
-        console.log('deserializeUser', res)
-        done(new UnauthorizedException('expired token'), undefined)
+    async deserializeUser(user: any, done: (err: Error, payload: any) => void) {
+        const auth = await this.authService.findByUserId(user.id)
 
-        // done(null, payload)
+        if (auth) {
+            const user = {
+                id: auth.userId,
+                email: auth.email,
+                role: auth.role
+            }
+
+            done(null, user)
+        } else {
+            done(new UnauthorizedException('expired token'), undefined)
+        }
     }
 }

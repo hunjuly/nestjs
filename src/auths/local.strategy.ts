@@ -3,6 +3,10 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-local'
 import { AuthsService } from './auths.service'
 
+type Payload = {
+    id: string
+}
+
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
     constructor(private authService: AuthsService) {
@@ -12,25 +16,17 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         })
     }
 
-    async validate(email: string, password: string): Promise<any> {
+    async validate(email: string, password: string): Promise<Payload> {
         const auth = await this.authService.findByEmail(email)
 
         if (!auth) throw new UnauthorizedException(`${email} not found.`)
 
-        const isCorrect = await this.authService.validate(auth.userId, password)
+        const isValid = await this.authService.validate(auth.userId, password)
 
-        if (!isCorrect) {
+        if (!isValid) {
             throw new UnauthorizedException()
         }
 
-        return { id: auth.userId, email: auth.email, role: auth.role }
+        return { id: auth.userId }
     }
-
-    // async authenticate(req: any, options?: any): Promise<void> {
-    //     // const auth = await this.authService.findByEmail('email')
-    //     super.authenticate(req, options)
-    //     console.log('req, options')
-
-    //     req.user = { id: 'auth.userId', email: 'user@mail.com', role: 'member' }
-    // }
 }

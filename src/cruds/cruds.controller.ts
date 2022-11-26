@@ -6,7 +6,7 @@ import {
     PageOption,
     PageQuery
 } from 'src//common/application'
-import { AdminGuard, UserGuard } from 'src/auths'
+import { AdminGuard, MemberGuard } from 'src/auths'
 import { CrudsService } from './cruds.service'
 import { CreateCrudDto, UpdateCrudDto } from './dto'
 
@@ -25,13 +25,13 @@ export class CrudsController {
         return this.service.findAll(page, order)
     }
 
-    @UseGuards(UserGuard)
+    @UseGuards(MemberGuard)
     @Get(':id')
     findById(@Param('id') id: string) {
         return this.service.findById(id)
     }
 
-    @UseGuards(UserGuard)
+    @UseGuards(MemberGuard)
     @Patch(':id')
     update(@Param('id') id: string, @Body() updateDto: UpdateCrudDto) {
         return this.service.update(id, updateDto)
