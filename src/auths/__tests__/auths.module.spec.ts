@@ -1,15 +1,11 @@
 import { HttpStatus, INestApplication } from '@nestjs/common'
-import { TestingModule } from '@nestjs/testing'
 import { Test } from '@nestjs/testing'
-import { SystemError } from 'src/common'
+import { SystemException } from 'src/common'
 import { TestRequest, createApp, createRequest } from 'src/common/jest'
 import { GlobalModule } from 'src/global.module'
 import { AuthsModule } from '../auths.module'
 import { AuthsService } from '../auths.service'
 import { CreateAuthDto } from '../auths.service'
-
-// TODO 시스템 오류 시 어떻게 멈추나.
-// https://stackoverflow.com/questions/57146395/how-to-trigger-application-shutdown-from-a-service-in-nest-js
 
 // 사용자 삭제하면 토큰 무효화 하는가?
 // google: oauth token validation user removed
@@ -18,14 +14,13 @@ import { CreateAuthDto } from '../auths.service'
 // 실시간 상태가 필요하다면 보안된 엔드포인트에 대한 모든 요청에 대해 사용자의 상태를 확인하는 코드를 작성하기만 하면 됩니다.
 
 describe('/auths', () => {
-    let module: TestingModule
     let app: INestApplication
     let req: TestRequest
 
     let service: AuthsService
 
     beforeAll(async () => {
-        module = await Test.createTestingModule({
+        const module = await Test.createTestingModule({
             imports: [GlobalModule, AuthsModule]
         }).compile()
 
@@ -55,7 +50,7 @@ describe('/auths', () => {
         it('이미 존재하는 auth는 실패한다', async () => {
             const promise = service.create(member.createDto)
 
-            await expect(promise).rejects.toThrow(SystemError)
+            await expect(promise).rejects.toThrow(SystemException)
         })
     })
 
