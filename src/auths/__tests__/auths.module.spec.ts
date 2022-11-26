@@ -1,8 +1,12 @@
 import { HttpStatus, INestApplication } from '@nestjs/common'
 import { TestingModule } from '@nestjs/testing'
+import { Test } from '@nestjs/testing'
+import { SystemError } from 'src/common'
 import { TestRequest, createApp, createRequest } from 'src/common/jest'
+import { GlobalModule } from 'src/global.module'
+import { AuthsModule } from '../auths.module'
 import { AuthsService } from '../auths.service'
-import { admin, createAuthsTestingModule, member } from './mocks'
+import { CreateAuthDto } from '../auths.service'
 
 // TODO 권한문제, 자기자신 혹은 admin을 어떻게 알 수 있는가? 새로운 가드가 필요하다.
 // https://gist.github.com/DimosthenisK/db21929a137d3e6c147f0bda3ecfbda6#file-self-decorator-ts
@@ -10,7 +14,7 @@ import { admin, createAuthsTestingModule, member } from './mocks'
 // TODO 시스템 오류 시 어떻게 멈추나.
 // https://stackoverflow.com/questions/57146395/how-to-trigger-application-shutdown-from-a-service-in-nest-js
 
-// TODO 사용자 삭제하면 토큰 무효화 하는가?
+// 사용자 삭제하면 토큰 무효화 하는가?
 // google: oauth token validation user removed
 // https://social.msdn.microsoft.com/forums/en-US/09300817-edb4-460e-9d09-f907658d41a6/how-to-know-if-user-has-been-deactivateddeleted-and-remove-access-token?forum=aspwebapi
 // 베어러 토큰은 암호화를 통해 보안된 엔드포인트에서 자체 포함되고 검증됩니다.
@@ -24,7 +28,10 @@ describe('/auths', () => {
     let service: AuthsService
 
     beforeAll(async () => {
-        module = await createAuthsTestingModule()
+        module = await Test.createTestingModule({
+            imports: [GlobalModule, AuthsModule]
+        }).compile()
+
         app = await createApp(module)
         req = createRequest(app, '/auths')
 
@@ -35,7 +42,7 @@ describe('/auths', () => {
         await app.close()
     })
 
-    describe('1. 사용자 등록', () => {
+    describe('1. auth 생성', () => {
         it('member', async () => {
             const auth = await service.create(member.createDto)
 
@@ -47,9 +54,15 @@ describe('/auths', () => {
 
             expect(auth).toMatchObject({ userId: expect.any(String) })
         })
+
+        it('이미 존재하는 auth은 실패한다', async () => {
+            const promise = service.create(member.createDto)
+
+            await expect(promise).rejects.toThrow(SystemError)
+        })
     })
 
-    describe('2. 로그인', () => {
+    describe('2. login', () => {
         it('member', async () => {
             const res = await req.post(member.loginDto)
             expect(res.status).toEqual(HttpStatus.CREATED)
@@ -69,28 +82,54 @@ describe('/auths', () => {
 
             admin.authCookie = authCookie
         })
+
+        it('password가 틀림', async () => {
+            const res = await req.post({
+                ...member.loginDto,
+                password: 'wrong'
+            })
+
+            expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
+        })
+
+        it('email이 존재하지 않음', async () => {
+            const res = await req.post({
+                ...member.loginDto,
+                email: 'unknown@mail.com'
+            })
+
+            expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
+        })
     })
 
-    describe('3. 서비스 사용', () => {
-        it('member는 멤버 서비스 사용 가능', async () => {
-            const res = await req.get('member-test').set('cookie', member.authCookie)
+    describe('3. user authorization', () => {
+        it('MemberGuard', async () => {
+            const method = 'member-guard-test'
 
-            expect(res.status).toEqual(HttpStatus.OK)
+            const memberRes = await req.get(method).set('cookie', member.authCookie)
+            expect(memberRes.status).toEqual(HttpStatus.OK)
+
+            const adminRes = await req.get(method).set('cookie', admin.authCookie)
+            expect(adminRes.status).toEqual(HttpStatus.OK)
         })
-        it('member는 관리자 서비스 사용 불가', async () => {
-            const res = await req.get('admin-test').set('cookie', member.authCookie)
+        it('AdminGuard', async () => {
+            const method = 'admin-guard-test'
+
+            const memberRes = await req.get(method).set('cookie', member.authCookie)
+            expect(memberRes.status).toEqual(HttpStatus.FORBIDDEN)
+
+            const adminRes = await req.get(method).set('cookie', admin.authCookie)
+            expect(adminRes.status).toEqual(HttpStatus.OK)
+        })
+
+        it('invalid cookie', async () => {
+            const res = await req.delete().set('cookie', 'invalid-token')
 
             expect(res.status).toEqual(HttpStatus.FORBIDDEN)
         })
-
-        it('admin는 관리자 서비스 사용 가능', async () => {
-            const res = await req.get('admin-test').set('cookie', admin.authCookie)
-
-            expect(res.status).toEqual(HttpStatus.OK)
-        })
     })
 
-    describe('4. 사용자 삭제', () => {
+    describe('4. auth 삭제', () => {
         it('member', async () => {
             const success = await service.remove(member.userId)
 
@@ -99,28 +138,58 @@ describe('/auths', () => {
     })
 
     describe('5. logout', () => {
-        it('삭제된 member는 로그아웃 불가', async () => {
+        it('member는 삭제돼서 logout 불가', async () => {
             const res = await req.delete().set('cookie', member.authCookie)
 
             expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
         })
 
-        it('admin은 로그아웃 가능', async () => {
+        it('admin은 logout 가능', async () => {
             const res = await req.delete().set('cookie', admin.authCookie)
 
             expect(res.status).toEqual(HttpStatus.OK)
         })
     })
 
-    describe('6. 재로그인', () => {
-        it('삭제된 member는 로그인 불가', async () => {
+    describe('6. login, again', () => {
+        it('member는 삭제돼서 login 불가', async () => {
             const res = await req.post(member.loginDto)
             expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
         })
 
-        it('admin는 로그인 가능', async () => {
+        it('admin은 login 가능', async () => {
             const res = await req.post(admin.loginDto)
             expect(res.status).toEqual(HttpStatus.CREATED)
         })
     })
 })
+
+const member = {
+    createDto: {
+        userId: 'memberA',
+        role: 'member',
+        email: 'memberA@mail.com',
+        password: '1234'
+    } as CreateAuthDto,
+    loginDto: {
+        email: 'memberA@mail.com',
+        password: '1234'
+    },
+    authCookie: null,
+    userId: 'memberA'
+}
+
+const admin = {
+    createDto: {
+        userId: 'adminA',
+        role: 'admin',
+        email: 'adminA@mail.com',
+        password: '!@#$'
+    } as CreateAuthDto,
+    loginDto: {
+        email: 'adminA@mail.com',
+        password: '!@#$'
+    },
+    authCookie: null,
+    userId: 'adminA'
+}

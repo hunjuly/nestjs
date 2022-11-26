@@ -19,11 +19,11 @@ export class AuthsController {
         })
     }
 
-    @Get('admin-test')
+    @Get('admin-guard-test')
     @UseGuards(AdminGuard)
     adminTest() {}
 
-    @Get('member-test')
+    @Get('member-guard-test')
     @UseGuards(MemberGuard)
     memberTest() {}
 }

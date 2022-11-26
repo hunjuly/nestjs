@@ -22,7 +22,7 @@ describe('user register, login & logout', () => {
         await app.close()
     })
 
-    describe('1. 사용자 등록', () => {
+    describe('1. user 등록', () => {
         it('memberA', async () => {
             const res = await users.post(memberA.createDto)
             expect(res.status).toEqual(HttpStatus.CREATED)
@@ -48,7 +48,7 @@ describe('user register, login & logout', () => {
         })
     })
 
-    describe('2. 로그인', () => {
+    describe('2. login', () => {
         it('memberA', async () => {
             const res = await auths.post(memberA.loginDto)
             expect(res.status).toEqual(HttpStatus.CREATED)
@@ -70,7 +70,7 @@ describe('user register, login & logout', () => {
         })
     })
 
-    describe('3. 사용자 권한', () => {
+    describe('3. user authorization', () => {
         it('memberA는 멤버 서비스 사용 가능', async () => {
             const res = await users.get(memberA.userId).set('cookie', memberA.authCookie)
 
@@ -115,7 +115,7 @@ describe('user register, login & logout', () => {
         })
     })
 
-    describe('5. 로그아웃', () => {
+    describe('5. logout', () => {
         it('삭제된 memberA는 로그아웃 불가', async () => {
             const res = await auths.delete().set('cookie', memberA.authCookie)
 
@@ -129,18 +129,18 @@ describe('user register, login & logout', () => {
         })
     })
 
-    describe('6. 재로그인', () => {
-        it('삭제된 memberA는 로그인 불가', async () => {
+    describe('6. login, again', () => {
+        it('삭제된 memberA는 login 불가', async () => {
             const res = await auths.post(memberA.loginDto)
             expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
         })
 
-        it('삭제된 memberB는 로그인 불가', async () => {
+        it('삭제된 memberB는 login 불가', async () => {
             const res = await auths.post(memberB.loginDto)
             expect(res.status).toEqual(HttpStatus.UNAUTHORIZED)
         })
 
-        it('adminA는 로그인 가능', async () => {
+        it('adminA는 login 가능', async () => {
             const res = await auths.post(adminA.loginDto)
             expect(res.status).toEqual(HttpStatus.CREATED)
         })

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcrypt'
 import { Repository } from 'typeorm'
+import { SystemError } from 'src/common'
 import { UserRole } from 'src/users/domain'
 import { AuthRecord } from './auth.record'
 
@@ -22,7 +23,7 @@ export class AuthsService {
     async create(dto: CreateAuthDto) {
         const user = await this.findByEmail(dto.email)
 
-        if (user) throw new Error('already exists authentication')
+        if (user) throw new SystemError('already exists authentication')
 
         // 7을 선택한 이유는 없다. 적당히 골랐다.
         const saltOrRounds = 7
