@@ -26,9 +26,10 @@ describe('main', () => {
 
     it('catch SytemException & shutdown', async () => {
         const appService = app.get(AppService)
-        appService.subscribeToShutdown(() => {})
 
         const spy = jest.spyOn(appService, 'subscribeToShutdown')
+
+        appService.subscribeToShutdown(() => {})
 
         await req.get()
 
@@ -39,7 +40,7 @@ describe('main', () => {
 @Controller('test')
 class TestController {
     @Get()
-    test() {
+    method() {
         throw new SystemException('test message')
     }
 }

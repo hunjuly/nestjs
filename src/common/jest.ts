@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, INestApplication } from '@nestjs/common'
+import { CanActivate, ExecutionContext, INestApplication, LogLevel, LoggerService } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as supertest from 'supertest'
 import { AdminGuard, SelfGuard } from 'src/auths'
@@ -30,6 +30,15 @@ class MockAuthGuard implements CanActivate {
     }
 }
 
+export class MockLogger implements LoggerService {
+    log(_message: any, ..._optionalParams: any[]): any {}
+    error(_message: any, ..._optionalParams: any[]): any {}
+    warn(_message: any, ..._optionalParams: any[]): any {}
+    debug?(_message: any, ..._optionalParams: any[]): any {}
+    verbose?(_message: any, ..._optionalParams: any[]): any {}
+    setLogLevels?(_levels: LogLevel[]): any {}
+}
+
 export async function createTestingModule(injections: {
     modules?: any[]
     controllers?: any[]
@@ -53,6 +62,8 @@ export async function createTestingModule(injections: {
 }
 export async function createApp(module: TestingModule) {
     const app = module.createNestApplication()
+    app.useLogger(new MockLogger())
+
     await app.init()
 
     return app
