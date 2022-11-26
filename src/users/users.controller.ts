@@ -1,16 +1,4 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    ForbiddenException,
-    Get,
-    Param,
-    Patch,
-    Post,
-    Request,
-    UseFilters,
-    UseGuards
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseFilters, UseGuards } from '@nestjs/common'
 import {
     DomainExceptionFilter,
     OrderOption,
@@ -18,7 +6,7 @@ import {
     PageOption,
     PageQuery
 } from 'src//common/application'
-import { AdminGuard, MemberGuard } from 'src/auths'
+import { AdminGuard, SelfGuard } from 'src/auths'
 import { CreateUserDto, UpdateUserDto } from './dto'
 import { UsersService } from './users.service'
 
@@ -32,31 +20,27 @@ export class UsersController {
         return this.service.create(createDto)
     }
 
-    @UseGuards(AdminGuard)
     @Get()
+    @UseGuards(AdminGuard)
     findAll(@PageQuery() page: PageOption, @OrderQuery() order?: OrderOption) {
         return this.service.findAll(page, order)
     }
 
-    @UseGuards(MemberGuard)
     @Get(':id')
+    @UseGuards(SelfGuard)
     findById(@Param('id') id: string) {
         return this.service.findById(id)
     }
 
-    @UseGuards(MemberGuard)
     @Patch(':id')
+    @UseGuards(SelfGuard)
     update(@Param('id') id: string, @Body() updateDto: UpdateUserDto) {
         return this.service.update(id, updateDto)
     }
 
-    @UseGuards(MemberGuard)
     @Delete(':id')
-    remove(@Request() req, @Param('id') id: string) {
-        if (req.user.role === 'admin' || id === req.user.id) {
-            return this.service.remove(id)
-        }
-
-        throw new ForbiddenException()
+    @UseGuards(SelfGuard)
+    remove(@Param('id') id: string) {
+        return this.service.remove(id)
     }
 }

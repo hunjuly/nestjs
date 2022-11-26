@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
+import { SessionUser } from '../types'
 import { IS_PUBLIC_KEY } from './public'
 
 @Injectable()
@@ -17,9 +18,10 @@ export class AdminGuard implements CanActivate {
         }
 
         const request = context.switchToHttp().getRequest()
+        const user = request.user as SessionUser
 
-        if (request.user.role !== 'admin') return false
+        if (!user) return false
 
-        return request.isAuthenticated()
+        return user.role === 'admin'
     }
 }

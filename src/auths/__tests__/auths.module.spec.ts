@@ -8,9 +8,6 @@ import { AuthsModule } from '../auths.module'
 import { AuthsService } from '../auths.service'
 import { CreateAuthDto } from '../auths.service'
 
-// TODO 권한문제, 자기자신 혹은 admin을 어떻게 알 수 있는가? 새로운 가드가 필요하다.
-// https://gist.github.com/DimosthenisK/db21929a137d3e6c147f0bda3ecfbda6#file-self-decorator-ts
-
 // TODO 시스템 오류 시 어떻게 멈추나.
 // https://stackoverflow.com/questions/57146395/how-to-trigger-application-shutdown-from-a-service-in-nest-js
 
@@ -55,7 +52,7 @@ describe('/auths', () => {
             expect(auth).toMatchObject({ userId: expect.any(String) })
         })
 
-        it('이미 존재하는 auth은 실패한다', async () => {
+        it('이미 존재하는 auth는 실패한다', async () => {
             const promise = service.create(member.createDto)
 
             await expect(promise).rejects.toThrow(SystemError)
@@ -103,17 +100,17 @@ describe('/auths', () => {
     })
 
     describe('3. user authorization', () => {
-        it('MemberGuard', async () => {
-            const method = 'member-guard-test'
+        it('SelfGuard', async () => {
+            const path = 'test/self-guard/' + member.userId
 
-            const memberRes = await req.get(method).set('cookie', member.authCookie)
+            const memberRes = await req.get(path).set('cookie', member.authCookie)
             expect(memberRes.status).toEqual(HttpStatus.OK)
 
-            const adminRes = await req.get(method).set('cookie', admin.authCookie)
+            const adminRes = await req.get(path).set('cookie', admin.authCookie)
             expect(adminRes.status).toEqual(HttpStatus.OK)
         })
         it('AdminGuard', async () => {
-            const method = 'admin-guard-test'
+            const method = 'test/admin-guard'
 
             const memberRes = await req.get(method).set('cookie', member.authCookie)
             expect(memberRes.status).toEqual(HttpStatus.FORBIDDEN)

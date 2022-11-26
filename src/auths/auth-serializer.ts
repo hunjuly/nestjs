@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { PassportSerializer } from '@nestjs/passport'
 import { AuthsService } from './auths.service'
+import { SessionUser } from './types'
 
 @Injectable()
 export class AuthSerializer extends PassportSerializer {
@@ -20,7 +21,7 @@ export class AuthSerializer extends PassportSerializer {
                 id: auth.userId,
                 email: auth.email,
                 role: auth.role
-            }
+            } as SessionUser
 
             done(null, user)
         } else {

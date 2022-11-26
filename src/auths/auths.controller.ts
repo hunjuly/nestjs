@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, Logger, Post, Request, UseGuards } from '@nestjs/common'
-import { AdminGuard, LocalAuthGuard, MemberGuard } from './guards'
+import { AdminGuard, LocalAuthGuard, Self, SelfGuard } from './guards'
 
 @Controller('auths')
 export class AuthsController {
@@ -10,7 +10,7 @@ export class AuthsController {
     }
 
     @Delete()
-    @UseGuards(MemberGuard)
+    @UseGuards(SelfGuard)
     async logout(@Request() req) {
         await req.logout((err) => {
             if (err) {
@@ -19,11 +19,12 @@ export class AuthsController {
         })
     }
 
-    @Get('admin-guard-test')
+    @Get('test/admin-guard')
     @UseGuards(AdminGuard)
     adminTest() {}
 
-    @Get('member-guard-test')
-    @UseGuards(MemberGuard)
+    @Get('test/self-guard/:id')
+    @Self({ userIDParam: 'id', allowAdmins: true })
+    @UseGuards(SelfGuard)
     memberTest() {}
 }

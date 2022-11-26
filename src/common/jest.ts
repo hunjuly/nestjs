@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import * as supertest from 'supertest'
-import { AdminGuard, MemberGuard } from 'src/auths'
+import { AdminGuard, SelfGuard } from 'src/auths'
 import { GlobalModule } from 'src/global.module'
 
 export function createSpy(object: any, method: string, args: any[] | undefined | null, response: any) {
@@ -44,7 +44,7 @@ export async function createTestingModule(injections: {
         controllers,
         providers
     })
-    builder.overrideGuard(MemberGuard).useClass(MockAuthGuard)
+    builder.overrideGuard(SelfGuard).useClass(MockAuthGuard)
     builder.overrideGuard(AdminGuard).useClass(MockAuthGuard)
 
     const module = await builder.compile()
