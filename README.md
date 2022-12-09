@@ -1,6 +1,6 @@
 ## Description
 
-Describe programming using `nestjs`, `redis`, `grpc`, `typeorm`.
+Describe programming using `nestjs`, `redis`, `grpc`, `typeorm`..
 
 ## TODO
 
