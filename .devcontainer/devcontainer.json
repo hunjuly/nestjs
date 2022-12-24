@@ -23,5 +23,8 @@
         "WORKSPACE_ROOT": "${containerWorkspaceFolder}",
         "NODE_ENV": "development"
     },
+    "forwardPorts": [
+        3000
+    ],
     "postCreateCommand": "npm i --prefix ./"
 }

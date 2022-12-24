@@ -10,9 +10,9 @@ Describe programming using `nestjs`, `redis`, `grpc`, `typeorm`..
 
 -   A simple entity of CRUD uses `Active Record`. Complex entities use the `Data Mapper` style.
 -   `src/common` is a common library that can be used in other nestjs projects.
--   Because the DDD uses the entity concept, the `.entity.ts` file created by `nest cli` is changed to `.record.ts` and the class name is also appended with `Record` suffix.<br>
+-   Because the DDD uses the entity concept, the `.entity.ts` file created by `nest cli` is changed to `.record.ts` and the class name is also appended with `Record` suffix.\
     The reason for record is that it is information recorded in DB by typeorm.
--   HATEOAS 혹은 HAL은 controller에서 구현한다. 그러나 여기서는 하지 않는다. 완전한 self descriptive를 지원하는 것은 어렵고 복잡하다. 꼭 self description이 필요하다면 대안으로 GRPC를 사용할 수 있다.
+-   HATEOAS or HAL is implemented in the controller. However, it is not implemented here. Supporting full self descriptives is difficult and complicated. If you really need self description, you can use GRPC as an alternative.
 
     ```sh
     curl -u admin:admin -X GET "http://localhost:8080/confluence/rest/api/space/ds/content/page?limit=5&start=5"

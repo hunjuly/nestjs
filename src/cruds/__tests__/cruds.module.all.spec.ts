@@ -6,9 +6,9 @@ import { CrudsService } from '../cruds.service'
 import { createDto, createDtos, firstDto, secondDto, updateDto } from './mocks'
 
 /*
-만약 controller,service를 각각 다른 프로그래머가 개발한다면 각각의 격리된 레이어를 대상으로 테스트 해야 한다.
-혼자 개발한다 하더라도 각 레이어의 크기가 크고 복잡하다면 테스트를 나눌 수 있다.
-그러나 여기서는 이 정도 테스트로 충분하다. 각 레이어 마다 할 필요는 없다.
+If controller and service are developed by different programmers, each isolated layer should be tested.
+Even if you develop alone, if each layer is large and complex, you can divide the test.
+However, this test is sufficient here. You don't have to do it for each layer.
 */
 describe('/cruds', () => {
     let module: TestingModule

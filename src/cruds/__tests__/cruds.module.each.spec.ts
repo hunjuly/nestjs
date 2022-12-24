@@ -6,12 +6,12 @@ import { CrudsService } from '../cruds.service'
 import { createDto, createDtos, firstDto, secondDto, updateDto } from './mocks'
 
 /*
-유닛 테스트는 다른 테스트 케이스에 의존하지 않는 것이 좋다.
-그래서 여기서는 beforeEach를 실행하고 각 테스트에 필요한 create user를 실행한다.
-그러나 이것이 코드를 더 복잡하게 한다.
-기본적인 CRUD는 순서대로 테스트 하는게 좋다.
-아래는 안 좋은 케이스로 뒀다.
- */
+Unit tests should not depend on other test cases.
+So here, beforeEach is executed and the create user required for each test is executed.
+However, this makes the code more complex.
+It's good to test basic CRUD in order.
+Below is a bad case.
+*/
 describe('/cruds', () => {
     let module: TestingModule
     let app: INestApplication
