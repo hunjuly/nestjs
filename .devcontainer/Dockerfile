@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:lts-alpine
 
 # Development Tools
 RUN apk add -f git curl jq tree vim asciinema
