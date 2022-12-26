@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-12-26T00:32:46.052Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15" etag="Cuz5Gi7h033BrpqYRd0G" version="20.7.4" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2022-12-26T11:52:05.830Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15" etag="Ip-qjPpgxCYrT_qc8bes" version="20.7.4" type="github" pages="4">
   <diagram id="3KD_eXYmt1nBWjpt5BOu" name="who&amp;what">
     <mxGraphModel dx="1436" dy="729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -74,7 +74,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="buying tickets" id="SwQHozpSzbYUUKjixujb">
-    <mxGraphModel dx="2489" dy="2058" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="2236" dy="1929" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="n6CRG6hLEZFFQgUCB15U-0" />
         <mxCell id="n6CRG6hLEZFFQgUCB15U-1" parent="n6CRG6hLEZFFQgUCB15U-0" />
@@ -219,7 +219,7 @@
             <mxPoint x="199.5" y="-722" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dotC8Va3vZ5KyYyJwo9q-1" value="theaters(movieId,상영기간)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.52;entryY=0.308;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
+        <mxCell id="dotC8Va3vZ5KyYyJwo9q-1" value="theaters(movieId,상영일[])" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.52;entryY=0.308;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="399.5" y="-777.9999999999998" as="sourcePoint" />
             <mxPoint x="200" y="-777.9999999999998" as="targetPoint" />
@@ -240,7 +240,7 @@
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-5" value="StatisticsService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=0;strokeColor=default;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
           <mxGeometry x="470" y="-1139" width="100" height="1120" as="geometry" />
         </mxCell>
-        <mxCell id="EQVAHNTnu9_8cxI2cfLv-8" value="theaters(movieId, 상영기간)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.52;entryY=0.308;entryDx=0;entryDy=0;entryPerimeter=0;" parent="EQVAHNTnu9_8cxI2cfLv-5" edge="1">
+        <mxCell id="EQVAHNTnu9_8cxI2cfLv-8" value="theaters(movieId,&amp;nbsp;상영일[])" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.52;entryY=0.308;entryDx=0;entryDy=0;entryPerimeter=0;" parent="EQVAHNTnu9_8cxI2cfLv-5" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="289.5" y="341" as="sourcePoint" />
             <mxPoint x="-70" y="341.0000000000002" as="targetPoint" />
