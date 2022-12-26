@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-12-26T00:14:31.045Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15" etag="tGEPGLYJAjeIu5TatnH2" version="20.7.4" type="github" pages="5">
+<mxfile host="app.diagrams.net" modified="2022-12-26T00:27:13.593Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15" etag="ELJx73OectPkFnX97XMj" version="20.7.4" type="github" pages="4">
   <diagram id="3KD_eXYmt1nBWjpt5BOu" name="who&amp;what">
-    <mxGraphModel dx="984" dy="695" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1436" dy="729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -74,7 +74,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="buying tickets" id="SwQHozpSzbYUUKjixujb">
-    <mxGraphModel dx="1996" dy="1901" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="2489" dy="2058" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="n6CRG6hLEZFFQgUCB15U-0" />
         <mxCell id="n6CRG6hLEZFFQgUCB15U-1" parent="n6CRG6hLEZFFQgUCB15U-0" />
@@ -264,7 +264,7 @@
             <mxPoint x="-69.75" y="739" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="EQVAHNTnu9_8cxI2cfLv-24" value="결제(orderId,paymentOption)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#FF0000;" parent="EQVAHNTnu9_8cxI2cfLv-5" target="EQVAHNTnu9_8cxI2cfLv-23" edge="1">
+        <mxCell id="EQVAHNTnu9_8cxI2cfLv-24" value="결제(orderId, cardInfo)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#FF0000;" parent="EQVAHNTnu9_8cxI2cfLv-5" target="EQVAHNTnu9_8cxI2cfLv-23" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="-69.99647058823484" y="819" as="sourcePoint" />
             <mxPoint x="129.5" y="819" as="targetPoint" />
@@ -471,7 +471,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="o-RGYNDa6gb60LkuTU2P" name="classes">
-    <mxGraphModel dx="358" dy="2018" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="636" dy="1929" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -550,7 +550,7 @@
         <mxCell id="3fTszNtFpuzyzQcIzCOg-18" value="sold" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3fTszNtFpuzyzQcIzCOg-16" vertex="1">
           <mxGeometry y="52" width="140" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="3_Pp4POVXidikGEL4NJ2-1" value="hold" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="3fTszNtFpuzyzQcIzCOg-16">
+        <mxCell id="3_Pp4POVXidikGEL4NJ2-1" value="hold" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3fTszNtFpuzyzQcIzCOg-16" vertex="1">
           <mxGeometry y="78" width="140" height="26" as="geometry" />
         </mxCell>
         <mxCell id="3fTszNtFpuzyzQcIzCOg-19" value="grade" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="3fTszNtFpuzyzQcIzCOg-16" vertex="1">
@@ -613,14 +613,6 @@
         <mxCell id="u2kb-pPZuD_mpwhoR287-1" value="theater.seats는 value인가 entity인가? &lt;br&gt;entity라면 theater가 aggregate root다&lt;br&gt;seat는 entity다 id로 관리되어야 하는 각각이 유니크한 속성이다." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;align=left;" parent="1" vertex="1">
           <mxGeometry x="1033" y="-437" width="238" height="78" as="geometry" />
         </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="nV54Y1yRFOsjFaBgSNUw" name="pay order">
-    <mxGraphModel dx="984" dy="667" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
       </root>
     </mxGraphModel>
   </diagram>
