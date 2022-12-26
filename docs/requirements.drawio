@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-12-26T00:27:13.593Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15" etag="ELJx73OectPkFnX97XMj" version="20.7.4" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2022-12-26T00:32:46.052Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15" etag="Cuz5Gi7h033BrpqYRd0G" version="20.7.4" type="github" pages="4">
   <diagram id="3KD_eXYmt1nBWjpt5BOu" name="who&amp;what">
     <mxGraphModel dx="1436" dy="729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -348,7 +348,7 @@
         <mxCell id="2Gi9oBy8cIkgD_BMxEC6-0" value="&lt;div style=&quot;text-align: left;&quot;&gt;TheatersService는 scheduleRepo을 포함한다.&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;const theaters = &amp;nbsp;schedule.findTheatersByMovie(movieId) 를 해야 한다.&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
           <mxGeometry x="651" y="-914" width="399" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Yz2ctBILXrtQK-oeyWx--0" value="메소드를 weeklyRanking로 해도 될까?&lt;br&gt;이것은 weekly를 속성으로 볼 것인가? 대상으로 볼 것인가?&lt;br&gt;여기서는 속성으로 판단했다. &lt;br&gt;그리고 지금은 ranking이지만 정확하게는 movieRankings가 될 것이다. 순위는 영화 외에도 극장, 연령 등 다양할 수 있다." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;align=left;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
+        <mxCell id="Yz2ctBILXrtQK-oeyWx--0" value="메소드를 weeklyRanking로 해도 될까?&lt;br&gt;이것은 weekly를 속성으로 볼 것인가? 대상으로 볼 것인가?&lt;br&gt;여기서는 속성으로 판단했다. &lt;br&gt;ranking은 영화 외에도 극장, 연령 등 다양하다.&lt;br&gt;ranking(&#39;weekly&#39;,&#39;movie&#39;) 이와 같이 확장될 수 있다." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;align=left;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
           <mxGeometry x="551" y="-1058" width="299" height="90" as="geometry" />
         </mxCell>
         <mxCell id="Yz2ctBILXrtQK-oeyWx--1" value="&lt;div style=&quot;text-align: left;&quot;&gt;ScheduleService는 TicketsRepo를 포함해야 한다.&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;회차 당 남은 티켓수를 보여줘야 한다.&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
