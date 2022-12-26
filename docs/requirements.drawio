@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-12-26T11:52:05.830Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15" etag="Ip-qjPpgxCYrT_qc8bes" version="20.7.4" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2022-12-26T11:58:40.129Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15" etag="AXng3oBHV2dtxnCJ7Ah_" version="20.7.4" type="github" pages="4">
   <diagram id="3KD_eXYmt1nBWjpt5BOu" name="who&amp;what">
     <mxGraphModel dx="1436" dy="729" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -74,7 +74,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="buying tickets" id="SwQHozpSzbYUUKjixujb">
-    <mxGraphModel dx="2236" dy="1929" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1790" dy="1703" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="n6CRG6hLEZFFQgUCB15U-0" />
         <mxCell id="n6CRG6hLEZFFQgUCB15U-1" parent="n6CRG6hLEZFFQgUCB15U-0" />
@@ -83,38 +83,38 @@
         </mxCell>
         <mxCell id="dotC8Va3vZ5KyYyJwo9q-2" value="극장선택(theaterId)" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.47;entryY=0.338;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-2" edge="1">
           <mxGeometry width="60" relative="1" as="geometry">
-            <mxPoint x="-96" y="387.77" as="sourcePoint" />
-            <mxPoint x="49" y="387.4100000000001" as="targetPoint" />
+            <mxPoint x="-96" y="441.77" as="sourcePoint" />
+            <mxPoint x="49" y="441.4100000000001" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nJTvsKPgxT_m7LcFDDeI-0" value="회차 선택(roundId)" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.47;entryY=0.338;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-2" edge="1">
           <mxGeometry width="60" relative="1" as="geometry">
-            <mxPoint x="-96" y="537.7700000000002" as="sourcePoint" />
-            <mxPoint x="49" y="537.4099999999999" as="targetPoint" />
+            <mxPoint x="-96" y="591.7700000000002" as="sourcePoint" />
+            <mxPoint x="49" y="591.4099999999999" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nJTvsKPgxT_m7LcFDDeI-4" value="주문 생성, 티켓(ticketId[]) 선점" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-2" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="52.00352941176516" y="670" as="sourcePoint" />
-            <mxPoint x="251.5" y="670" as="targetPoint" />
+            <mxPoint x="52.00352941176516" y="724" as="sourcePoint" />
+            <mxPoint x="251.5" y="724" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nJTvsKPgxT_m7LcFDDeI-5" value="주문 정보(orderId)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.51;entryY=0.605;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-2" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="244.6800000000003" y="755.02" as="sourcePoint" />
-            <mxPoint x="53.68000000000029" y="755.02" as="targetPoint" />
+            <mxPoint x="244.6800000000003" y="809.02" as="sourcePoint" />
+            <mxPoint x="53.68000000000029" y="809.02" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-0" value="결제(orderId, coupon)" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.47;entryY=0.338;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-2" edge="1">
           <mxGeometry width="60" relative="1" as="geometry">
-            <mxPoint x="-96" y="780.3600000000005" as="sourcePoint" />
-            <mxPoint x="49" y="779.9999999999999" as="targetPoint" />
+            <mxPoint x="-96" y="834.3600000000005" as="sourcePoint" />
+            <mxPoint x="49" y="833.9999999999999" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-1" value="결제(orderId)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-2" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="52.00352941176516" y="800" as="sourcePoint" />
-            <mxPoint x="251.5" y="800" as="targetPoint" />
+            <mxPoint x="52.00352941176516" y="854" as="sourcePoint" />
+            <mxPoint x="251.5" y="854" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="n6CRG6hLEZFFQgUCB15U-3" value="Backend" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=0;strokeColor=default;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
@@ -122,20 +122,20 @@
         </mxCell>
         <mxCell id="nJTvsKPgxT_m7LcFDDeI-1" value="티켓 목록(roundId)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#000000;entryX=0.472;entryY=0.541;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-3" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="-152.5" y="562" as="sourcePoint" />
-            <mxPoint x="49.879999999999825" y="562.0000000000002" as="targetPoint" />
+            <mxPoint x="-152.5" y="616" as="sourcePoint" />
+            <mxPoint x="49.879999999999825" y="616.0000000000002" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nJTvsKPgxT_m7LcFDDeI-2" value="티켓 목록" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-3" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="51.68000000000001" y="628.02" as="sourcePoint" />
-            <mxPoint x="-152.5" y="628.02" as="targetPoint" />
+            <mxPoint x="51.68000000000001" y="682.02" as="sourcePoint" />
+            <mxPoint x="-152.5" y="682.02" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-2" value="결제 성공(orderId)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.51;entryY=0.605;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-3" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="49.5" y="949.02" as="sourcePoint" />
-            <mxPoint x="-149.99999999999972" y="949.02" as="targetPoint" />
+            <mxPoint x="49.5" y="1003.02" as="sourcePoint" />
+            <mxPoint x="-149.99999999999972" y="1003.02" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-6" value="movieId" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;" parent="n6CRG6hLEZFFQgUCB15U-3" target="n6CRG6hLEZFFQgUCB15U-7" edge="1">
@@ -186,6 +186,12 @@
         <mxCell id="n6CRG6hLEZFFQgUCB15U-11" value="TheatersService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=0;strokeColor=default;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
           <mxGeometry x="710" y="-1139" width="100" height="1120" as="geometry" />
         </mxCell>
+        <mxCell id="WJvwJOxjs1si3uOO23no-0" value="movieId, thearterId" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontColor=#FF0000;" edge="1" parent="n6CRG6hLEZFFQgUCB15U-11">
+          <mxGeometry width="80" relative="1" as="geometry">
+            <mxPoint x="50" y="338" as="sourcePoint" />
+            <mxPoint x="170.13" y="338" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="n6CRG6hLEZFFQgUCB15U-12" value="극장 목록(movieId, 현재위치)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#000000;entryX=0.49;entryY=0.372;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="197.5" y="-848.3600000000001" as="sourcePoint" />
@@ -201,34 +207,40 @@
         <mxCell id="n6CRG6hLEZFFQgUCB15U-20" value="ScheduleService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
           <mxGeometry x="830" y="-1139" width="100" height="1120" as="geometry" />
         </mxCell>
+        <mxCell id="WJvwJOxjs1si3uOO23no-1" value="상영일[]" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;" edge="1" parent="n6CRG6hLEZFFQgUCB15U-20">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="50.25" y="369" as="sourcePoint" />
+            <mxPoint x="-74" y="369" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="n6CRG6hLEZFFQgUCB15U-21" value="회차 목록(theaterId, movieId, date)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#000000;entryX=0.472;entryY=0.541;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="197.5" y="-685.0799999999999" as="sourcePoint" />
-            <mxPoint x="397.20000000000005" y="-685.0799999999999" as="targetPoint" />
+            <mxPoint x="197.5" y="-631.0799999999999" as="sourcePoint" />
+            <mxPoint x="397.20000000000005" y="-631.0799999999999" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="n6CRG6hLEZFFQgUCB15U-22" value="rounds(시간, 남은 티켓수)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.51;entryY=0.605;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="399.5" y="-621" as="sourcePoint" />
-            <mxPoint x="199" y="-620.9999999999999" as="targetPoint" />
+            <mxPoint x="399.5" y="-567" as="sourcePoint" />
+            <mxPoint x="199" y="-566.9999999999999" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dotC8Va3vZ5KyYyJwo9q-0" value="날짜 선택(date)" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry width="60" relative="1" as="geometry">
-            <mxPoint x="52" y="-722" as="sourcePoint" />
-            <mxPoint x="199.5" y="-722" as="targetPoint" />
+            <mxPoint x="52" y="-668" as="sourcePoint" />
+            <mxPoint x="199.5" y="-668" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dotC8Va3vZ5KyYyJwo9q-1" value="theaters(movieId,상영일[])" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.52;entryY=0.308;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="399.5" y="-777.9999999999998" as="sourcePoint" />
-            <mxPoint x="200" y="-777.9999999999998" as="targetPoint" />
+            <mxPoint x="399.5" y="-723.9999999999998" as="sourcePoint" />
+            <mxPoint x="200" y="-723.9999999999998" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nJTvsKPgxT_m7LcFDDeI-3" value="티켓 선택(ticketId)" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.47;entryY=0.338;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry width="60" relative="1" as="geometry">
-            <mxPoint x="54" y="-490.22999999999956" as="sourcePoint" />
-            <mxPoint x="199" y="-490.59000000000015" as="targetPoint" />
+            <mxPoint x="54" y="-436.22999999999956" as="sourcePoint" />
+            <mxPoint x="199" y="-436.59000000000015" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-4" value="ranking(weekly)&amp;nbsp;" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontColor=#FF0000;" parent="n6CRG6hLEZFFQgUCB15U-1" target="EQVAHNTnu9_8cxI2cfLv-5" edge="1">
@@ -242,32 +254,32 @@
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-8" value="theaters(movieId,&amp;nbsp;상영일[])" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.52;entryY=0.308;entryDx=0;entryDy=0;entryPerimeter=0;" parent="EQVAHNTnu9_8cxI2cfLv-5" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="289.5" y="341" as="sourcePoint" />
-            <mxPoint x="-70" y="341.0000000000002" as="targetPoint" />
+            <mxPoint x="289.5" y="395" as="sourcePoint" />
+            <mxPoint x="-70" y="395.0000000000002" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-14" value="theaterId, movieId, date" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontColor=#FF0000;" parent="EQVAHNTnu9_8cxI2cfLv-5" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="-70" y="474" as="sourcePoint" />
-            <mxPoint x="409.5" y="474" as="targetPoint" />
+            <mxPoint x="-70" y="528" as="sourcePoint" />
+            <mxPoint x="409.5" y="528" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="EQVAHNTnu9_8cxI2cfLv-20" value="ticketId[]" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#FF0000;" parent="EQVAHNTnu9_8cxI2cfLv-5" target="EQVAHNTnu9_8cxI2cfLv-19" edge="1">
+        <mxCell id="EQVAHNTnu9_8cxI2cfLv-20" value="ticketId[]" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#FF0000;" parent="EQVAHNTnu9_8cxI2cfLv-5" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="-69.99647058823484" y="689" as="sourcePoint" />
-            <mxPoint x="529.5" y="689" as="targetPoint" />
+            <mxPoint x="-69.99647058823484" y="743" as="sourcePoint" />
+            <mxPoint x="649.5" y="743" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-21" value="주문 정보(orderId)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.51;entryY=0.605;entryDx=0;entryDy=0;entryPerimeter=0;" parent="EQVAHNTnu9_8cxI2cfLv-5" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="649.5" y="739" as="sourcePoint" />
-            <mxPoint x="-69.75" y="739" as="targetPoint" />
+            <mxPoint x="649.5" y="793" as="sourcePoint" />
+            <mxPoint x="-69.75" y="793" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="EQVAHNTnu9_8cxI2cfLv-24" value="결제(orderId, cardInfo)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#FF0000;" parent="EQVAHNTnu9_8cxI2cfLv-5" target="EQVAHNTnu9_8cxI2cfLv-23" edge="1">
+        <mxCell id="EQVAHNTnu9_8cxI2cfLv-24" value="결제(orderId, cardInfo)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#FF0000;" parent="EQVAHNTnu9_8cxI2cfLv-5" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="-69.99647058823484" y="819" as="sourcePoint" />
-            <mxPoint x="129.5" y="819" as="targetPoint" />
+            <mxPoint x="-69.99647058823484" y="873" as="sourcePoint" />
+            <mxPoint x="779.5" y="873" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-10" value="예매 시작(movieId)" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
@@ -278,8 +290,8 @@
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-15" value="rounds(시간, 남은 티켓수)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.51;entryY=0.605;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="879.5" y="-636" as="sourcePoint" />
-            <mxPoint x="400" y="-636" as="targetPoint" />
+            <mxPoint x="879.5" y="-582" as="sourcePoint" />
+            <mxPoint x="400" y="-582" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-16" value="TicketsService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
@@ -287,20 +299,20 @@
         </mxCell>
         <mxCell id="JzAR9wD903sUzkHggHRX-0" value="sold tickets&amp;nbsp;" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;" parent="EQVAHNTnu9_8cxI2cfLv-16" edge="1">
           <mxGeometry width="60" relative="1" as="geometry">
-            <mxPoint x="49.5" y="890" as="sourcePoint" />
-            <mxPoint x="-38" y="890" as="targetPoint" />
+            <mxPoint x="49.5" y="944" as="sourcePoint" />
+            <mxPoint x="-38" y="944" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="EQVAHNTnu9_8cxI2cfLv-17" value="티켓 목록(roundId)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#FF0000;" parent="n6CRG6hLEZFFQgUCB15U-1" target="EQVAHNTnu9_8cxI2cfLv-16" edge="1">
+        <mxCell id="EQVAHNTnu9_8cxI2cfLv-17" value="티켓 목록(roundId)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#FF0000;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="400.00352941176516" y="-560" as="sourcePoint" />
-            <mxPoint x="599.5" y="-560" as="targetPoint" />
+            <mxPoint x="400.00352941176516" y="-506" as="sourcePoint" />
+            <mxPoint x="999.5" y="-506" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-18" value="tickets(좌석수 만큼 있다)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;entryX=0.51;entryY=0.605;entryDx=0;entryDy=0;entryPerimeter=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="999.5" y="-528" as="sourcePoint" />
-            <mxPoint x="400.25" y="-528" as="targetPoint" />
+            <mxPoint x="999.5" y="-474" as="sourcePoint" />
+            <mxPoint x="400.25" y="-474" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-19" value="OrdersService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
@@ -308,20 +320,20 @@
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-25" value="paid(ticketId)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#000000;" parent="EQVAHNTnu9_8cxI2cfLv-19" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="49.5" y="869" as="sourcePoint" />
-            <mxPoint x="-70" y="869" as="targetPoint" />
+            <mxPoint x="49.5" y="923" as="sourcePoint" />
+            <mxPoint x="-70" y="923" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-28" value="결제 성공(orderId)" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;fontSize=11;fontColor=#000000;" parent="EQVAHNTnu9_8cxI2cfLv-19" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="169.6300000000001" y="918" as="sourcePoint" />
-            <mxPoint x="-670.5" y="918" as="targetPoint" />
+            <mxPoint x="169.6300000000001" y="972" as="sourcePoint" />
+            <mxPoint x="-670.5" y="972" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="EQVAHNTnu9_8cxI2cfLv-22" value="hold(10min,ticketId)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-1" source="EQVAHNTnu9_8cxI2cfLv-19" edge="1">
+        <mxCell id="EQVAHNTnu9_8cxI2cfLv-22" value="hold(10min,ticketId)" style="html=1;verticalAlign=bottom;endArrow=block;rounded=0;fontSize=11;fontColor=#000000;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="410.00352941176516" y="-426" as="sourcePoint" />
-            <mxPoint x="1000" y="-426" as="targetPoint" />
+            <mxPoint x="1119.5" y="-372" as="sourcePoint" />
+            <mxPoint x="1000" y="-372" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-23" value="PaymentsService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
@@ -329,20 +341,20 @@
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-27" value="결제성공(orderId)" style="html=1;verticalAlign=bottom;endArrow=open;rounded=0;fontSize=11;fontColor=#000000;endFill=0;" parent="EQVAHNTnu9_8cxI2cfLv-23" edge="1">
           <mxGeometry width="80" relative="1" as="geometry">
-            <mxPoint x="49.5" y="849" as="sourcePoint" />
-            <mxPoint x="-70" y="849" as="targetPoint" />
+            <mxPoint x="49.5" y="903" as="sourcePoint" />
+            <mxPoint x="-70" y="903" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-29" value="TicketsService의 데이터는&amp;nbsp;&lt;br&gt;영화수*극장수*좌석수*회차*상영기간 &lt;br&gt;만큼 생성된다. 엄청나게 많은 데이터다." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;align=left;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
           <mxGeometry x="924" y="-1047" width="206" height="67" as="geometry" />
         </mxCell>
         <mxCell id="EQVAHNTnu9_8cxI2cfLv-32" value="&lt;div style=&quot;text-align: left;&quot;&gt;이벤트인가? 메소드인가?&amp;nbsp;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;티켓이 업데이트 됐다는 정보는 이벤트로 했다. Statistics에서 사용한다.&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;PaymentService는 OrderService와 밀접한 관계가 있어서 직접 호출했다.&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;그러나 티켓 입장에서는 어떤 서비스에 업데이트 해야 하는지 모른다.&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;Order와 Ticket도 밀접한 관계가 있기 때문에 직접 호출했다.&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
-          <mxGeometry x="840" y="-180" width="380" height="130" as="geometry" />
+          <mxGeometry x="840" y="-126" width="380" height="130" as="geometry" />
         </mxCell>
         <mxCell id="YmCHaal1r0CGUgPRFODm-0" value="구매 완료 화면" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;" parent="n6CRG6hLEZFFQgUCB15U-1" edge="1">
           <mxGeometry width="60" relative="1" as="geometry">
-            <mxPoint x="199.5" y="-161" as="sourcePoint" />
-            <mxPoint x="50" y="-161" as="targetPoint" />
+            <mxPoint x="199.5" y="-107" as="sourcePoint" />
+            <mxPoint x="50" y="-107" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="2Gi9oBy8cIkgD_BMxEC6-0" value="&lt;div style=&quot;text-align: left;&quot;&gt;TheatersService는 scheduleRepo을 포함한다.&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;const theaters = &amp;nbsp;schedule.findTheatersByMovie(movieId) 를 해야 한다.&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
@@ -352,13 +364,13 @@
           <mxGeometry x="551" y="-1058" width="299" height="90" as="geometry" />
         </mxCell>
         <mxCell id="Yz2ctBILXrtQK-oeyWx--1" value="&lt;div style=&quot;text-align: left;&quot;&gt;ScheduleService는 TicketsRepo를 포함해야 한다.&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;회차 당 남은 티켓수를 보여줘야 한다.&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
-          <mxGeometry x="750" y="-740" width="290" height="60" as="geometry" />
+          <mxGeometry x="750" y="-686" width="290" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ACQ4I4YMNUELCtM10cYg-0" value="&lt;h1&gt;Buying Tickets&lt;/h1&gt;&lt;p&gt;actor : user&lt;/p&gt;&lt;p&gt;goal : 사용자가 영화 티켓을 구매한다.&lt;/p&gt;&lt;p&gt;preconditions : 사용자는 회원 가입 및 로그인 상태다.&lt;/p&gt;&lt;p&gt;main flow:&lt;/p&gt;&lt;p&gt;1. 사용자가 현재 상영중인 영화를 선택한다.&lt;/p&gt;&lt;p&gt;&amp;nbsp; - 영화 목록은 주간 순위, 월간 순위, 개봉일자로 정렬된다.&lt;/p&gt;&lt;p&gt;&amp;nbsp; - 영화를 선택하면 시놉시스, 사용자 후기 등 상세 정보를 볼 수 있다.&lt;/p&gt;&lt;p&gt;&lt;strike&gt;&amp;nbsp; - 검색을 통해서 과거에 상영했던 영화를 볼 수 있다.&lt;/strike&gt;&lt;/p&gt;&lt;p&gt;2. 극장을 선택한다.&lt;/p&gt;&amp;nbsp; - 선택한 영화를 상영 중인 극장만 보여준다&lt;p&gt;&amp;nbsp; - 사용자의 현재 위치에서 가까운 극장을 추천한다.&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; - 반경 1.5km의 모든 극장. 없으면 가장 가까운 극장 5개&lt;/p&gt;&lt;p&gt;&amp;nbsp; - 지역을 선택하면 해당하는 극장 전체를 보여준다.&lt;/p&gt;&lt;p&gt;&amp;nbsp; &amp;nbsp; - 지역은 여러단계로 이루어진다. 극장 목록을 보여주는 것은 마지막 단계다.&lt;/p&gt;&lt;p&gt;3. 상영 시간을 선택한다.&lt;/p&gt;&lt;p&gt;&amp;nbsp; - 매진되어 좌석이 없는 시간은 흐리게 표현한다.&lt;/p&gt;&lt;p&gt;4. 좌석을 선택한다.&lt;/p&gt;&lt;p&gt;&amp;nbsp; - 좌석은 등급과 종류가 있다.(로얄석, 커플석)&lt;/p&gt;&lt;p&gt;&amp;nbsp; - 좌석을 선택하면 10분 동안 선점 상태가 된다. 결제를 하기 전에 다른 사용자가 티켓을 구매하는 것을 막는다.&lt;/p&gt;&lt;p&gt;5. 결제한다.&lt;/p&gt;&lt;p&gt;&amp;nbsp; - 카드결제는 PaymentGateway 서비스를 사용한다.&lt;/p&gt;&lt;p&gt;6. 완료&lt;/p&gt;&lt;p&gt;&amp;nbsp; - 결제까지 성공하면 구매한 티켓 정보를 보여준다.&lt;/p&gt;" style="text;html=1;strokeColor=default;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="n6CRG6hLEZFFQgUCB15U-1" vertex="1">
           <mxGeometry x="-420" y="-1000" width="387" height="676" as="geometry" />
         </mxCell>
         <mxCell id="SWdKTFVaQi8pzAOr6D53-0" value="&lt;div style=&quot;&quot;&gt;orderId 리턴할 때 포인트/쿠폰 등 결제 관련 정보도 함께 리턴한다.&lt;/div&gt;&lt;div style=&quot;&quot;&gt;PointService, CouponService 로 나눌 것인가?&lt;/div&gt;&lt;div style=&quot;&quot;&gt;둘은 나누는 것이 좋다. 각각은 성격이 다른 entity이다.&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=14;align=left;" vertex="1" parent="n6CRG6hLEZFFQgUCB15U-1">
-          <mxGeometry x="1144" y="-441" width="327" height="74" as="geometry" />
+          <mxGeometry x="1144" y="-387" width="327" height="74" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
