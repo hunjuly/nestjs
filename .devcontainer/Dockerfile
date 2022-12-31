@@ -25,9 +25,3 @@ RUN DOCKER_PKG="docker-20.10.9.tgz";\
     tar -xf $DOCKER_PKG --strip-components 1 --directory /usr/local/bin/ docker/docker; \
     rm -f $DOCKER_PKG
 RUN apk add -f docker-compose
-
-#grpcurl
-# RUN GRPCURL_PKG="grpcurl_1.8.7_linux_$(arch).tar.gz";\
-#     curl -fsSLO --compressed "https://github.com/fullstorydev/grpcurl/releases/download/v1.8.7/$GRPCURL_PKG";\
-#     tar -xf $GRPCURL_PKG  --directory /usr/local/bin/;\
-#     rm -f $GRPCURL_PKG
