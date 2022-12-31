@@ -12,7 +12,8 @@
         "ms-azuretools.vscode-docker",
         "esbenp.prettier-vscode",
         "firsttris.vscode-jest-runner",
-        "foxundermoon.shell-format"
+        "foxundermoon.shell-format",
+        "jebbs.plantuml"
     ],
     "initializeCommand": "docker network create vscode || true",
     "runArgs": [
@@ -26,5 +27,5 @@
     "forwardPorts": [
         3000
     ],
-    "postCreateCommand": "npm i --prefix ./"
+    "postCreateCommand": "npm i --prefix ./;git config --global pull.rebase true"
 }
