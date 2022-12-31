@@ -1,3 +1,4 @@
+```plantuml
 @startuml "buying"
 autonumber 1.1.1
 Alice -> Bob: Authentication request
@@ -20,3 +21,4 @@ autonumber inc B
 'Now we have 3.2.1
 Bob --> Alice: Response
 @enduml
+```
