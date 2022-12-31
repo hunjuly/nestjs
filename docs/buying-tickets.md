@@ -48,6 +48,6 @@ user --> frontend: 극장화면 호출
 
 ```plantuml
 @startuml
-listfonts a?????.한글
+listfonts 극장화면 호출
 @enduml
 ```
