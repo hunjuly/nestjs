@@ -28,5 +28,5 @@
     "forwardPorts": [
         3000
     ],
-    "postCreateCommand": "npm i --prefix ./;git config --global pull.rebase true"
+    "postCreateCommand": "sh postCreateCommand.sh"
 }
