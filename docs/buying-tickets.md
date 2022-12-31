@@ -30,7 +30,6 @@ main flow:
 ' skinparam monochrome true
 skinparam shadowing false
 skinparam defaultFontSize 11
-skinparam defaultFontName dialog
 
 actor user as "User"
 control front as "Front-end"
@@ -49,6 +48,6 @@ user --> frontend: 극장화면 호출
 
 ```plantuml
 @startuml
-listfonts 한글테스트
+listfonts a?????.한글
 @enduml
 ```
