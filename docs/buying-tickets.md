@@ -27,27 +27,94 @@ main flow:
 
 ```plantuml
 @startuml
-' skinparam monochrome true
 skinparam shadowing false
 skinparam defaultFontSize 11
 
 actor user as "User"
 control front as "Front-end"
-control backend as "Back-end"
-collections statistics
+boundary back as "Back-end"
+collections stats as "Statistics"
 collections movies
 collections theaters
 collections schedules
 collections tickets
 collections orders
 collections payments
+queue events
 
-user --> frontend: 극장화면 호출
-@enduml
-```
+user -> front: 로그인
+front -> back: 영화 목록(주간,월간)
+back -> stats: ranking(weekly)
+    note right
+        메소드를 weeklyRanking로 해도 될까?
+        이것은 weekly를 속성으로 볼 것인가? 대상으로 볼 것인가?
+        여기서는 속성으로 판단했다.
+        ranking은 영화 외에도 극장, 연령 등 다양하다.
+        ranking('weekly','movie') 이와 같이 확장될 수 있다.
+    end note
+front <-- back: 영화 목록(주간,월간)
+user -> front: 영화(movie) 선택
+front -> back: 영화 정보(movieId)
+back -> movies: movieId
+front <-- back: a movie
+user -> front: 예매 시작(movieId)
+front -> back: 극장 목록(movieId, 현재위치)
+back -> theaters: movieId, location
+    note right
+        TheatersService는 scheduleRepo을 포함한다.
+        const theaters =  schedule.findTheatersByMovie(movieId) 를 해야 한다.
+    end note
+theaters -> schedules: movieId, theaterId
+theaters <-- schedules: 상영일[]
+back <-- theaters: theaters(movieId, 상영일[])
+front <-- back: theaters(movieId, 상영일[])
+user -> front: 극장 선택(theaterId)
+user -> front: 날짜 선택(date)
+front -> back: 회차 목록(theaterId,movieId,date)
+back -> schedules: theaterId, movieId, date
+    note right
+        ScheduleService는 TicketsRepo를 포함해야 한다.
+        회차 당 남은 티켓수를 보여줘야 한다.
+    end note
+back <-- schedules: rounds(시간, 남은 티켓 수)
+front <-- back: rounds(시간,남은 티켓 수)
+user -> front: 회차 선택(roundId)
+front -> back: 티켓 목록(roundId)
+back -> tickets: 티켓 목록(roundId)
+    note right
+        TicketsService의 데이터는
+        영화수*극장수*좌석수*회차*상영기간
+        만큼 생성된다. 엄청나게 많은 데이터다.
+    end note
+back <-- tickets: tickets(좌석 수 만큼 있다)
+front <-- back: 티켓 목록
+user -> front: 티켓 선택(ticketId)
+front -> back: 주문 생성, 티켓(ticketId[]) 선점
+back -> orders: ticketId[]
+tickets <- orders: hold(10min, ticketId)
+back <-- orders: 주문 정보(orderId)
+    note right
+        orderId 리턴할 때 포인트/쿠폰 등 결제 관련 정보도 함께 리턴한다.
+        PointService, CouponService 로 나눌 것인가?
+        둘은 나누는 것이 좋다. 각각은 성격이 다른 entity이다.
+    end note
+front <-- back: 주문 정보(orderId)
+user -> front: 결제(orderId, coupon, cardInfo)
+front -> back: 결제(orderId, coupon, cardInfo)
+back -> payments: 결제(orderId, coupon, cardInfo)
+orders <- payments: 결제 성공(orderId)
+tickets <- orders: paid(ticketId)
+tickets ->> events: sold tickets
+    note right
+        이벤트인가? 메소드인가?
 
-```plantuml
-@startuml
-listfonts 극장화면 호출
+        티켓이 업데이트 됐다는 정보는 이벤트로 했다. Statistics에서 사용한다.
+        PaymentService는 OrderService와 밀접한 관계가 있어서 직접 호출했다.
+        그러나 티켓 입장에서는 어떤 서비스에 업데이트 해야 하는지 모른다.
+        Order와 Ticket도 밀접한 관계가 있기 때문에 직접 호출했다.
+    end note
+back <-- payments: 결제 성공(orderId)
+front <-- back: 결제 성공(orderId)
+user <-- front: 구매완료화면
 @enduml
 ```
