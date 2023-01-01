@@ -1,5 +1,7 @@
 ## Description
 
+docker run -d --network vscode --name plantuml plantuml/plantuml-server:jetty
+
 Describe programming using `nestjs`, `redis`, `grpc`, `typeorm`..
 
 ## Development
