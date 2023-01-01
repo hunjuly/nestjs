@@ -1,6 +1,4 @@
 {
-    "plantuml.jar": "/app/plantuml.jar",
     "plantuml.render": "PlantUMLServer",
-    "plantuml.server": "http://plantuml:8080",
-    "markdown-preview-enhanced.plantumlServer": "http://plantuml:8080"
+    "plantuml.server": "http://plantuml:8080"
 }

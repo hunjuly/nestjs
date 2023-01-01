@@ -1,6 +1,7 @@
 @startuml title
 skinparam shadowing false
 skinparam defaultFontSize 11
+left to right direction
 
 class Order {
     userIds
