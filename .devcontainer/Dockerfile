@@ -13,9 +13,6 @@ RUN echo "alias l='ls --color=auto -lA'" >> ~/.bashrc
 # Development Tools
 RUN apk add -f git curl jq tree vim asciinema
 
-# plant uml
-# RUN apk add openjdk11-jre graphviz font-noto-cjk
-
 # ApacheBench
 RUN apk add -f apache2-utils
 

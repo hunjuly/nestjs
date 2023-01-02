@@ -1,12 +1,6 @@
 ## Description
 
-docker run -d --network vscode --name plantuml plantuml/plantuml-server:jetty
-http://plantuml:8080
-
-apk add openjdk11-jre graphviz font-noto-cjk
-mkdir /app && wget https://github.com/plantuml/plantuml/releases/download/v1.2022.14/plantuml-1.2022.14.jar -O /app/plantuml.jar
-
-wget http://sourceforge.net/projects/plantuml/files/plantuml-nodot.1.2022.14.jar/download -O /root/plantuml.jar
+postStartCommand": "docker run -d --network vscode --name plantuml plantuml/plantuml-server:jetty
 
 Describe programming using `nestjs`, `redis`, `grpc`, `typeorm`..
 
