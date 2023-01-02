@@ -31,8 +31,6 @@ end note
 
 ```plantuml
 @startuml title
-skinparam shadowing false
-skinparam defaultFontSize 11
 
 class Order {
     userIds
