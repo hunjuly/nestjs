@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  nestjs:
+    build: .
+    volumes:
+      - ..:/workspace/nestjs
+    working_dir: "/workspace/nestjs"
+    command: [".devcontainer/code-aarch64" ,"tunnel" ,"--accept-server-license-terms"]
+    # command: ["./wait-for-it.sh", "db:5432", "--", "python", "app.py"]
+    # command: ["ls",".devcontainer"]
+    # command: "echo $(arch)"
