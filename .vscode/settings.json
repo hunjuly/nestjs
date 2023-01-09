@@ -1,4 +1,4 @@
 {
-    "plantuml.render": "PlantUMLServer",
-    "plantuml.server": "http://hunjuly.iptime.org:8484"
+    "plantuml.server": "http://hunjuly.iptime.org:8484",
+    "plantuml.render": "PlantUMLServer"
 }

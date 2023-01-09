@@ -4,6 +4,10 @@ postStartCommand": "docker run -d --network vscode --name plantuml plantuml/plan
 
 Describe programming using `nestjs`, `redis`, `grpc`, `typeorm`..
 
+## Note
+
+-   .md에 포함된 UML은 @startuml/@enduml 사이에 커서가 위치해야 프리뷰를 볼 수 있다. 한 번 프리뷰가 설정되면 다른 uml이 선택되기 전까지 유지된다.
+
 ## Development
 
 1. 최초 구현은 controller인가? domain인가?\
